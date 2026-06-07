@@ -12,6 +12,14 @@ Coivitas is an open protocol for environments where humans and autonomous
 agents act side by side and every action must be attributable, bounded, and
 auditable. It does not assume trust; it produces evidence.
 
+It contributes a reference architecture for **verifiable delegation**,
+**policy-bounded agent actions**, and **tamper-evident audit evidence** in
+human-agent environments.
+
+**Author & maintainer:** Yashu Liu
+([ORCID 0009-0009-4324-2935](https://orcid.org/0009-0009-4324-2935)) — an
+independent open-source research project, not affiliated with any employer.
+
 ## Capabilities
 
 The protocol is organized into six composable layers:
@@ -30,29 +38,38 @@ The protocol is organized into six composable layers:
 
 ## Quickstart
 
+The `golden-path` demo writes to a tamper-evident ledger, so it needs a
+Postgres database. Docker is the simplest way to provide one.
+
 ```bash
-# Requires Node.js >= 20 and pnpm >= 9
+# Requires Node.js >= 20, pnpm >= 9, and Docker
+
+# 1. Install and build
 pnpm install
 pnpm build
+
+# 2. Provide connection settings (DATABASE_URL is required by the demo)
+cp .env.example .env
+
+# 3. Start Postgres 16 and apply the schema
+docker compose up -d     # starts a Postgres container with the default coivitas role
+pnpm run db:setup        # creates schemas in the coivitas_dev database
+pnpm run db:migrate      # applies SQL migrations under packages/*/sql/
+
+# 4. Run the end-to-end demo
 pnpm run golden-path
 ```
 
 `golden-path` exercises the full stack — issuing a DID, minting a scoped
 token, signing an envelope, evaluating policy, and writing an audit entry —
-in roughly five minutes.
-
-For database-backed examples:
-
-```bash
-docker compose up -d    # starts Postgres 16 with the default coivitas role
-pnpm run db:setup       # creates schemas in the coivitas_dev database
-pnpm run db:migrate     # applies SQL migrations under packages/*/sql/
-```
+and completes in a few seconds. It prints a per-step report ending in
+`"errors": []` on success.
 
 The default `docker-compose.yml` provisions a Postgres role named `coivitas`
-(matching `PGUSER` in `scripts/db-setup.sh`). If you connect to an existing
-Postgres instance instead, ensure a role named `coivitas` exists before
-running migrations — otherwise `packages/policy/sql/004-enhance-action-records.sql`
+(matching `PGUSER` in `scripts/db-setup.sh`) and reads `PGPORT`/`PGUSER`/
+`PGPASSWORD`/`PGDATABASE` from `.env`. If you connect to an existing Postgres
+instance instead, ensure a role named `coivitas` exists before running
+migrations — otherwise `packages/policy/sql/004-enhance-action-records.sql`
 silently skips its `REVOKE UPDATE, DELETE` (the SQL-layer append-only guard).
 To use a different role name, override `PGUSER` in `.env` and patch the
 REVOKE target accordingly.
@@ -80,6 +97,28 @@ pnpm run test:interop      # conformance + interop suites
 pnpm run test:coverage     # coverage report
 ```
 
+## Citing Coivitas
+
+If Coivitas is useful in your research, prototype, or paper, please cite it.
+GitHub renders a **"Cite this repository"** button from
+[`CITATION.cff`](CITATION.cff); until an archival DOI is minted, use:
+
+> Liu, Y. (2026). *Coivitas: Verifiable Identity, Delegation, and Audit
+> Evidence for Human-Agent Environments* (Version 0.1.0-alpha.1) [Software].
+> https://github.com/ttssp/Coivitas
+
+```bibtex
+@software{liu_coivitas_2026,
+  author  = {Liu, Yashu},
+  title   = {{Coivitas: Verifiable Identity, Delegation, and Audit Evidence for Human-Agent Environments}},
+  year    = {2026},
+  version = {0.1.0-alpha.1},
+  url     = {https://github.com/ttssp/Coivitas}
+}
+```
+
+Once the project is archived on Zenodo, this section will be updated with a DOI.
+
 ## Contributing
 
 Contributions are welcome. Please read [CONTRIBUTING.md](CONTRIBUTING.md) for
@@ -91,4 +130,4 @@ To report a vulnerability privately, see [SECURITY.md](SECURITY.md).
 ## License
 
 Licensed under the [Apache License, Version 2.0](LICENSE).
-Copyright 2026 Coivitas Foundation Contributors.
+Copyright 2026 Yashu Liu.

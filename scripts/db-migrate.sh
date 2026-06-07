@@ -21,7 +21,7 @@ export PGPASSWORD
 
 # Compatible with macOS default Bash 3: do not use mapfile.
 # NUL-separated to avoid word-splitting failures when a path contains whitespace.
-MIGRATIONS=
+MIGRATIONS=()
 while IFS= read -r -d '' migration; do
  MIGRATIONS+=("${migration}")
 done < <(find "${ROOT_DIR}/packages" -type f -path '*/sql/*.sql' -print0 | sort -z)

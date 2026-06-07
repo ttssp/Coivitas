@@ -75,3 +75,4 @@ tmp/
 /scripts/count-lines.sh
 /release-gate-report.md
 /.release-cleanup-mapping.md
+/.profile-readme-draft.md

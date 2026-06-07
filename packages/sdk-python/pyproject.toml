@@ -15,7 +15,7 @@ readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.11" # StrEnum / PEP 604 / asyncio TaskGroup
 authors = [
- { name = "Coivitas Foundation Contributors" },
+ { name = "Yashu Liu", email = "sundevil0405@gmail.com" },
 ]
 keywords = ["coivitas", "did", "envelope", "ed25519", "interop"]
 classifiers = [

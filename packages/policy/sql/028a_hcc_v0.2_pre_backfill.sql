@@ -13,7 +13,7 @@
 -- Run-order constraints:
 -- Run after 021_hash_chain_entries.sql (the table already exists)
 -- Run before the application script backfill
--- 028a-bis (CREATE INDEX CONCURRENTLY) has no transaction dependency — may run in any order relative to this file.
+-- 028b (CREATE INDEX CONCURRENTLY) must run after this file, since the index targets the column added here.
 
 -- Subsequent steps:
 -- Step B: scripts/migrations/028-hcc-v0.2-backward-compatibility.ts (application script backfill)

@@ -3,7 +3,7 @@
  "version": "0.1.0-alpha.1",
  "private": true,
  "description": "Verifiable identity, scoped authorization, auditable behavior, and accountable governance protocol for human-agent co-existence society.",
- "author": "Coivitas Foundation Contributors",
+ "author": "Yashu Liu <sundevil0405@gmail.com>",
  "license": "Apache-2.0",
  "homepage": "https://github.com/ttssp/Coivitas",
  "repository": {

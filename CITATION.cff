@@ -1,0 +1,38 @@
+cff-version: 1.2.0
+title: "Coivitas: Verifiable Identity, Delegation, and Audit Evidence for Human-Agent Environments"
+message: "If you use Coivitas in academic work, a prototype, or a paper, please cite it using the metadata below."
+type: software
+authors:
+  - family-names: Liu
+    given-names: Yashu
+    email: sundevil0405@gmail.com
+    orcid: "https://orcid.org/0009-0009-4324-2935"
+repository-code: "https://github.com/ttssp/Coivitas"
+url: "https://github.com/ttssp/Coivitas"
+license: "Apache-2.0"
+version: "0.1.0-alpha.1"
+date-released: "2026-06-07"
+abstract: >-
+  Coivitas is an experimental trust and accountability layer for environments
+  where humans and autonomous agents act side by side. It provides a reference
+  architecture for verifiable delegation, policy-bounded agent actions, and
+  tamper-evident audit evidence: verifiable identity (decentralized
+  identifiers), scoped authorization (capability tokens), auditable behavior (a
+  tamper-evident ledger), and accountable governance.
+keywords:
+  - AI agents
+  - agent accountability
+  - verifiable delegation
+  - delegated authorization
+  - capability tokens
+  - audit evidence
+  - tamper-evident ledger
+  - verifiable identity
+  - decentralized identifiers
+# After connecting the repository to Zenodo and cutting a GitHub Release, Zenodo
+# mints a DOI. Add it here so "Cite this repository" and downstream tools resolve
+# to the archival record:
+# identifiers:
+#   - type: doi
+#     value: "10.5281/zenodo.XXXXXXX"
+#     description: "Concept DOI (always resolves to the latest version)"

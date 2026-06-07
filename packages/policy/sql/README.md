@@ -28,7 +28,7 @@ BYO-Postgres workflow).
 | 023 | Create `policy.revocation_records` | `023_revocation_records.sql` |
 | 026 | Create `policy.atp_audit_events` | `026_atp_audit_events.sql` |
 | 027 | Add FK + RLS to `atp_audit_events` | `027_atp_audit_events_fk_and_rls.sql` |
-| 028a / 028a-bis / 028c | Hash Chain Canonicalize v0.2 schema migration | `028a_hcc_v0.2_pre_backfill.sql`, `028a-bis_hcc_v0.2_pre_backfill_index.sql`, `028c_hcc_v0.2_post_backfill.sql` |
+| 028a / 028b / 028c | Hash Chain Canonicalize v0.2 schema migration | `028a_hcc_v0.2_pre_backfill.sql`, `028b_hcc_v0.2_pre_backfill_index.sql`, `028c_hcc_v0.2_post_backfill.sql` |
 
 > Slot `009` is intentionally reserved (was scoped to a feature that did not
 > land).
