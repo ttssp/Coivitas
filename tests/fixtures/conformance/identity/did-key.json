@@ -1,0 +1,17 @@
+{
+ "$schema": "conformance/identity/did-key",
+ "description": "did:key round-trip fixtures",
+ "valid": [
+ {
+ "id": "principal-did-key-rfc",
+ "publicKey": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "didKey": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw"
+ }
+ ],
+ "invalid": [
+ {
+ "id": "missing-multibase-prefix",
+ "didKey": "did:key:6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw"
+ }
+ ]
+}

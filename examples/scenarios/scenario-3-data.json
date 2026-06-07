@@ -1,0 +1,106 @@
+{
+ "scenarioId": "scenario-3",
+ "title": "Data query boundary study",
+ "phase": "P1-research",
+ "description": "Phase-2-oriented query scenario kept as structured fixture while current L0 schema remains only.",
+ "schemaStatus": {
+ "phase1CompatibleArtifacts": [
+ "principals",
+ "agentDocuments",
+ "envelopes"
+ ],
+ "phase2PendingArtifacts": [
+ "requestedCapabilities",
+ "queryActionRecords"
+ ]
+ },
+ "principals": [
+ {
+ "did": "did:key:z6Mkq4tY8rN1bC5wD9sF2hJ6kL3pV7xM0aQ2eR4tY6uI8oP1",
+ "publicKey": "7777777777777777777777777777777777777777777777777777777777777777",
+ "displayName": "Dave Hsu",
+ "createdAt": "2026-04-02T11:00:00.000Z"
+ }
+ ],
+ "agentDocuments": [
+ {
+ "id": "did:agent:4444444444444444444444444444444444444444",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6Mkq4tY8rN1bC5wD9sF2hJ6kL3pV7xM0aQ2eR4tY6uI8oP1",
+ "publicKey": "8888888888888888888888888888888888888888888888888888888888888888",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkq4tY8rN1bC5wD9sF2hJ6kL3pV7xM0aQ2eR4tY6uI8oP1",
+ "agentDid": "did:agent:4444444444444444444444444444444444444444",
+ "issuedAt": "2026-04-02T11:05:00.000Z",
+ "expiresAt": null,
+ "signature": "9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a9a"
+ },
+ "serviceEndpoints": [
+ {
+ "id": "query",
+ "type": "NegotiationEndpoint",
+ "url": "https://data-agent.example.com/query"
+ }
+ ],
+ "createdAt": "2026-04-02T11:05:00.000Z",
+ "updatedAt": "2026-04-02T11:05:00.000Z"
+ }
+ ],
+ "requestedCapabilities": [
+ {
+ "action": "QUERY",
+ "scope": {
+ "type": "allowlist",
+ "field": "dataset_id",
+ "values": ["sales-2026", "inventory-current"]
+ }
+ },
+ {
+ "action": "QUERY",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "result_limit",
+ "max": 1000
+ }
+ },
+ {
+ "action": "QUERY",
+ "scope": {
+ "type": "allowlist",
+ "field": "operation",
+ "values": ["read"]
+ }
+ }
+ ],
+ "envelopes": [
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440401",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:4444444444444444444444444444444444444444",
+ "recipientDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440499",
+ "sequenceNumber": 1
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "QUERY",
+ "params": {
+ "dataset_id": "sales-2026",
+ "operation": "read",
+ "result_limit": 500,
+ "filters": {
+ "quarter": "Q1"
+ }
+ }
+ },
+ "signature": "bcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbc",
+ "timestamp": "2026-04-02T11:10:00.000Z"
+ }
+ ],
+ "expectedOutcomes": {
+ "supportedToday": false,
+ "pendingActionVocabularyAddition": "QUERY",
+ "businessLayerChecks": ["time-range-validation", "pii-masking"]
+ }
+}

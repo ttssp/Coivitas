@@ -1,0 +1,483 @@
+{
+    "version": "v0.2",
+    "generated_by": "packages/sdk-python/scripts/generate-hcc-reverse-fixtures.py",
+    "python_canonicalize_lib": "jcs (or stdlib JCS fallback)",
+    "python_hash_lib": "hashlib.sha256 (Python stdlib;HCC v0.2)",
+    "hcc_version": "2.0.0",
+    "preimage_order": "canonicalPayloadBytes || chainIdentityJcsBytes (cross-lang, consistent with the TS Producer)",
+    "vectors": [
+        {
+            "id": "RV1-py-genesis-only",
+            "description": "RV1: single-entry chain (genesis only); chainIdentity has 1 field only (chainNamespace only, no tenantId/auditClass); minimal ASCII payload; distinct from TS V1's three-field identity",
+            "chainIdentity": {
+                "chainNamespace": "py-genesis"
+            },
+            "entries": [
+                {
+                    "entryId": "650640ec-521a-4eb0-9ad1-95370554227c",
+                    "canonicalPayload": "{\"creator\":\"did:agent:py-rv1-creator\",\"event\":\"py-init\",\"seq\":0}",
+                    "canonicalPayloadHash": "da2b83e2b43a5d4e5f7606eb2b915447c39a31e03f6b7044da53698cffe7106f",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "py-genesis"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b2263726561746f72223a226469643a6167656e743a70792d7276312d63726561746f72222c226576656e74223a2270792d696e6974222c22736571223a307d7b22636861696e4e616d657370616365223a2270792d67656e65736973227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "da2b83e2b43a5d4e5f7606eb2b915447c39a31e03f6b7044da53698cffe7106f"
+            ],
+            "expected_final_hash": "da2b83e2b43a5d4e5f7606eb2b915447c39a31e03f6b7044da53698cffe7106f",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "RV2-py-three-entry-chain",
+            "description": "RV2: 3-entry chain; same chainIdentity (policy + UUID tenantId + L2); simple payload schema (action + sequence + actor); recursive hash linkage",
+            "chainIdentity": {
+                "chainNamespace": "policy",
+                "tenantId": "21515b0b-b990-43cb-b067-06bf6e17d3c9",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "8a69e25b-728c-497b-ab81-b2c0cf25e1df",
+                    "canonicalPayload": "{\"action\":\"start\",\"actor\":\"did:agent:py-rv2-actor\",\"sequence\":0}",
+                    "canonicalPayloadHash": "61a0e1691425f4ea1915f7bed34e62622bec285491e5c8cdb34659680e2cae71",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "21515b0b-b990-43cb-b067-06bf6e17d3c9",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "ac26a9f2-6ada-4170-b031-e16e68aaa3d5",
+                    "canonicalPayload": "{\"action\":\"process\",\"actor\":\"did:agent:py-rv2-actor\",\"ref\":\"start-completed\",\"sequence\":1}",
+                    "canonicalPayloadHash": "f7ae5551b95e4d1012a0092417535d7f7eb6b279d7df4b14b3c72995157ae594",
+                    "previousHash": "61a0e1691425f4ea1915f7bed34e62622bec285491e5c8cdb34659680e2cae71",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "21515b0b-b990-43cb-b067-06bf6e17d3c9",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "4df673f3-29f1-4a4d-889f-e14ff3576c3f",
+                    "canonicalPayload": "{\"action\":\"commit\",\"actor\":\"did:agent:py-rv2-actor\",\"outcome\":\"success\",\"sequence\":2}",
+                    "canonicalPayloadHash": "77349e47f45e6e3adf35175d4fe64cf280c51a9b709286e8120640e1b653d2e7",
+                    "previousHash": "f7ae5551b95e4d1012a0092417535d7f7eb6b279d7df4b14b3c72995157ae594",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "21515b0b-b990-43cb-b067-06bf6e17d3c9",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b22616374696f6e223a227374617274222c226163746f72223a226469643a6167656e743a70792d7276322d6163746f72222c2273657175656e6365223a307d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2232313531356230622d623939302d343363622d623036372d303662663665313764336339227d",
+                "7b22616374696f6e223a2270726f63657373222c226163746f72223a226469643a6167656e743a70792d7276322d6163746f72222c22726566223a2273746172742d636f6d706c65746564222c2273657175656e6365223a317d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2232313531356230622d623939302d343363622d623036372d303662663665313764336339227d",
+                "7b22616374696f6e223a22636f6d6d6974222c226163746f72223a226469643a6167656e743a70792d7276322d6163746f72222c226f7574636f6d65223a2273756363657373222c2273657175656e6365223a327d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2232313531356230622d623939302d343363622d623036372d303662663665313764336339227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "61a0e1691425f4ea1915f7bed34e62622bec285491e5c8cdb34659680e2cae71",
+                "f7ae5551b95e4d1012a0092417535d7f7eb6b279d7df4b14b3c72995157ae594",
+                "77349e47f45e6e3adf35175d4fe64cf280c51a9b709286e8120640e1b653d2e7"
+            ],
+            "expected_final_hash": "77349e47f45e6e3adf35175d4fe64cf280c51a9b709286e8120640e1b653d2e7",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "RV3-py-five-entry-chain",
+            "description": "RV3: 5-entry chain; same chainIdentity (governance + UUID tenantId + L3); multiple payload shapes (including nested + array; differing schema across entries)",
+            "chainIdentity": {
+                "chainNamespace": "governance",
+                "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                "auditClass": "L3"
+            },
+            "entries": [
+                {
+                    "entryId": "c4832e22-9cfe-416c-b7e7-3440333e6abc",
+                    "canonicalPayload": "{\"id\":\"mot-py-001\",\"kind\":\"motion\",\"supporters\":[]}",
+                    "canonicalPayloadHash": "906f8b1984a67a028d2aa7d07a671ec7f6f128e6d8decfda871962eecf01de92",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "98a1ee8b-05a8-4f11-b53b-78b82f021ecd",
+                    "canonicalPayload": "{\"endorser\":\"did:agent:py-rv3-e1\",\"kind\":\"endorse\",\"motionId\":\"mot-py-001\",\"weight\":3}",
+                    "canonicalPayloadHash": "a07c07cf2a1f5354ce4c70fb3b01adc0a96952599b32c07d88cb3a322fb2f42e",
+                    "previousHash": "906f8b1984a67a028d2aa7d07a671ec7f6f128e6d8decfda871962eecf01de92",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "ddc2a063-fa87-4c5d-98a1-90ed2a38b6a5",
+                    "canonicalPayload": "{\"endorser\":\"did:agent:py-rv3-e2\",\"kind\":\"endorse\",\"motionId\":\"mot-py-001\",\"weight\":1}",
+                    "canonicalPayloadHash": "dda08dd3a21bc85e494dec6092ac41bd94262fe70286c589d968be74e14b7408",
+                    "previousHash": "a07c07cf2a1f5354ce4c70fb3b01adc0a96952599b32c07d88cb3a322fb2f42e",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "e24e5156-8c92-45ad-87c4-e3a2889fff21",
+                    "canonicalPayload": "{\"kind\":\"threshold-passed\",\"motionId\":\"mot-py-001\",\"nested\":{\"achieved\":4,\"required\":3}}",
+                    "canonicalPayloadHash": "812161da5e5d62527b9c190c73ab0d6a48bc9a99a34d58f849fa862d892a4be3",
+                    "previousHash": "dda08dd3a21bc85e494dec6092ac41bd94262fe70286c589d968be74e14b7408",
+                    "chainPosition": 3,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-25T00:00:03.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "eb19d782-1a4f-455a-9263-786c902149d7",
+                    "canonicalPayload": "{\"actions\":[\"enact-1\",\"enact-2\",\"enact-3\"],\"effective_at\":\"2026-05-25\",\"kind\":\"enact\",\"motionId\":\"mot-py-001\"}",
+                    "canonicalPayloadHash": "08ed158cf9f9d22c591e6ba78c2c271c6a391929e71f8d031c5955c87029104d",
+                    "previousHash": "812161da5e5d62527b9c190c73ab0d6a48bc9a99a34d58f849fa862d892a4be3",
+                    "chainPosition": 4,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "12afb84c-78b5-4072-90f3-44dae8bf6a9e",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-25T00:00:04.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226964223a226d6f742d70792d303031222c226b696e64223a226d6f74696f6e222c22737570706f7274657273223a5b5d7d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2231326166623834632d373862352d343037322d393066332d343464616538626636613965227d",
+                "7b22656e646f72736572223a226469643a6167656e743a70792d7276332d6531222c226b696e64223a22656e646f727365222c226d6f74696f6e4964223a226d6f742d70792d303031222c22776569676874223a337d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2231326166623834632d373862352d343037322d393066332d343464616538626636613965227d",
+                "7b22656e646f72736572223a226469643a6167656e743a70792d7276332d6532222c226b696e64223a22656e646f727365222c226d6f74696f6e4964223a226d6f742d70792d303031222c22776569676874223a317d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2231326166623834632d373862352d343037322d393066332d343464616538626636613965227d",
+                "7b226b696e64223a227468726573686f6c642d706173736564222c226d6f74696f6e4964223a226d6f742d70792d303031222c226e6573746564223a7b226163686965766564223a342c227265717569726564223a337d7d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2231326166623834632d373862352d343037322d393066332d343464616538626636613965227d",
+                "7b22616374696f6e73223a5b22656e6163742d31222c22656e6163742d32222c22656e6163742d33225d2c226566666563746976655f6174223a22323032362d30352d3235222c226b696e64223a22656e616374222c226d6f74696f6e4964223a226d6f742d70792d303031227d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2231326166623834632d373862352d343037322d393066332d343464616538626636613965227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "906f8b1984a67a028d2aa7d07a671ec7f6f128e6d8decfda871962eecf01de92",
+                "a07c07cf2a1f5354ce4c70fb3b01adc0a96952599b32c07d88cb3a322fb2f42e",
+                "dda08dd3a21bc85e494dec6092ac41bd94262fe70286c589d968be74e14b7408",
+                "812161da5e5d62527b9c190c73ab0d6a48bc9a99a34d58f849fa862d892a4be3",
+                "08ed158cf9f9d22c591e6ba78c2c271c6a391929e71f8d031c5955c87029104d"
+            ],
+            "expected_final_hash": "08ed158cf9f9d22c591e6ba78c2c271c6a391929e71f8d031c5955c87029104d",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "RV4-py-japanese-emoji-payload",
+            "description": "RV4: 3-entry chain; canonicalPayload contains Japanese Hiragana + Katakana + distinct emoji (🦀 / 🐍 / 🌸); content fully independent of TS V4's CJK (avoids cross-validation false positives); verifies Python JCS UTF-8 + field code-point ordering matches TS at the byte level",
+            "chainIdentity": {
+                "chainNamespace": "audit-jp",
+                "tenantId": "684fde53-68db-4399-9562-cb3898a0c39f",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "e82698ba-c560-4be6-ba76-f83027fd6622",
+                    "canonicalPayload": "{\"actor\":\"did:agent:日本語\",\"marker\":\"🦀\",\"イベント\":\"開始\"}",
+                    "canonicalPayloadHash": "57f5dc5c0e48afdda54a14608fbd3197ee222c7bc468f25d3b9218f7c9ff92d4",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-jp",
+                        "tenantId": "684fde53-68db-4399-9562-cb3898a0c39f",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "03d36c5b-ae0e-4451-8bd5-83da8c7d1f34",
+                    "canonicalPayload": "{\"actor\":\"did:agent:日本語\",\"イベント\":\"進行\",\"ラベル\":[\"タグ1\",\"タグ2\",\"🐍\"]}",
+                    "canonicalPayloadHash": "841dc6658b74c2479ef6ec707fdce5ceb2c74a3aee087a36c47c56d56d541d3c",
+                    "previousHash": "57f5dc5c0e48afdda54a14608fbd3197ee222c7bc468f25d3b9218f7c9ff92d4",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-jp",
+                        "tenantId": "684fde53-68db-4399-9562-cb3898a0c39f",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "8f29cdab-7f41-40d3-aecf-f0418abafeb2",
+                    "canonicalPayload": "{\"actor\":\"did:agent:日本語\",\"イベント\":\"完了\",\"要約\":\"ASCII + ひらがな + カタカナ + emoji 🌸\"}",
+                    "canonicalPayloadHash": "006f0e9c6a0f1784d48966eeff1111e8c7f998c5c47a09abf4cc765758d80712",
+                    "previousHash": "841dc6658b74c2479ef6ec707fdce5ceb2c74a3aee087a36c47c56d56d541d3c",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-jp",
+                        "tenantId": "684fde53-68db-4399-9562-cb3898a0c39f",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226163746f72223a226469643a6167656e743ae697a5e69cace8aa9e222c226d61726b6572223a22f09fa680222c22e382a4e38399e383b3e38388223a22e9968be5a78b227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d6a70222c2274656e616e744964223a2236383466646535332d363864622d343339392d393536322d636233383938613063333966227d",
+                "7b226163746f72223a226469643a6167656e743ae697a5e69cace8aa9e222c22e382a4e38399e383b3e38388223a22e980b2e8a18c222c22e383a9e38399e383ab223a5b22e382bfe382b031222c22e382bfe382b032222c22f09f908d225d7d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d6a70222c2274656e616e744964223a2236383466646535332d363864622d343339392d393536322d636233383938613063333966227d",
+                "7b226163746f72223a226469643a6167656e743ae697a5e69cace8aa9e222c22e382a4e38399e383b3e38388223a22e5ae8ce4ba86222c22e8a681e7b484223a224153434949202b20e381b2e38289e3818ce381aa202b20e382abe382bfe382abe3838a202b20656d6f6a6920f09f8cb8227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d6a70222c2274656e616e744964223a2236383466646535332d363864622d343339392d393536322d636233383938613063333966227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "57f5dc5c0e48afdda54a14608fbd3197ee222c7bc468f25d3b9218f7c9ff92d4",
+                "841dc6658b74c2479ef6ec707fdce5ceb2c74a3aee087a36c47c56d56d541d3c",
+                "006f0e9c6a0f1784d48966eeff1111e8c7f998c5c47a09abf4cc765758d80712"
+            ],
+            "expected_final_hash": "006f0e9c6a0f1784d48966eeff1111e8c7f998c5c47a09abf4cc765758d80712",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "RV5-py-multi-field-identity",
+            "description": "RV5: 4-entry chain; chainIdentity uses all three fields (audit-py + UUID tenantId + L1); payload mixes numbers + null + bool in various combinations (verifies JCS primitive ordering)",
+            "chainIdentity": {
+                "chainNamespace": "audit-py",
+                "tenantId": "17d6e82e-10be-43ac-b99a-c3137bfdbbf5",
+                "auditClass": "L1"
+            },
+            "entries": [
+                {
+                    "entryId": "0665fba3-d00e-4123-8889-83e0537ddcb8",
+                    "canonicalPayload": "{\"approved\":false,\"phase\":\"draft\",\"score\":0}",
+                    "canonicalPayloadHash": "82a0ee60a17e8cd4811d10a0f6cd4a1a3e8ef6bbf51f7158104a888564a4d361",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-py",
+                        "tenantId": "17d6e82e-10be-43ac-b99a-c3137bfdbbf5",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "c63bfa4c-3029-4d45-a6eb-f8ddc1ca220d",
+                    "canonicalPayload": "{\"approved\":false,\"phase\":\"review\",\"reviewer\":null,\"score\":50}",
+                    "canonicalPayloadHash": "867f94f6208a1d980a542ca799a3545a9b37b66e1bafc19d6bc4fb82298bf801",
+                    "previousHash": "82a0ee60a17e8cd4811d10a0f6cd4a1a3e8ef6bbf51f7158104a888564a4d361",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-py",
+                        "tenantId": "17d6e82e-10be-43ac-b99a-c3137bfdbbf5",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "19427034-80d6-4163-9df8-577918fb0cd8",
+                    "canonicalPayload": "{\"approved\":true,\"phase\":\"approve\",\"reviewer\":\"did:agent:py-rv5-reviewer\",\"score\":85}",
+                    "canonicalPayloadHash": "10669d713aff1e5169f7f5ed1087a29defa1ede3f3fa8985de51f9464731a744",
+                    "previousHash": "867f94f6208a1d980a542ca799a3545a9b37b66e1bafc19d6bc4fb82298bf801",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-py",
+                        "tenantId": "17d6e82e-10be-43ac-b99a-c3137bfdbbf5",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "e9ca7213-a764-4107-9e32-c9a7b581e910",
+                    "canonicalPayload": "{\"approved\":true,\"phase\":\"publish\",\"reviewer\":\"did:agent:py-rv5-publisher\",\"score\":100}",
+                    "canonicalPayloadHash": "d5fdcff5e3d9290f46389ef9cac303f6d98cf169c4186143ffabe665a6d25f17",
+                    "previousHash": "10669d713aff1e5169f7f5ed1087a29defa1ede3f3fa8985de51f9464731a744",
+                    "chainPosition": 3,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-py",
+                        "tenantId": "17d6e82e-10be-43ac-b99a-c3137bfdbbf5",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:03.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b22617070726f766564223a66616c73652c227068617365223a226472616674222c2273636f7265223a307d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d7079222c2274656e616e744964223a2231376436653832652d313062652d343361632d623939612d633331333762666462626635227d",
+                "7b22617070726f766564223a66616c73652c227068617365223a22726576696577222c227265766965776572223a6e756c6c2c2273636f7265223a35307d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d7079222c2274656e616e744964223a2231376436653832652d313062652d343361632d623939612d633331333762666462626635227d",
+                "7b22617070726f766564223a747275652c227068617365223a22617070726f7665222c227265766965776572223a226469643a6167656e743a70792d7276352d7265766965776572222c2273636f7265223a38357d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d7079222c2274656e616e744964223a2231376436653832652d313062652d343361632d623939612d633331333762666462626635227d",
+                "7b22617070726f766564223a747275652c227068617365223a227075626c697368222c227265766965776572223a226469643a6167656e743a70792d7276352d7075626c6973686572222c2273636f7265223a3130307d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d7079222c2274656e616e744964223a2231376436653832652d313062652d343361632d623939612d633331333762666462626635227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "82a0ee60a17e8cd4811d10a0f6cd4a1a3e8ef6bbf51f7158104a888564a4d361",
+                "867f94f6208a1d980a542ca799a3545a9b37b66e1bafc19d6bc4fb82298bf801",
+                "10669d713aff1e5169f7f5ed1087a29defa1ede3f3fa8985de51f9464731a744",
+                "d5fdcff5e3d9290f46389ef9cac303f6d98cf169c4186143ffabe665a6d25f17"
+            ],
+            "expected_final_hash": "d5fdcff5e3d9290f46389ef9cac303f6d98cf169c4186143ffabe665a6d25f17",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "RV6-py-NEGATIVE-mixed-identity",
+            "description": "RV6 NEGATIVE: 3-entry chain; entry[1]'s chainIdentity differs from entry[0]/entry[2] (identity-rebinding); TS verifyHashChain must reject via the chain-level identity consistency check (HC_CHAIN_IDENTITY_PREIMAGE_FAILED)",
+            "chainIdentity": {
+                "chainNamespace": "py-audit-A",
+                "tenantId": "b56dcb9a-2b9c-4a5f-9170-63cbc8231e0b",
+                "auditClass": "L1"
+            },
+            "entries": [
+                {
+                    "entryId": "826e9132-b4af-4a56-a578-b150d5300ab7",
+                    "canonicalPayload": "{\"ev\":\"py-a-0\"}",
+                    "canonicalPayloadHash": "4eb1809570454cbbe8f1f169aeae8fe7521e456e421da802ecd65580ffcbac7b",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-A",
+                        "tenantId": "b56dcb9a-2b9c-4a5f-9170-63cbc8231e0b",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "20e09343-e4ab-47ed-8c8a-6e85a8689201",
+                    "canonicalPayload": "{\"ev\":\"py-a-1\"}",
+                    "canonicalPayloadHash": "18dd9a91494b0e92f281493acc2f458a2b914e4b10df5584dc6279b4c71e55f9",
+                    "previousHash": "4eb1809570454cbbe8f1f169aeae8fe7521e456e421da802ecd65580ffcbac7b",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-B",
+                        "tenantId": "3a438227-e68f-489e-9d4d-cdb068ad79b5",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "36801c42-113f-45e4-bd2b-2c073c681825",
+                    "canonicalPayload": "{\"ev\":\"py-a-2\"}",
+                    "canonicalPayloadHash": "aef3f8c188090333c03d40068ddfbd7a4f5b6b69873bf7cd8160f658c531d54a",
+                    "previousHash": "18dd9a91494b0e92f281493acc2f458a2b914e4b10df5584dc6279b4c71e55f9",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-A",
+                        "tenantId": "b56dcb9a-2b9c-4a5f-9170-63cbc8231e0b",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226576223a2270792d612d30227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2270792d61756469742d41222c2274656e616e744964223a2262353664636239612d326239632d346135662d393137302d363363626338323331653062227d",
+                "7b226576223a2270792d612d31227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2270792d61756469742d42222c2274656e616e744964223a2233613433383232372d653638662d343839652d396434642d636462303638616437396235227d",
+                "7b226576223a2270792d612d32227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2270792d61756469742d41222c2274656e616e744964223a2262353664636239612d326239632d346135662d393137302d363363626338323331653062227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "4eb1809570454cbbe8f1f169aeae8fe7521e456e421da802ecd65580ffcbac7b",
+                "18dd9a91494b0e92f281493acc2f458a2b914e4b10df5584dc6279b4c71e55f9",
+                "aef3f8c188090333c03d40068ddfbd7a4f5b6b69873bf7cd8160f658c531d54a"
+            ],
+            "expected_final_hash": "aef3f8c188090333c03d40068ddfbd7a4f5b6b69873bf7cd8160f658c531d54a",
+            "expected_verify_outcome": "REJECT",
+            "expected_reject_error_substring": "mixed-identity",
+            "expected_reject_error_code": "HC_CHAIN_IDENTITY_PREIMAGE_FAILED",
+            "tamper_description": "entry[1].chainIdentity replaced with a different tenant (py-audit-B + a different UUID tenantId); previousHash linkage preserved (fabricated to look legitimate); TS verify must reject via the chain-level identity consistency check (verify-hash-chain.ts L315-320 is the real anchor)"
+        },
+        {
+            "id": "RV7-py-NEGATIVE-tampered-hash",
+            "description": "RV7 NEGATIVE: 3-entry chain; the last entry's canonicalPayloadHash final char is flipped (0 <-> f, 1 <-> e, ...); TS verifyHashChain must reject via assertCanonicalPayloadHashConsistent (HC_CHAIN_IDENTITY_PREIMAGE_FAILED; verify-helpers.ts L189-191 is the real anchor)",
+            "chainIdentity": {
+                "chainNamespace": "py-audit-tamper",
+                "tenantId": "c1ceb87d-1548-4df8-9933-765effe1867a",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "48e9f286-ae1f-45e0-a9ee-b4c715d1d9cd",
+                    "canonicalPayload": "{\"ev\":\"py-t-0\"}",
+                    "canonicalPayloadHash": "fd64fee1977c56d6983f07c6fe06c79c1cce4f5238b737e340ef56362ee23728",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-tamper",
+                        "tenantId": "c1ceb87d-1548-4df8-9933-765effe1867a",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "0aa041b0-5f09-44d5-88f3-694abf639e8e",
+                    "canonicalPayload": "{\"ev\":\"py-t-1\"}",
+                    "canonicalPayloadHash": "3a85ef0d148e1578e620aefdcba8bc05a9415904e29d822471630011f687fd2e",
+                    "previousHash": "fd64fee1977c56d6983f07c6fe06c79c1cce4f5238b737e340ef56362ee23728",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-tamper",
+                        "tenantId": "c1ceb87d-1548-4df8-9933-765effe1867a",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "1b19660c-6dea-48a2-bcd1-14e9131047f6",
+                    "canonicalPayload": "{\"ev\":\"py-t-2\"}",
+                    "canonicalPayloadHash": "2b91f4c2780719127ebfb8e15f489b6751b0da0d938d2218019ca83db1b6f682",
+                    "previousHash": "3a85ef0d148e1578e620aefdcba8bc05a9415904e29d822471630011f687fd2e",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "py-audit-tamper",
+                        "tenantId": "c1ceb87d-1548-4df8-9933-765effe1867a",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-25T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226576223a2270792d742d30227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2270792d61756469742d74616d706572222c2274656e616e744964223a2263316365623837642d313534382d346466382d393933332d373635656666653138363761227d",
+                "7b226576223a2270792d742d31227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2270792d61756469742d74616d706572222c2274656e616e744964223a2263316365623837642d313534382d346466382d393933332d373635656666653138363761227d",
+                "7b226576223a2270792d742d32227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2270792d61756469742d74616d706572222c2274656e616e744964223a2263316365623837642d313534382d346466382d393933332d373635656666653138363761227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "fd64fee1977c56d6983f07c6fe06c79c1cce4f5238b737e340ef56362ee23728",
+                "3a85ef0d148e1578e620aefdcba8bc05a9415904e29d822471630011f687fd2e",
+                "2b91f4c2780719127ebfb8e15f489b6751b0da0d938d2218019ca83db1b6f68d"
+            ],
+            "expected_final_hash": "2b91f4c2780719127ebfb8e15f489b6751b0da0d938d2218019ca83db1b6f68d",
+            "expected_verify_outcome": "REJECT",
+            "expected_reject_error_substring": "recomputed",
+            "expected_reject_error_code": "HC_CHAIN_IDENTITY_PREIMAGE_FAILED",
+            "tamper_description": "entry[2].canonicalPayloadHash final char flipped (0->f / a->5 etc.); after TS recompute, the result != stored canonicalPayloadHash -> HC_CHAIN_IDENTITY_PREIMAGE_FAILED reject"
+        }
+    ]
+}

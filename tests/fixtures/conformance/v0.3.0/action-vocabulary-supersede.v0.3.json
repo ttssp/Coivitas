@@ -1,0 +1,267 @@
+{
+ "$schema": "conformance/action-record",
+ "description": "conformance fixture: SESSION_SUPERSEDED ActionVocabulary extension (A8). actor = did:system:session-governor; 4 reason enum values + 4 invalid rejection points; the three-state coexistence is guaranteed by the schemas.ts allOf branches",
+ "valid": [
+ {
+ "id": "valid-supersede-explicit-close",
+ "description": "SESSION_SUPERSEDED reason=EXPLICIT_CLOSE: business side actively closes, includes a valid successor newSessionId",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000001",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440010",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440011",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-27T01:01:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "11aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "1100334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "valid-supersede-token-revoked",
+ "description": "SESSION_SUPERSEDED reason=TOKEN_REVOKED: CapabilityToken revocation triggers close + fresh handshake (Invariant 8 positive hardening)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000002",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440020",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440021",
+ "reason": "TOKEN_REVOKED",
+ "timestamp": "2026-04-27T01:02:00.000Z",
+ "affectedAgentDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:02:00.000Z",
+ "prevHash": "ba7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0e01",
+ "ledgerSignature": "22aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "2200334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "valid-supersede-idle-expired",
+ "description": "SESSION_SUPERSEDED reason=IDLE_EXPIRED: sweeper advances IDLE to CLOSED (idleHardMs timeout)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000003",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440030",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440031",
+ "reason": "IDLE_EXPIRED",
+ "timestamp": "2026-04-27T01:03:00.000Z",
+ "affectedAgentDid": "did:agent:c5f3d4e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doL"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:03:00.000Z",
+ "prevHash": "ca7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0e02",
+ "ledgerSignature": "33aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "3300334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "valid-supersede-forced-close-null-new-session",
+ "description": "SESSION_SUPERSEDED reason=FORCED_CLOSE: ops / exception-path forced close, no successor session (newSessionId=null is valid only under this reason)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000004",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440040",
+ "newSessionId": null,
+ "reason": "FORCED_CLOSE",
+ "timestamp": "2026-04-27T01:04:00.000Z",
+ "affectedAgentDid": "did:agent:d6e4f5a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doM"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:04:00.000Z",
+ "prevHash": "da7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0e03",
+ "ledgerSignature": "44aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "4400334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-supersede-actor-non-session-governor",
+ "description": "SESSION_SUPERSEDED misuses did:agent:* as actor (did:system:session-governor is enforced; AJV const rejects)",
+ "expectedError": "agentDid must equal did:system:session-governor",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000011",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440050",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440051",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-27T01:11:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "55aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "5500334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "invalid-supersede-reason-missing",
+ "description": "SESSION_SUPERSEDED parametersSummary missing reason (sessionSupersededParams required rejects)",
+ "expectedError": "must have required property 'reason'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000012",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440060",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440061",
+ "timestamp": "2026-04-27T01:12:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "66aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "6600334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "invalid-supersede-reason-unknown-value",
+ "description": "SESSION_SUPERSEDED reason unknown value NETWORK_TIMEOUT (outside the 4-value enum; AJV enum rejects)",
+ "expectedError": "reason must be equal to one of the allowed values",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000013",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440070",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440071",
+ "reason": "NETWORK_TIMEOUT",
+ "timestamp": "2026-04-27T01:13:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:13:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "77aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "7700334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "invalid-supersede-old-session-id-missing",
+ "description": "SESSION_SUPERSEDED parametersSummary missing oldSessionId (sessionSupersededParams required rejects)",
+ "expectedError": "must have required property 'oldSessionId'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000014",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440081",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-27T01:14:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:14:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "88aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "8800334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ }
+ ],
+ "cross_version": [
+ {
+ "id": "cross-v010-with-supersede-action-reject",
+ "description": "v0.1.0 ActionRecord contains SESSION_SUPERSEDED action: the enum lacks the 6th value, so the 0.1.0 validator rejects fail-closed (P1.1)",
+ "valid": false,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000021",
+ "specVersion": "0.1.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440090",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440091",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-27T01:21:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:21:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "99aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788"
+ }
+ },
+ {
+ "id": "cross-v030-business-action-pass",
+ "description": "v0.3.0 business action (INQUIRY) retains the strict didAgent/didKey mode: isolation from the SESSION_SUPERSEDED branch does not break existing contracts",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050e00000022",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product_category": "electronics" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T01:22:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aaaabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "aabb334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ }
+ ]
+}

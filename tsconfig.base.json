@@ -1,0 +1,40 @@
+{
+ "compilerOptions": {
+ "baseUrl": ".",
+ "target": "ES2022",
+ "module": "NodeNext",
+ "moduleResolution": "NodeNext",
+ "lib": ["ES2022"],
+ "paths": {
+ "@coivitas/types": ["packages/types/src/index.ts"],
+ "@coivitas/crypto": ["packages/crypto/src/index.ts"],
+ "@coivitas/identity": ["packages/identity/src/index.ts"],
+ "@coivitas/policy": ["packages/policy/src/index.ts"],
+ "@coivitas/communication": [
+ "packages/communication/src/index.ts"
+ ],
+ "@coivitas/sdk": ["packages/sdk/src/index.ts"],
+ "@coivitas/shared": ["packages/shared/src/index.ts"],
+ "@coivitas/managed-service-runtime": [
+ "packages/managed-service-runtime/src/index.ts"
+ ],
+ "@coivitas/wallet-interface": [
+ "packages/wallet-interface/src/index.ts"
+ ]
+ },
+ "strict": true,
+ "declaration": true,
+ "declarationMap": true,
+ "sourceMap": true,
+ "composite": true,
+ "incremental": true,
+ "esModuleInterop": true,
+ "forceConsistentCasingInFileNames": true,
+ "skipLibCheck": true,
+ "resolveJsonModule": true,
+ "isolatedModules": true,
+ "noUncheckedIndexedAccess": true,
+ "noImplicitOverride": true,
+ "useDefineForClassFields": true
+ }
+}

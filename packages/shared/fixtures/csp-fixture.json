@@ -1,0 +1,245 @@
+{
+  "$schema": "https://coivitas.ai/schemas/csp-fixture-v0.1.json",
+  "$comment": "CSP v0.1 test fixtures — 5 paths: 1 normal (PASS) + 4 fail-closed (REJECT).",
+  "version": "0.1.0",
+  "generatedAt": "2026-05-18T00:00:00.000Z",
+  "fixtures": [
+    {
+      "id": "csp-fixture-001-normal",
+      "description": "Normal path (PASS): all 6 fields compliant; mode A; DID audience",
+      "path": "normal",
+      "expectResult": "PASS",
+      "payload": {
+        "cspVersion": "1.0.0",
+        "token": {
+          "id": "token-fixture-001",
+          "specVersion": "0.3.0",
+          "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "principalDid": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedTo": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedAt": "2026-05-18T00:00:00.000Z",
+          "expiresAt": "2026-05-18T01:00:00.000Z",
+          "capabilities": [
+            {
+              "action": "agent:read",
+              "scope": {
+                "type": "allowlist",
+                "field": "resource",
+                "values": ["doc-001", "doc-002"]
+              }
+            }
+          ],
+          "revocationUrl": "https://revocation.example.com/v1/lists",
+          "proof": {
+            "type": "Ed25519Signature2026",
+            "created": "2026-05-18T00:00:00.000Z",
+            "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+            "value": "z4oey5q2M3XKaxup3UnZoKZxbe6qKthmcEoBdMEJwnBTRK+4sVP0V2X0VZjwz2GJ2m8kE5kFrDpFD3PrFXkQ=="
+          }
+        },
+        "disclosedClaims": [],
+        "challenge": "550e8400-e29b-41d4-a716-446655440000",
+        "audience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "notAfter": "2026-05-18T00:05:00.000Z"
+      },
+      "verifierContext": {
+        "expectedAudience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "issuedChallenge": "550e8400-e29b-41d4-a716-446655440000",
+        "challengeIssuedAt": "2026-05-18T00:04:50.000Z"
+      }
+    },
+    {
+      "id": "csp-fixture-002-challenge-mismatch",
+      "description": "fail-closed (REJECT): challenge does not match the verifier-issued challenge (CSP_CHALLENGE_INVALID; invariant I3)",
+      "path": "challenge_mismatch",
+      "expectResult": "REJECT",
+      "expectErrorCode": "CSP_CHALLENGE_INVALID",
+      "expectedHttpStatus": 401,
+      "payload": {
+        "cspVersion": "1.0.0",
+        "token": {
+          "id": "token-fixture-002",
+          "specVersion": "0.3.0",
+          "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "principalDid": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedTo": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedAt": "2026-05-18T00:00:00.000Z",
+          "expiresAt": "2026-05-18T01:00:00.000Z",
+          "capabilities": [
+            {
+              "action": "agent:write",
+              "scope": {
+                "type": "allowlist",
+                "field": "resource",
+                "values": ["doc-003"]
+              }
+            }
+          ],
+          "revocationUrl": "https://revocation.example.com/v1/lists",
+          "proof": {
+            "type": "Ed25519Signature2026",
+            "created": "2026-05-18T00:00:00.000Z",
+            "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+            "value": "z4oey5q2M3XKaxup3UnZoKZxbe6qKthmcEoBdMEJwnBTRK+4sVP0V2X0VZjwz2GJ2m8kE5kFrDpFD3PrFXkQ=="
+          }
+        },
+        "disclosedClaims": [],
+        "challenge": "aaaaaaaa-bbbb-4ccc-8ddd-eeeeeeeeeeee",
+        "audience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "notAfter": "2026-05-18T00:05:00.000Z"
+      },
+      "verifierContext": {
+        "expectedAudience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "issuedChallenge": "11111111-2222-4333-8444-555555555555",
+        "challengeIssuedAt": "2026-05-18T00:04:50.000Z",
+        "verifyStep": "8.5",
+        "rejectReason": "payload.challenge !== verifier.issuedChallenge (verifier-side issued challenge guards against replay)"
+      }
+    },
+    {
+      "id": "csp-fixture-003-audience-mismatch",
+      "description": "fail-closed (REJECT): audience does not match the verifier expectedAudience (CSP_AUDIENCE_MISMATCH; invariant I4)",
+      "path": "audience_mismatch",
+      "expectResult": "REJECT",
+      "expectErrorCode": "CSP_AUDIENCE_MISMATCH",
+      "expectedHttpStatus": 403,
+      "payload": {
+        "cspVersion": "1.0.0",
+        "token": {
+          "id": "token-fixture-003",
+          "specVersion": "0.3.0",
+          "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "principalDid": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedTo": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedAt": "2026-05-18T00:00:00.000Z",
+          "expiresAt": "2026-05-18T01:00:00.000Z",
+          "capabilities": [
+            {
+              "action": "agent:execute",
+              "scope": {
+                "type": "allowlist",
+                "field": "action",
+                "values": ["approve"]
+              }
+            }
+          ],
+          "revocationUrl": "https://revocation.example.com/v1/lists",
+          "proof": {
+            "type": "Ed25519Signature2026",
+            "created": "2026-05-18T00:00:00.000Z",
+            "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+            "value": "z4oey5q2M3XKaxup3UnZoKZxbe6qKthmcEoBdMEJwnBTRK+4sVP0V2X0VZjwz2GJ2m8kE5kFrDpFD3PrFXkQ=="
+          }
+        },
+        "disclosedClaims": [],
+        "challenge": "550e8400-e29b-41d4-a716-446655440001",
+        "audience": "did:key:z6ATTACKER_INJECTED_DID_HIJACK_ATTEMPT_xxxx",
+        "notAfter": "2026-05-18T00:05:00.000Z"
+      },
+      "verifierContext": {
+        "expectedAudience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "issuedChallenge": "550e8400-e29b-41d4-a716-446655440001",
+        "challengeIssuedAt": "2026-05-18T00:04:50.000Z",
+        "verifyStep": "8.6",
+        "rejectReason": "payload.audience !== verifier.expectedAudience (strict === equality; startsWith/wildcard not allowed)"
+      }
+    },
+    {
+      "id": "csp-fixture-004-notafter-expired",
+      "description": "fail-closed (REJECT): notAfter has expired (CSP_PAYLOAD_EXPIRED; invariant I5; guards against stale replay)",
+      "path": "notafter_expired",
+      "expectResult": "REJECT",
+      "expectErrorCode": "CSP_PAYLOAD_EXPIRED",
+      "expectedHttpStatus": 401,
+      "payload": {
+        "cspVersion": "1.0.0",
+        "token": {
+          "id": "token-fixture-004",
+          "specVersion": "0.3.0",
+          "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "principalDid": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedTo": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedAt": "2026-05-17T23:50:00.000Z",
+          "expiresAt": "2026-05-18T01:00:00.000Z",
+          "capabilities": [
+            {
+              "action": "agent:read",
+              "scope": {
+                "type": "allowlist",
+                "field": "resource",
+                "values": ["stale-doc"]
+              }
+            }
+          ],
+          "revocationUrl": "https://revocation.example.com/v1/lists",
+          "proof": {
+            "type": "Ed25519Signature2026",
+            "created": "2026-05-17T23:50:00.000Z",
+            "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+            "value": "z4oey5q2M3XKaxup3UnZoKZxbe6qKthmcEoBdMEJwnBTRK+4sVP0V2X0VZjwz2GJ2m8kE5kFrDpFD3PrFXkQ=="
+          }
+        },
+        "disclosedClaims": [],
+        "challenge": "550e8400-e29b-41d4-a716-446655440002",
+        "audience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "notAfter": "2026-05-17T23:55:00.000Z"
+      },
+      "verifierContext": {
+        "expectedAudience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "issuedChallenge": "550e8400-e29b-41d4-a716-446655440002",
+        "challengeIssuedAt": "2026-05-17T23:54:50.000Z",
+        "verifierNow": "2026-05-18T00:00:00.000Z",
+        "verifyStep": "8.7",
+        "rejectReason": "payload.notAfter '2026-05-17T23:55:00.000Z' <= now + minWindow(1s); stale replay attack"
+      }
+    },
+    {
+      "id": "csp-fixture-005-token-version-unsupported",
+      "description": "fail-closed (REJECT): token.specVersion not in the supported set (CSP_TOKEN_VERSION_UNSUPPORTED; invariant I1)",
+      "path": "token_version_unsupported",
+      "expectResult": "REJECT",
+      "expectErrorCode": "CSP_TOKEN_VERSION_UNSUPPORTED",
+      "expectedHttpStatus": 400,
+      "payload": {
+        "cspVersion": "1.0.0",
+        "token": {
+          "id": "token-fixture-005",
+          "specVersion": "9.9.9",
+          "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+          "principalDid": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedTo": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+          "issuedAt": "2026-05-18T00:00:00.000Z",
+          "expiresAt": "2026-05-18T01:00:00.000Z",
+          "capabilities": [
+            {
+              "action": "agent:read",
+              "scope": {
+                "type": "allowlist",
+                "field": "resource",
+                "values": ["doc-004"]
+              }
+            }
+          ],
+          "revocationUrl": "https://revocation.example.com/v1/lists",
+          "proof": {
+            "type": "Ed25519Signature2026",
+            "created": "2026-05-18T00:00:00.000Z",
+            "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+            "value": "z4oey5q2M3XKaxup3UnZoKZxbe6qKthmcEoBdMEJwnBTRK+4sVP0V2X0VZjwz2GJ2m8kE5kFrDpFD3PrFXkQ=="
+          }
+        },
+        "disclosedClaims": [],
+        "challenge": "550e8400-e29b-41d4-a716-446655440003",
+        "audience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "notAfter": "2026-05-18T00:05:00.000Z"
+      },
+      "verifierContext": {
+        "expectedAudience": "did:key:z6MkiTBz1ymuepAQ4HEHYSF1H8quG5GLVVQR3djdX3mDooWp",
+        "issuedChallenge": "550e8400-e29b-41d4-a716-446655440003",
+        "challengeIssuedAt": "2026-05-18T00:04:50.000Z",
+        "verifyStep": "pre-pipeline",
+        "rejectReason": "token.specVersion '9.9.9' not in SUPPORTED_SPEC_VERSIONS ['0.1.0', '0.2.0', '0.3.0']"
+      }
+    }
+  ]
+}

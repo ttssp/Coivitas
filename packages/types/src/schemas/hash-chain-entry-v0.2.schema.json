@@ -1,0 +1,90 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://coivitas.ai/schemas/hash-chain-entry-v0.2.json",
+ "title": "HashChainEntry",
+ "description": "Hash Chain Canonicalize v0.2 entry schema (8 required fields, additionalProperties: false)",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "entryId",
+  "canonicalPayload",
+  "canonicalPayloadHash",
+  "previousHash",
+  "chainPosition",
+  "chainIdentity",
+  "timestamp",
+  "hccVersion"
+ ],
+ "properties": {
+  "entryId": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+   "description": "UUID v4 entry identifier"
+  },
+  "canonicalPayload": {
+   "type": "string",
+   "minLength": 2,
+   "description": "RFC 8785 JCS canonicalized JSON string; minimum length 2 = '{}' empty object"
+  },
+  "canonicalPayloadHash": {
+   "type": "string",
+   "pattern": "^[a-f0-9]{64}$",
+   "description": "SHA-256 hex digest of (canonicalPayloadBytes || chainIdentityJcsBytes) UTF-8 bytes (v0.2 upgraded preimage)"
+  },
+  "previousHash": {
+   "type": "string",
+   "pattern": "^[a-f0-9]{64}$",
+   "description": "SHA-256 hex digest of previous entry; genesis = 64 zeros"
+  },
+  "chainPosition": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "Non-negative monotonically increasing position in chain"
+  },
+  "chainIdentity": {
+   "$ref": "#/$defs/ChainIdentity",
+   "description": "Mandatory field in v0.2; the three chainIdentity fields are JCS-canonicalized and then fed into the hash preimage"
+  },
+  "timestamp": {
+   "type": "string",
+   "format": "date-time",
+   "description": "ISO 8601 UTC entry write time"
+  },
+  "hccVersion": {
+   "type": "string",
+   "const": "2.0.0",
+   "description": "HCC protocol version; the only valid value in v0.2 is '2.0.0'; schema breaking change vs v0.1 '1.0.0'"
+  }
+ },
+ "$defs": {
+  "ChainIdentity": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "chainNamespace"
+   ],
+   "properties": {
+    "chainNamespace": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Non-empty chain namespace; e.g. 'atp' / 'policy' / 'governance'"
+    },
+    "tenantId": {
+     "type": "string",
+     "format": "uuid",
+     "description": "Tenant UUID; atp callers required"
+    },
+    "auditClass": {
+     "type": "string",
+     "enum": [
+      "L1",
+      "L2",
+      "L3"
+     ],
+     "description": "Audit class; atp callers required"
+    }
+   }
+  }
+ }
+}

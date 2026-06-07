@@ -1,0 +1,8 @@
+{
+ "_comment": "hcc v0.2 Case 2: ChainIdentity namespace-only (no optional fields)",
+ "chainIdentity": {
+ "chainNamespace": "global:audit"
+ },
+ "expectedJcsBytes_utf8": "{\"chainNamespace\":\"global:audit\"}",
+ "_note": "optional fields tenantId/auditClass absent → not included in JCS (RFC 8785)"
+}

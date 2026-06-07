@@ -1,0 +1,61 @@
+{
+  "name": "@coivitas/sdk",
+  "version": "0.1.0-alpha.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "coivitas": "./dist/cli/index.js"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./key-custody": {
+      "types": "./dist/key-custody/index.d.ts",
+      "default": "./dist/key-custody/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "@aws-sdk/client-kms": "^3.0.0"
+  },
+  "peerDependenciesMeta": {
+    "@aws-sdk/client-kms": {
+      "optional": true
+    }
+  },
+  "dependencies": {
+    "@coivitas/communication": "workspace:*",
+    "@coivitas/crypto": "workspace:*",
+    "@coivitas/identity": "workspace:*",
+    "@coivitas/policy": "workspace:*",
+    "@coivitas/shared": "workspace:*",
+    "@coivitas/types": "workspace:*",
+    "@node-saml/node-saml": "^5.1.0",
+    "@peculiar/x509": "^2.0.0",
+    "commander": "^14.0.3",
+    "express": "^5.1.0",
+    "jose": "5.10.0",
+    "openid-client": "6.8.4",
+    "reflect-metadata": "^0.2.2"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "cli": "node ./dist/cli/index.js",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "test": "vitest run --config vitest.config.ts",
+    "sdk-python:fixtures:regenerate": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-cross-lang-fixtures.ts --regenerate",
+    "sdk-python:fixtures:check": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-cross-lang-fixtures.ts --check",
+    "cross-lang:ts-fixtures:regenerate": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-cross-lang-fixtures.ts --regenerate",
+    "cross-lang:ts-fixtures:check": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-cross-lang-fixtures.ts --check",
+    "cross-lang:python-fixtures:check": "python3 -m pytest ../../tests/python/interop/test_cross_lang_fixture_consumer.py -v --tb=short",
+    "hcc:fixtures:regenerate": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-hcc-cross-lang-fixtures.ts --regenerate",
+    "hcc:fixtures:check": "tsx --tsconfig ../../tsconfig.base.json scripts/generate-hcc-cross-lang-fixtures.ts --check"
+  }
+}

@@ -1,0 +1,13 @@
+{
+    "files": [],
+    "references": [
+        { "path": "./packages/types" },
+        { "path": "./packages/crypto" },
+        { "path": "./packages/identity" },
+        { "path": "./packages/policy" },
+        { "path": "./packages/communication" },
+        { "path": "./packages/sdk" },
+        { "path": "./packages/shared" },
+        { "path": "./packages/managed-service-runtime" }
+    ]
+}

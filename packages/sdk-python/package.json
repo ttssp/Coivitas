@@ -1,0 +1,12 @@
+{
+ "$schema": "https://json.schemastore.org/package.json",
+ "name": "@coivitas/sdk-python-marker",
+ "version": "0.0.0",
+ "private": true,
+ "description": "pnpm workspace marker for the Python SDK. Real package metadata lives in pyproject.toml (PEP 621); this file is not published to npm and only hosts the npm-side entry points for cross-language fixture scripts.",
+ "license": "Apache-2.0",
+ "scripts": {
+ "hcc:reverse-fixtures:regenerate": "python3 scripts/generate-hcc-reverse-fixtures.py --regenerate",
+ "hcc:reverse-fixtures:check": "python3 scripts/generate-hcc-reverse-fixtures.py --check"
+ }
+}

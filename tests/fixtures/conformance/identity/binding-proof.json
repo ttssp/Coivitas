@@ -1,0 +1,52 @@
+{
+ "$schema": "conformance/identity/binding-proof",
+ "description": "BindingProof schema and verification fixtures",
+ "valid": [
+ {
+ "id": "binding-rfc-vector",
+ "principalPublicKey": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "data": {
+ "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+ "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+ "issuedAt": "2026-04-03T08:00:00.000Z",
+ "expiresAt": null,
+ "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "binding-tampered-signature",
+ "data": {
+ "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+ "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+ "issuedAt": "2026-04-03T08:00:00.000Z",
+ "expiresAt": null,
+ "signature": "0cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+ }
+ },
+ {
+ "id": "binding-invalid-did",
+ "data": {
+ "principalDid": "not-a-did",
+ "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+ "issuedAt": "2026-04-03T08:00:00.000Z",
+ "expiresAt": null,
+ "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "binding-expired",
+ "valid": false,
+ "data": {
+ "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+ "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+ "issuedAt": "2026-04-03T08:00:00.000Z",
+ "expiresAt": "2026-04-03T08:00:00.000Z",
+ "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+ }
+ }
+ ]
+}

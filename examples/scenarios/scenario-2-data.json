@@ -1,0 +1,137 @@
+{
+ "scenarioId": "scenario-2",
+ "title": "Content publishing",
+ "phase": "P0",
+ "description": "Publishing flow that validates allowlist scopes and content integrity.",
+ "principals": [
+ {
+ "did": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "publicKey": "5555555555555555555555555555555555555555555555555555555555555555",
+ "displayName": "Carol Wu",
+ "createdAt": "2026-04-02T10:00:00.000Z"
+ }
+ ],
+ "agentDocuments": [
+ {
+ "id": "did:agent:3333333333333333333333333333333333333333",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "publicKey": "6666666666666666666666666666666666666666666666666666666666666666",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "agentDid": "did:agent:3333333333333333333333333333333333333333",
+ "issuedAt": "2026-04-02T10:05:00.000Z",
+ "expiresAt": null,
+ "signature": "56565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656565656"
+ },
+ "capabilities": ["PUBLISH", "RECORD"],
+ "serviceEndpoints": [
+ {
+ "id": "publishing",
+ "type": "NegotiationEndpoint",
+ "url": "https://publisher-agent.example.com/publish"
+ }
+ ],
+ "createdAt": "2026-04-02T10:05:00.000Z",
+ "updatedAt": "2026-04-02T10:05:00.000Z"
+ }
+ ],
+ "capabilityTokens": [
+ {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-446655440301",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "principalDid": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "issuedTo": "did:agent:3333333333333333333333333333333333333333",
+ "issuedAt": "2026-04-02T10:06:00.000Z",
+ "expiresAt": "2026-04-03T10:06:00.000Z",
+ "capabilities": [
+ {
+ "action": "PUBLISH",
+ "scope": {
+ "type": "allowlist",
+ "field": "channel_id",
+ "values": ["official-blog", "internal-wiki"]
+ }
+ },
+ {
+ "action": "PUBLISH",
+ "scope": {
+ "type": "allowlist",
+ "field": "content_type",
+ "values": ["article", "document"]
+ }
+ },
+ {
+ "action": "PUBLISH",
+ "scope": {
+ "type": "allowlist",
+ "field": "visibility",
+ "values": ["public", "internal"]
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-04-02T10:06:00.000Z",
+ "verificationMethod": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2#key-1",
+ "value": "78787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878787878"
+ }
+ }
+ ],
+ "envelopes": [
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440301",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:3333333333333333333333333333333333333333",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440399",
+ "sequenceNumber": 1
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "PUBLISH",
+ "params": {
+ "content_id": "550e8400-e29b-41d4-a716-446655440302",
+ "content_type": "article",
+ "channel_id": "official-blog",
+ "title": "Q1 Product Release Summary",
+ "content_hash": "333333333333333333333333333333333333333333333333333333333333abcd",
+ "visibility": "public"
+ },
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440301"
+ },
+ "signature": "90909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090909090",
+ "timestamp": "2026-04-02T10:10:00.000Z"
+ }
+ ],
+ "actionRecords": [
+ {
+ "id": "880e8400-e29b-41d4-a716-446655440301",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:3333333333333333333333333333333333333333",
+ "principalDid": "did:key:z6Mkf8pN2aD4sL7qW1xC5vB9mR3tY6uH0jK2nP4dS8eT1gV2",
+ "action": "PUBLISH",
+ "parametersSummary": {
+ "channelId": "official-blog"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440301"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "message": "Published article to official-blog"
+ },
+ "timestamp": "2026-04-02T10:10:30.000Z",
+ "prevHash": null,
+ "ledgerSignature": "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab"
+ }
+ ],
+ "expectedOutcomes": {
+ "publishStatus": "published",
+ "rejectedChannelId": "external-twitter",
+ "scopeFailureCode": "SCOPE_EXCEEDED"
+ }
+}

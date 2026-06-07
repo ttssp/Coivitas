@@ -1,0 +1,29 @@
+{
+ "date": "2026-04-03",
+ "implementationA": "@coivitas (TypeScript, v0.1.0)",
+ "implementationB": "node:crypto/OpenSSL Ed25519 verifier",
+ "suites": {
+ "conformance_valid": {
+ "total": 12,
+ "passed": 12,
+ "failed": 0
+ },
+ "conformance_invalid": {
+ "total": 15,
+ "passed": 15,
+ "failed": 0
+ },
+ "conformance_boundary": {
+ "total": 9,
+ "passed": 9,
+ "failed": 0
+ },
+ "ed25519_cross_library": {
+ "total": 2,
+ "passed": 2,
+ "failed": 0
+ }
+ },
+ "conclusion": "PASS",
+ "notes": "This report covers wire-format fixtures plus an independent Ed25519 verifier path. Full two-stack handshake interoperability still requires an external implementation."
+}

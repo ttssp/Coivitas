@@ -1,0 +1,487 @@
+{
+    "version": "v0.2",
+    "generated_by": "packages/sdk/scripts/generate-hcc-cross-lang-fixtures.ts",
+    "ts_canonicalize_lib": "canonicalize@2.1.0",
+    "ts_hash_lib": "@noble/hashes/sha256 (TS HCC v0.2)",
+    "hcc_version": "2.0.0",
+    "preimage_order": "canonicalPayloadBytes || chainIdentityJcsBytes",
+    "vectors": [
+        {
+            "id": "V1-genesis-only",
+            "description": "V1: single-entry chain (genesis only); chainIdentity = atp all three fields; payload minimal ASCII",
+            "chainIdentity": {
+                "chainNamespace": "atp",
+                "tenantId": "tenant-v1-stable",
+                "auditClass": "L1"
+            },
+            "entries": [
+                {
+                    "entryId": "c2e16066-871d-4a14-86a7-0c3cbc817149",
+                    "canonicalPayload": "{\"actor\":\"did:agent:v1-actor\",\"eventType\":\"genesis\",\"nonce\":\"nonce-v1-0\"}",
+                    "canonicalPayloadHash": "98d56d42af05920110fb09c117d32bd71dd03af360edc69ba4ce779e906901a2",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "atp",
+                        "tenantId": "tenant-v1-stable",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226163746f72223a226469643a6167656e743a76312d6163746f72222c226576656e7454797065223a2267656e65736973222c226e6f6e6365223a226e6f6e63652d76312d30227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a22617470222c2274656e616e744964223a2274656e616e742d76312d737461626c65227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "98d56d42af05920110fb09c117d32bd71dd03af360edc69ba4ce779e906901a2"
+            ],
+            "expected_final_hash": "98d56d42af05920110fb09c117d32bd71dd03af360edc69ba4ce779e906901a2",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "V2-three-entry-chain",
+            "description": "V2: 3-entry chain; same chainIdentity (policy/tenant-002); payload simple incrementing nonce; recursive hash linking",
+            "chainIdentity": {
+                "chainNamespace": "policy",
+                "tenantId": "tenant-002",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "191c1fad-e5d6-4cbc-9e0a-9aeca0baca23",
+                    "canonicalPayload": "{\"actor\":\"did:agent:v2-a\",\"event\":\"init\",\"step\":0}",
+                    "canonicalPayloadHash": "949a585b8f0b1355ff371e327c22152a39b7a743c779e1ee35d54f8553c875b3",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "tenant-002",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "5189cd82-7799-4381-b40e-43eb98490eb3",
+                    "canonicalPayload": "{\"actor\":\"did:agent:v2-a\",\"event\":\"update\",\"prevRef\":\"step-0\",\"step\":1}",
+                    "canonicalPayloadHash": "ab514a4ec2c17cdb5042bf4c001f4a341867e0a4ede4a2ec03db4e6443e3b7a9",
+                    "previousHash": "949a585b8f0b1355ff371e327c22152a39b7a743c779e1ee35d54f8553c875b3",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "tenant-002",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "4c98e1ae-c077-4e86-bc52-37f85184ef92",
+                    "canonicalPayload": "{\"actor\":\"did:agent:v2-a\",\"event\":\"finalize\",\"result\":\"ok\",\"step\":2}",
+                    "canonicalPayloadHash": "88cd2726e4d778d6dd04ce815f5867ab20d2b6332e43a730bf9ea8ff1940f461",
+                    "previousHash": "ab514a4ec2c17cdb5042bf4c001f4a341867e0a4ede4a2ec03db4e6443e3b7a9",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "policy",
+                        "tenantId": "tenant-002",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226163746f72223a226469643a6167656e743a76322d61222c226576656e74223a22696e6974222c2273746570223a307d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2274656e616e742d303032227d",
+                "7b226163746f72223a226469643a6167656e743a76322d61222c226576656e74223a22757064617465222c2270726576526566223a22737465702d30222c2273746570223a317d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2274656e616e742d303032227d",
+                "7b226163746f72223a226469643a6167656e743a76322d61222c226576656e74223a2266696e616c697a65222c22726573756c74223a226f6b222c2273746570223a327d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a22706f6c696379222c2274656e616e744964223a2274656e616e742d303032227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "949a585b8f0b1355ff371e327c22152a39b7a743c779e1ee35d54f8553c875b3",
+                "ab514a4ec2c17cdb5042bf4c001f4a341867e0a4ede4a2ec03db4e6443e3b7a9",
+                "88cd2726e4d778d6dd04ce815f5867ab20d2b6332e43a730bf9ea8ff1940f461"
+            ],
+            "expected_final_hash": "88cd2726e4d778d6dd04ce815f5867ab20d2b6332e43a730bf9ea8ff1940f461",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "V3-five-entry-chain",
+            "description": "V3: 5-entry chain; same chainIdentity (governance/tenant-003); multiple payload shapes (incl. nested + array)",
+            "chainIdentity": {
+                "chainNamespace": "governance",
+                "tenantId": "tenant-003",
+                "auditClass": "L3"
+            },
+            "entries": [
+                {
+                    "entryId": "23ed5811-b6ec-4ad7-8c66-852350a5895a",
+                    "canonicalPayload": "{\"id\":\"prop-001\",\"kind\":\"proposal\",\"votes\":[]}",
+                    "canonicalPayloadHash": "ea5332bb6ae0aedf997d1c47f072b5ba940e2c4b05e7587b08abbc836abd6a31",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "tenant-003",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "18c68c68-043d-402f-b1ee-bc40515f7fd7",
+                    "canonicalPayload": "{\"kind\":\"vote\",\"propId\":\"prop-001\",\"voter\":\"did:agent:v\",\"weight\":1}",
+                    "canonicalPayloadHash": "cd24c0b796472d01709d2d3c64c28887fdf576f86d2e086c069b8d52472b2275",
+                    "previousHash": "ea5332bb6ae0aedf997d1c47f072b5ba940e2c4b05e7587b08abbc836abd6a31",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "tenant-003",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "7a5d1b61-70b9-4366-85a7-28ff9351e941",
+                    "canonicalPayload": "{\"kind\":\"vote\",\"propId\":\"prop-001\",\"voter\":\"did:agent:w\",\"weight\":2}",
+                    "canonicalPayloadHash": "6ef9dc9315ed78ee77009cc91a26fb612467b685e2c3d8fb407a227e5de124eb",
+                    "previousHash": "cd24c0b796472d01709d2d3c64c28887fdf576f86d2e086c069b8d52472b2275",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "tenant-003",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "50a9ccb9-474b-4b43-a985-4dd17a9e29d2",
+                    "canonicalPayload": "{\"kind\":\"quorum-reached\",\"nested\":{\"threshold\":3,\"total\":3},\"propId\":\"prop-001\"}",
+                    "canonicalPayloadHash": "13addde6fb4f1115c7798ffb4e3169e82ba388979b3b18a18a888588e879651f",
+                    "previousHash": "6ef9dc9315ed78ee77009cc91a26fb612467b685e2c3d8fb407a227e5de124eb",
+                    "chainPosition": 3,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "tenant-003",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-24T00:00:03.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "7a2db8ac-23b9-4db7-b2ee-553d5668a72b",
+                    "canonicalPayload": "{\"actions\":[\"a1\",\"a2\"],\"kind\":\"execute\",\"propId\":\"prop-001\",\"timestamp_ref\":\"2026-05-24\"}",
+                    "canonicalPayloadHash": "cb78eb5a12fc2bb6c08ed31a57b1ac272ebad46d2b6c66ab1924c1544ef42bdf",
+                    "previousHash": "13addde6fb4f1115c7798ffb4e3169e82ba388979b3b18a18a888588e879651f",
+                    "chainPosition": 4,
+                    "chainIdentity": {
+                        "chainNamespace": "governance",
+                        "tenantId": "tenant-003",
+                        "auditClass": "L3"
+                    },
+                    "timestamp": "2026-05-24T00:00:04.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226964223a2270726f702d303031222c226b696e64223a2270726f706f73616c222c22766f746573223a5b5d7d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2274656e616e742d303033227d",
+                "7b226b696e64223a22766f7465222c2270726f704964223a2270726f702d303031222c22766f746572223a226469643a6167656e743a76222c22776569676874223a317d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2274656e616e742d303033227d",
+                "7b226b696e64223a22766f7465222c2270726f704964223a2270726f702d303031222c22766f746572223a226469643a6167656e743a77222c22776569676874223a327d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2274656e616e742d303033227d",
+                "7b226b696e64223a2271756f72756d2d72656163686564222c226e6573746564223a7b227468726573686f6c64223a332c22746f74616c223a337d2c2270726f704964223a2270726f702d303031227d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2274656e616e742d303033227d",
+                "7b22616374696f6e73223a5b226131222c226132225d2c226b696e64223a2265786563757465222c2270726f704964223a2270726f702d303031222c2274696d657374616d705f726566223a22323032362d30352d3234227d7b226175646974436c617373223a224c33222c22636861696e4e616d657370616365223a22676f7665726e616e6365222c2274656e616e744964223a2274656e616e742d303033227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "ea5332bb6ae0aedf997d1c47f072b5ba940e2c4b05e7587b08abbc836abd6a31",
+                "cd24c0b796472d01709d2d3c64c28887fdf576f86d2e086c069b8d52472b2275",
+                "6ef9dc9315ed78ee77009cc91a26fb612467b685e2c3d8fb407a227e5de124eb",
+                "13addde6fb4f1115c7798ffb4e3169e82ba388979b3b18a18a888588e879651f",
+                "cb78eb5a12fc2bb6c08ed31a57b1ac272ebad46d2b6c66ab1924c1544ef42bdf"
+            ],
+            "expected_final_hash": "cb78eb5a12fc2bb6c08ed31a57b1ac272ebad46d2b6c66ab1924c1544ef42bdf",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "V4-unicode-emoji-payload",
+            "description": "V4: 3-entry chain; canonicalPayload with mixed Unicode CJK + emoji (validates JCS UTF-8 + field code-point ordering)",
+            "chainIdentity": {
+                "chainNamespace": "audit-cn",
+                "tenantId": "tenant-004",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "edcded46-b8d4-4f03-b020-ec69903b4b15",
+                    "canonicalPayload": "{\"actor\":\"did:agent:中文\",\"emoji\":\"🔒\",\"描述\":\"初始事件\"}",
+                    "canonicalPayloadHash": "037fa11330900e96e5669f3a73deceecb074ccfc060270dc15165508fde0e437",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-cn",
+                        "tenantId": "tenant-004",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "a0930764-f832-4534-949d-a43f386a078b",
+                    "canonicalPayload": "{\"actor\":\"did:agent:中文\",\"tags\":[\"标签一\",\"标签二\",\"🚀\"],\"描述\":\"更新事件\"}",
+                    "canonicalPayloadHash": "f3fe984acb444f4fde07f4c020cde20e97fd57d7604b76fc0b1000a9a05e7258",
+                    "previousHash": "037fa11330900e96e5669f3a73deceecb074ccfc060270dc15165508fde0e437",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-cn",
+                        "tenantId": "tenant-004",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "a828e941-2868-4808-aaa7-8d7caf11a3dc",
+                    "canonicalPayload": "{\"actor\":\"did:agent:中文\",\"summary\":\"混合 ASCII + CJK + emoji 🎉\",\"描述\":\"完成\"}",
+                    "canonicalPayloadHash": "c90c9c3a5e5de0996554206eaef9755f18d29aabef6b6063d7e391ce9cf56227",
+                    "previousHash": "f3fe984acb444f4fde07f4c020cde20e97fd57d7604b76fc0b1000a9a05e7258",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-cn",
+                        "tenantId": "tenant-004",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226163746f72223a226469643a6167656e743ae4b8ade69687222c22656d6f6a69223a22f09f9492222c22e68f8fe8bfb0223a22e5889de5a78be4ba8be4bbb6227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d636e222c2274656e616e744964223a2274656e616e742d303034227d",
+                "7b226163746f72223a226469643a6167656e743ae4b8ade69687222c2274616773223a5b22e6a087e7adbee4b880222c22e6a087e7adbee4ba8c222c22f09f9a80225d2c22e68f8fe8bfb0223a22e69bb4e696b0e4ba8be4bbb6227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d636e222c2274656e616e744964223a2274656e616e742d303034227d",
+                "7b226163746f72223a226469643a6167656e743ae4b8ade69687222c2273756d6d617279223a22e6b7b7e59088204153434949202b20434a4b202b20656d6f6a6920f09f8e89222c22e68f8fe8bfb0223a22e5ae8ce68890227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d636e222c2274656e616e744964223a2274656e616e742d303034227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "037fa11330900e96e5669f3a73deceecb074ccfc060270dc15165508fde0e437",
+                "f3fe984acb444f4fde07f4c020cde20e97fd57d7604b76fc0b1000a9a05e7258",
+                "c90c9c3a5e5de0996554206eaef9755f18d29aabef6b6063d7e391ce9cf56227"
+            ],
+            "expected_final_hash": "c90c9c3a5e5de0996554206eaef9755f18d29aabef6b6063d7e391ce9cf56227",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "V5-multi-field-identity",
+            "description": "V5: 4-entry chain; chainIdentity multi-field combination (atp/tenant-005/L1); payload with number + null + bool",
+            "chainIdentity": {
+                "chainNamespace": "atp",
+                "tenantId": "tenant-005",
+                "auditClass": "L1"
+            },
+            "entries": [
+                {
+                    "entryId": "c38df0ab-c8f9-4819-901e-353ea397e3a2",
+                    "canonicalPayload": "{\"active\":true,\"count\":0,\"status\":\"pending\"}",
+                    "canonicalPayloadHash": "1e64605860ccd26c8044602ac680cc8bd3117f1bcf9d43592d1bec9bd5c2c88b",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "atp",
+                        "tenantId": "tenant-005",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "76c4dd6c-ccd3-47aa-b59b-6d4fbcbc1250",
+                    "canonicalPayload": "{\"active\":true,\"count\":10,\"last_actor\":null,\"status\":\"processing\"}",
+                    "canonicalPayloadHash": "2d92f1671bded5f91391eec7058caa4b90a09d523e7f3bb50f1f070793a79afd",
+                    "previousHash": "1e64605860ccd26c8044602ac680cc8bd3117f1bcf9d43592d1bec9bd5c2c88b",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "atp",
+                        "tenantId": "tenant-005",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "9497e451-4f9d-4e40-ab89-e6e49f505c13",
+                    "canonicalPayload": "{\"active\":true,\"count\":25,\"last_actor\":\"did:agent:reviewer\",\"status\":\"review\"}",
+                    "canonicalPayloadHash": "fd37ffd11b549107a4435d858038ccd26fac4300f22422900fb6d86f4216fca0",
+                    "previousHash": "2d92f1671bded5f91391eec7058caa4b90a09d523e7f3bb50f1f070793a79afd",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "atp",
+                        "tenantId": "tenant-005",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "277abccc-31a7-486c-909c-1a7aaae77d53",
+                    "canonicalPayload": "{\"active\":false,\"count\":100,\"last_actor\":\"did:agent:finalizer\",\"status\":\"done\"}",
+                    "canonicalPayloadHash": "150d5a8475111b8730363506c3b4a4797b697dd4ad3d49d1b16686f195c621f2",
+                    "previousHash": "fd37ffd11b549107a4435d858038ccd26fac4300f22422900fb6d86f4216fca0",
+                    "chainPosition": 3,
+                    "chainIdentity": {
+                        "chainNamespace": "atp",
+                        "tenantId": "tenant-005",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:03.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b22616374697665223a747275652c22636f756e74223a302c22737461747573223a2270656e64696e67227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a22617470222c2274656e616e744964223a2274656e616e742d303035227d",
+                "7b22616374697665223a747275652c22636f756e74223a31302c226c6173745f6163746f72223a6e756c6c2c22737461747573223a2270726f63657373696e67227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a22617470222c2274656e616e744964223a2274656e616e742d303035227d",
+                "7b22616374697665223a747275652c22636f756e74223a32352c226c6173745f6163746f72223a226469643a6167656e743a7265766965776572222c22737461747573223a22726576696577227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a22617470222c2274656e616e744964223a2274656e616e742d303035227d",
+                "7b22616374697665223a66616c73652c22636f756e74223a3130302c226c6173745f6163746f72223a226469643a6167656e743a66696e616c697a6572222c22737461747573223a22646f6e65227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a22617470222c2274656e616e744964223a2274656e616e742d303035227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "1e64605860ccd26c8044602ac680cc8bd3117f1bcf9d43592d1bec9bd5c2c88b",
+                "2d92f1671bded5f91391eec7058caa4b90a09d523e7f3bb50f1f070793a79afd",
+                "fd37ffd11b549107a4435d858038ccd26fac4300f22422900fb6d86f4216fca0",
+                "150d5a8475111b8730363506c3b4a4797b697dd4ad3d49d1b16686f195c621f2"
+            ],
+            "expected_final_hash": "150d5a8475111b8730363506c3b4a4797b697dd4ad3d49d1b16686f195c621f2",
+            "expected_verify_outcome": "PASS"
+        },
+        {
+            "id": "V6-NEGATIVE-mixed-identity",
+            "description": "V6 NEGATIVE: 3-entry chain; entry[1] chainIdentity differs from entry[0]/entry[2] (identity-rebinding); Python verify_hash_chain must reject",
+            "chainIdentity": {
+                "chainNamespace": "audit-A",
+                "tenantId": "tenant-A",
+                "auditClass": "L1"
+            },
+            "entries": [
+                {
+                    "entryId": "bead1cb5-7e7b-467e-b997-59fbdc88eae9",
+                    "canonicalPayload": "{\"ev\":\"a-0\"}",
+                    "canonicalPayloadHash": "5950f8f51c27f8409c4f58d452599368a98f7a42d8a3455db04240614de77b7d",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-A",
+                        "tenantId": "tenant-A",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "a6aee829-aeb6-40f8-9372-393e071219ef",
+                    "canonicalPayload": "{\"ev\":\"a-1\"}",
+                    "canonicalPayloadHash": "336f455a8a171855776fa971ee09fd31d8ef1598b4185ba449355e42b4681132",
+                    "previousHash": "5950f8f51c27f8409c4f58d452599368a98f7a42d8a3455db04240614de77b7d",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-B",
+                        "tenantId": "tenant-B",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "ce4f3ec8-4aed-48f9-bee2-ddae3dd07389",
+                    "canonicalPayload": "{\"ev\":\"a-2\"}",
+                    "canonicalPayloadHash": "56a6343dfc2809702a117ccf2375d40e549d2c2409f129248b6eecd1c1ac2374",
+                    "previousHash": "336f455a8a171855776fa971ee09fd31d8ef1598b4185ba449355e42b4681132",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-A",
+                        "tenantId": "tenant-A",
+                        "auditClass": "L1"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226576223a22612d30227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d41222c2274656e616e744964223a2274656e616e742d41227d",
+                "7b226576223a22612d31227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d42222c2274656e616e744964223a2274656e616e742d42227d",
+                "7b226576223a22612d32227d7b226175646974436c617373223a224c31222c22636861696e4e616d657370616365223a2261756469742d41222c2274656e616e744964223a2274656e616e742d41227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "5950f8f51c27f8409c4f58d452599368a98f7a42d8a3455db04240614de77b7d",
+                "336f455a8a171855776fa971ee09fd31d8ef1598b4185ba449355e42b4681132",
+                "56a6343dfc2809702a117ccf2375d40e549d2c2409f129248b6eecd1c1ac2374"
+            ],
+            "expected_final_hash": "56a6343dfc2809702a117ccf2375d40e549d2c2409f129248b6eecd1c1ac2374",
+            "expected_verify_outcome": "REJECT",
+            "expected_reject_error_substring": "mixed-identity",
+            "expected_reject_error_code": "HCC_CHAIN_IDENTITY_TAMPERED",
+            "tamper_description": "entry[1].chainIdentity replaced with a different tenant; previousHash linkage preserved (fabricated valid appearance); Python verify must reject via chain-level identity consistency check"
+        },
+        {
+            "id": "V7-NEGATIVE-tampered-hash",
+            "description": "V7 NEGATIVE: 3-entry chain; last entry canonicalPayloadHash char 0 changed to \"f\" (or incremented); Python verify must reject on hash mismatch",
+            "chainIdentity": {
+                "chainNamespace": "audit-tamper",
+                "tenantId": "tenant-007",
+                "auditClass": "L2"
+            },
+            "entries": [
+                {
+                    "entryId": "13838f2a-95be-4002-bb50-9f9ff0789f9b",
+                    "canonicalPayload": "{\"ev\":\"t-0\"}",
+                    "canonicalPayloadHash": "9fa137e3bc52612a9936ce5fe5557094eb29e25d5ba1b8b002a48c3703fd17e2",
+                    "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+                    "chainPosition": 0,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-tamper",
+                        "tenantId": "tenant-007",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:00.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "998979dc-1ac8-4e58-baca-f8e6b67a89fd",
+                    "canonicalPayload": "{\"ev\":\"t-1\"}",
+                    "canonicalPayloadHash": "830280fc9d5777c25a25d4c6c44e5a94efb858132b826bd6ea580b3c6dd872b5",
+                    "previousHash": "9fa137e3bc52612a9936ce5fe5557094eb29e25d5ba1b8b002a48c3703fd17e2",
+                    "chainPosition": 1,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-tamper",
+                        "tenantId": "tenant-007",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:01.000Z",
+                    "hccVersion": "2.0.0"
+                },
+                {
+                    "entryId": "219b08c1-0089-4096-a452-e07230196725",
+                    "canonicalPayload": "{\"ev\":\"t-2\"}",
+                    "canonicalPayloadHash": "25c42e9c73e35fd23b2b2e356b5d6e6332159eab3c84f6160ca51e88c4c0d4ed",
+                    "previousHash": "830280fc9d5777c25a25d4c6c44e5a94efb858132b826bd6ea580b3c6dd872b5",
+                    "chainPosition": 2,
+                    "chainIdentity": {
+                        "chainNamespace": "audit-tamper",
+                        "tenantId": "tenant-007",
+                        "auditClass": "L2"
+                    },
+                    "timestamp": "2026-05-24T00:00:02.000Z",
+                    "hccVersion": "2.0.0"
+                }
+            ],
+            "expected_concat_preimage_hex_per_position": [
+                "7b226576223a22742d30227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d74616d706572222c2274656e616e744964223a2274656e616e742d303037227d",
+                "7b226576223a22742d31227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d74616d706572222c2274656e616e744964223a2274656e616e742d303037227d",
+                "7b226576223a22742d32227d7b226175646974436c617373223a224c32222c22636861696e4e616d657370616365223a2261756469742d74616d706572222c2274656e616e744964223a2274656e616e742d303037227d"
+            ],
+            "expected_canonical_payload_hash_per_position": [
+                "9fa137e3bc52612a9936ce5fe5557094eb29e25d5ba1b8b002a48c3703fd17e2",
+                "830280fc9d5777c25a25d4c6c44e5a94efb858132b826bd6ea580b3c6dd872b5",
+                "d5c42e9c73e35fd23b2b2e356b5d6e6332159eab3c84f6160ca51e88c4c0d4ed"
+            ],
+            "expected_final_hash": "d5c42e9c73e35fd23b2b2e356b5d6e6332159eab3c84f6160ca51e88c4c0d4ed",
+            "expected_verify_outcome": "REJECT",
+            "expected_reject_error_substring": "mismatch",
+            "expected_reject_error_code": "HCC_HASH_MISMATCH",
+            "tamper_description": "entry[2].canonicalPayloadHash char 0 flip (0→f / a→b); after Python recompute != stored, reject"
+        }
+    ]
+}

@@ -1,0 +1,196 @@
+{
+ "$schema": "conformance/agent-identity-document",
+ "specVersion": "0.1.0",
+ "description": "AgentIdentityDocument wire-format conformance fixtures",
+ "valid": [
+ {
+ "id": "valid-minimal",
+ "description": "Minimal valid document (no optional fields)",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "valid-with-capabilities",
+ "description": "Valid document including capability declarations",
+ "data": {
+ "id": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "publicKey": "b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "agentDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "issuedAt": "2026-01-15T10:30:00.000Z",
+ "expiresAt": null,
+ "signature": "ccddee0011223344556677889900aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ },
+ "capabilities": ["INQUIRY", "QUOTE"],
+ "serviceEndpoints": [
+ {
+ "id": "agent-api",
+ "type": "AgentEndpoint",
+ "url": "https://agent.example.com/api/v1"
+ }
+ ],
+ "createdAt": "2026-01-15T10:30:00.000Z",
+ "updatedAt": "2026-01-20T08:00:00.000Z"
+ }
+ },
+ {
+ "id": "valid-binding-with-expiry",
+ "description": "Binding proof with an expiry time",
+ "data": {
+ "id": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MktFYFHD3GvPPKxbMHbHbgVZ7aCBWfVxvBhBGsVuRNH7Xk",
+ "publicKey": "c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4",
+ "bindingProof": {
+ "principalDid": "did:key:z6MktFYFHD3GvPPKxbMHbHbgVZ7aCBWfVxvBhBGsVuRNH7Xk",
+ "agentDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "issuedAt": "2026-02-01T00:00:00.000Z",
+ "expiresAt": "2027-02-01T00:00:00.000Z",
+ "signature": "ddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbcc"
+ },
+ "createdAt": "2026-02-01T00:00:00.000Z",
+ "updatedAt": "2026-02-01T00:00:00.000Z"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-agent-did-format",
+ "description": "Malformed Agent DID (not a did:agent: prefix)",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-principal-did-format",
+ "description": "Principal DID is not in did:key format",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.1.0",
+ "principalDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-missing-required-field",
+ "description": "Missing the required principalDid field",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.1.0",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-spec-version-mismatch",
+ "description": "specVersion mismatch",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "99.0.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-agent-did-min-length",
+ "description": "did:agent: followed by exactly 40 hexadecimal characters (shortest valid format)",
+ "valid": true,
+ "data": {
+ "id": "did:agent:0000000000000000000000000000000000000001",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "0000000000000000000000000000000000000000000000000000000000000001",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:0000000000000000000000000000000000000001",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "boundary-agent-did-too-short",
+ "description": "did:agent: followed by 39 characters (invalid format)",
+ "valid": false,
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:000000000000000000000000000000000000001",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:000000000000000000000000000000000000001",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ }
+ ]
+}

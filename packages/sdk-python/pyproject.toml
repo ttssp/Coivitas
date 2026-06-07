@@ -1,0 +1,119 @@
+# Python SDK v0.1
+# Config principles: PEP 621 standard + minimal dependencies (no transport / crypto implementation).
+# Python 3.11+; data model = pydantic v2 BaseModel; strict mode.
+# Package layout: src/coivitas/ (namespace package).
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "coivitas"
+version = "0.1.0a1"
+description = "Coivitas Python SDK — 1:1 binding for @coivitas/sdk (TypeScript)"
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.11" # StrEnum / PEP 604 / asyncio TaskGroup
+authors = [
+ { name = "Coivitas Foundation Contributors" },
+]
+keywords = ["coivitas", "did", "envelope", "ed25519", "interop"]
+classifiers = [
+ "Development Status:: 3 - Alpha",
+ "Intended Audience:: Developers",
+ "License:: OSI Approved:: Apache Software License",
+ "Programming Language:: Python:: 3.11",
+ "Programming Language:: Python:: 3.12",
+ "Topic:: Security:: Cryptography",
+ "Typing:: Typed",
+]
+
+# Runtime dependencies (security-relevant dependency list).
+# cryptography: crypto backend, Ed25519 signature verification in interop tests.
+# authlib: the Python-side consumer of the cross-lang transport fixtures,
+#   implementing JWT/JWK/JWA + OAuth2/OIDC (RFC 7519 / RFC 7517 / RFC 7518 / RFC 6749 + OIDC).
+# All three use an exact pin: keeps cross-environment builds reproducible and the supply chain auditable.
+dependencies = [
+ "pydantic>=2.6.0,<3",
+ # cryptography is used as the Ed25519/X25519 backend for FIPS-compliant scenarios.
+ # Why cryptography rather than pynacl:
+ # 1. cryptography has broader wheel coverage on macOS / linux CI and is more stable on restricted networks.
+ # 2. pynacl is still kept as a recommended alternative (users may substitute it).
+ # 3. interop tests only do Ed25519 verify (no X25519 / KDF needed), which cryptography fully covers.
+ "cryptography==46.0.3",
+ # authlib: the Python-side consumer of the cross-lang transport fixtures,
+ # implementing RFC 7519 JWT + RFC 7517 JWK + RFC 7518 JWA + RFC 6749 OAuth2 + OIDC.
+ "authlib==1.7.2",
+ # jcs: a Python binding for RFC 8785 JCS, keeping cross-lang canonicalization consistent.
+ # When the package is absent locally, crypto.py falls back to a stdlib JCS implementation.
+ "jcs==0.2.1",
+ # requests: HTTP client used by the OAuth2 introspection verifier (verify_oauth2_and_derive_did).
+ "requests>=2.31,<3",
+]
+
+[project.optional-dependencies]
+# Development dependencies; required for CI / acceptance.
+# mypy + pyright + black + ruff form the type-checking and formatting baseline.
+dev = [
+ "pytest>=8.0",
+ "pytest-asyncio>=0.23",
+ "pytest-cov>=4.1",
+ "mypy>=1.10",
+ "pyright>=1.1",
+ "black>=24.0",
+ "ruff>=0.5",
+]
+
+[project.urls]
+Homepage = "https://github.com/ttssp/Coivitas"
+Documentation = "https://github.com/ttssp/Coivitas/tree/main/packages/sdk-python"
+
+# ─── setuptools config ───────────────────────────────────────────────
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["coivitas*"]
+
+[tool.setuptools.package-data]
+"coivitas" = ["py.typed"] # PEP 561 marker
+
+# ─── pytest config ───────────────────────────────────────────────────
+# The Python SDK test entry point = the **repo-root** `pytest.ini` + `conftest.py` as the single source of truth.
+# Any [tool.pytest.ini_options] / conftest.py under packages/sdk-python/ has been
+# removed (to avoid pytest rootdir resolution ambiguity).
+# Acceptance command: run `python -m pytest tests/python/...` from the repo root.
+
+# ─── mypy / pyright strict mode (type checkers) ─────────────
+[tool.mypy]
+python_version = "3.11"
+strict = true
+warn_unused_ignores = true
+warn_redundant_casts = true
+disallow_any_generics = true
+mypy_path = "src"
+packages = ["coivitas"]
+
+[tool.pyright]
+include = ["src"]
+pythonVersion = "3.11"
+typeCheckingMode = "strict"
+reportMissingTypeStubs = "warning"
+
+# ─── black auto-formatting ─────────────────────
+# line-length = 100: does not conflict with the mypy/pyright strict style; matches ruff line-length.
+[tool.black]
+line-length = 100
+target-version = ["py311"]
+include = '\.pyi?$'
+
+# ─── ruff lint ────────────────────────────
+# line-length = 100; select picks the strictest baseline (pycodestyle errors/warnings + pyflakes
+# + isort + naming + pyupgrade + bugbear + builtins-shadow + comprehensions +
+# print-detection).
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+src = ["src"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "T20"]
+ignore = []

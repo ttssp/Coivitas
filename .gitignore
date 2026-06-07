@@ -1,0 +1,77 @@
+# --- Local-only files ------------------------------------------------------
+HANDOFF.md
+.cleanup-tools/
+.claude/
+
+# --- Build artifacts -------------------------------------------------------
+node_modules/
+dist/
+build/
+out/
+.turbo/
+.next/
+.cache/
+coverage/
+*.tsbuildinfo
+.eslintcache
+
+# --- Python ----------------------------------------------------------------
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+*.egg-info/
+.eggs/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.venv/
+venv/
+env/
+ENV/
+
+# --- Secrets / env ---------------------------------------------------------
+.env
+.env.local
+.env.*.local
+*.pem
+*.key
+secrets/
+
+# --- Logs ------------------------------------------------------------------
+*.log
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# --- IDE / editor ----------------------------------------------------------
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.history/
+
+# --- OS noise --------------------------------------------------------------
+.DS_Store
+Thumbs.db
+desktop.ini
+ehthumbs.db
+
+# --- Archives --------------------------------------------------------------
+*.tar.gz
+*.tgz
+
+# --- Misc temp -------------------------------------------------------------
+tmp/
+.tmp/
+*.bak
+*.orig
+
+# --- Local-only files ------------------------------------------------------
+/scripts/count-lines.sh
+/release-gate-report.md
+/.release-cleanup-mapping.md

@@ -1,0 +1,186 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "https://coivitas.ai/schemas/identity.schema.json",
+ "$defs": {
+ "did": {
+ "type": "string",
+ "pattern": "^did:[a-z][a-z0-9-]* [a-zA-Z0-9._%-]+(?::[a-zA-Z0-9._%-]+)*$"
+ },
+ "didKey": {
+ "type": "string",
+ "pattern": "^did:key:[a-zA-Z0-9._%-]+(?::[a-zA-Z0-9._%-]+)*$"
+ },
+ "didAgent": {
+ "type": "string",
+ "pattern": "^did:agent:[a-f0-9]{40}$"
+ },
+ "publicKey": {
+ "type": "string",
+ "pattern": "^[0-9a-f]{64}$"
+ },
+ "signature": {
+ "type": "string",
+ "pattern": "^[0-9a-f]{128}$"
+ },
+ "timestamp": {
+ "type": "string",
+ "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+ },
+ "specVersionCompat": {
+ "type": "string",
+ "enum": ["0.1.0", "0.2.0"]
+ },
+ "serviceEndpoint": {
+ "type": "object",
+ "properties": {
+ "id": { "type": "string", "minLength": 1 },
+ "type": { "type": "string", "minLength": 1 },
+ "url": { "type": "string", "pattern": "^https://" }
+ },
+ "required": ["id", "type", "url"],
+ "additionalProperties": false
+ },
+ "principalIdentity": {
+ "type": "object",
+ "properties": {
+ "did": { "$ref": "#/$defs/didKey" },
+ "publicKey": { "$ref": "#/$defs/publicKey" },
+ "displayName": { "type": "string", "maxLength": 100 },
+ "createdAt": { "$ref": "#/$defs/timestamp" }
+ },
+ "required": ["did", "publicKey", "createdAt"],
+ "additionalProperties": false
+ },
+ "bindingProof": {
+ "type": "object",
+ "properties": {
+ "principalDid": { "$ref": "#/$defs/didKey" },
+ "agentDid": { "$ref": "#/$defs/didAgent" },
+ "issuedAt": { "$ref": "#/$defs/timestamp" },
+ "expiresAt": {
+ "anyOf": [
+ { "$ref": "#/$defs/timestamp" },
+ { "type": "null" }
+ ]
+ },
+ "signature": { "$ref": "#/$defs/signature" }
+ },
+ "required": [
+ "principalDid",
+ "agentDid",
+ "issuedAt",
+ "expiresAt",
+ "signature"
+ ],
+ "additionalProperties": false
+ },
+ "rotationProof": {
+ "type": "object",
+ "properties": {
+ "oldPublicKey": { "$ref": "#/$defs/publicKey" },
+ "newPublicKey": { "$ref": "#/$defs/publicKey" },
+ "oldKeySignature": { "$ref": "#/$defs/signature" },
+ "newKeySignature": { "$ref": "#/$defs/signature" },
+ "principalSignature": { "$ref": "#/$defs/signature" },
+ "agentDid": { "$ref": "#/$defs/didAgent" },
+ "rotatedAt": { "$ref": "#/$defs/timestamp" }
+ },
+ "required": [
+ "oldPublicKey",
+ "newPublicKey",
+ "oldKeySignature",
+ "newKeySignature",
+ "principalSignature",
+ "agentDid",
+ "rotatedAt"
+ ],
+ "additionalProperties": false
+ },
+ "agentIdentityDocument": {
+ "type": "object",
+ "properties": {
+ "id": { "$ref": "#/$defs/didAgent" },
+ "specVersion": { "$ref": "#/$defs/specVersionCompat" },
+ "principalDid": { "$ref": "#/$defs/didKey" },
+ "publicKey": { "$ref": "#/$defs/publicKey" },
+ "bindingProof": { "$ref": "#/$defs/bindingProof" },
+ "capabilities": {
+ "type": "array",
+ "items": {
+ "type": "string",
+ "enum": [
+ "INQUIRY",
+ "QUOTE",
+ "CONFIRM",
+ "PUBLISH",
+ "RECORD"
+ ]
+ },
+ "maxItems": 20,
+ "uniqueItems": true
+ },
+ "serviceEndpoints": {
+ "type": "array",
+ "items": { "$ref": "#/$defs/serviceEndpoint" }
+ },
+ "createdAt": { "$ref": "#/$defs/timestamp" },
+ "updatedAt": { "$ref": "#/$defs/timestamp" },
+ "version": { "type": "integer", "minimum": 1 },
+ "previousPublicKey": { "$ref": "#/$defs/publicKey" },
+ "rotationProof": { "$ref": "#/$defs/rotationProof" }
+ },
+ "required": [
+ "id",
+ "specVersion",
+ "principalDid",
+ "publicKey",
+ "bindingProof",
+ "createdAt",
+ "updatedAt"
+ ],
+ "additionalProperties": false
+ },
+ "agentCard": {
+ "type": "object",
+ "properties": {
+ "did": { "$ref": "#/$defs/didAgent" },
+ "specVersion": { "$ref": "#/$defs/specVersionCompat" },
+ "displayName": { "type": "string", "maxLength": 128 },
+ "description": { "type": "string", "maxLength": 1024 },
+ "serviceEndpoints": {
+ "type": "array",
+ "items": { "$ref": "#/$defs/serviceEndpoint" }
+ },
+ "capabilitiesDeclared": {
+ "type": "array",
+ "items": {
+ "type": "string",
+ "enum": [
+ "INQUIRY",
+ "QUOTE",
+ "CONFIRM",
+ "PUBLISH",
+ "RECORD"
+ ]
+ },
+ "uniqueItems": true
+ },
+ "publicKey": { "$ref": "#/$defs/publicKey" },
+ "documentVersion": { "type": "integer", "minimum": 1 },
+ "updatedAt": { "$ref": "#/$defs/timestamp" },
+ "signature": { "$ref": "#/$defs/signature" }
+ },
+ "required": [
+ "did",
+ "specVersion",
+ "serviceEndpoints",
+ "capabilitiesDeclared",
+ "publicKey",
+ "documentVersion",
+ "updatedAt",
+ "signature"
+ ],
+ "additionalProperties": false
+ }
+ }
+}

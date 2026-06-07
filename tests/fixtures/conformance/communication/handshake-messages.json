@@ -1,0 +1,177 @@
+{
+    "$schema": "conformance/communication/handshake-messages",
+    "specVersion": "0.1.0",
+    "description": "Handshake-specific message fixtures",
+    "valid": [
+        {
+            "id": "valid-handshake-init-shape",
+            "description": "Valid HANDSHAKE_INIT payload",
+            "data": {
+                "id": "761f9511-f3ac-42e5-b827-557766550003",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "recipientDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "sessionId": null,
+                    "sequenceNumber": 1
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "challenge": {
+                        "challengeId": "chal-100",
+                        "initiatorDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "nonce": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                        "timestamp": "2026-04-03T00:00:00.000Z",
+                        "expiresAt": "2026-04-03T00:01:00.000Z",
+                        "initiatorCapabilities": ["INQUIRY", "QUOTE"]
+                    }
+                },
+                "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "timestamp": "2026-04-03T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "valid-handshake-ack-accepted",
+            "description": "HANDSHAKE_ACK accepting the handshake",
+            "data": {
+                "id": "862f9511-f3ac-42e5-b827-557766550004",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "sessionId": "9a0f9511-f3ac-42e5-b827-557766550004",
+                    "sequenceNumber": 2
+                },
+                "messageType": "HANDSHAKE_ACK",
+                "body": {
+                    "accepted": true,
+                    "response": {
+                        "challengeId": "chal-100",
+                        "sessionId": "9a0f9511-f3ac-42e5-b827-557766550004",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "responderCapabilities": ["QUOTE"],
+                        "nonce": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                        "timestamp": "2026-04-03T00:00:02.000Z"
+                    }
+                },
+                "signature": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111",
+                "timestamp": "2026-04-03T00:00:02.000Z"
+            }
+        },
+        {
+            "id": "valid-handshake-ack-rejected",
+            "description": "HANDSHAKE_ACK rejecting the handshake",
+            "data": {
+                "id": "973f9511-f3ac-42e5-b827-557766550005",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_ACK",
+                "body": {
+                    "accepted": false,
+                    "reason": "initiator not authorized",
+                    "response": {
+                        "challengeId": "chal-101",
+                        "sessionId": "",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "responderCapabilities": [],
+                        "nonce": "abcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+                        "timestamp": "2026-04-03T00:00:03.000Z"
+                    }
+                },
+                "signature": "22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222",
+                "timestamp": "2026-04-03T00:00:03.000Z"
+            }
+        }
+    ],
+    "invalid": [
+        {
+            "id": "invalid-init-missing-challenge-id",
+            "description": "HANDSHAKE_INIT is missing challengeId",
+            "expectedIssue": "INVALID_HANDSHAKE",
+            "data": {
+                "id": "a84f9511-f3ac-42e5-b827-557766550006",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "recipientDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "challenge": {
+                        "initiatorDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "nonce": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+                        "timestamp": "2026-04-03T00:00:00.000Z",
+                        "expiresAt": "2026-04-03T00:01:00.000Z",
+                        "initiatorCapabilities": ["INQUIRY"]
+                    }
+                },
+                "signature": "33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333",
+                "timestamp": "2026-04-03T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-ack-missing-response-nonce",
+            "description": "HANDSHAKE_ACK is missing response.nonce",
+            "expectedIssue": "INVALID_HANDSHAKE",
+            "data": {
+                "id": "b95f9511-f3ac-42e5-b827-557766550007",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "sessionId": "aa1f9511-f3ac-42e5-b827-557766550007"
+                },
+                "messageType": "HANDSHAKE_ACK",
+                "body": {
+                    "accepted": true,
+                    "response": {
+                        "challengeId": "chal-200",
+                        "sessionId": "aa1f9511-f3ac-42e5-b827-557766550007",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "responderCapabilities": ["QUOTE"],
+                        "timestamp": "2026-04-03T00:00:02.000Z"
+                    }
+                },
+                "signature": "44444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444",
+                "timestamp": "2026-04-03T00:00:02.000Z"
+            }
+        }
+    ],
+    "boundary": [
+        {
+            "id": "boundary-ack-empty-capabilities",
+            "description": "Valid ACK whose negotiated result is an empty capability set",
+            "valid": true,
+            "data": {
+                "id": "ca6f9511-f3ac-42e5-b827-557766550008",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                    "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                    "sessionId": "ba2f9511-f3ac-42e5-b827-557766550008"
+                },
+                "messageType": "HANDSHAKE_ACK",
+                "body": {
+                    "accepted": true,
+                    "response": {
+                        "challengeId": "chal-300",
+                        "sessionId": "ba2f9511-f3ac-42e5-b827-557766550008",
+                        "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+                        "responderCapabilities": [],
+                        "nonce": "fedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcbafedcbafe",
+                        "timestamp": "2026-04-03T00:00:04.000Z"
+                    }
+                },
+                "signature": "55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555",
+                "timestamp": "2026-04-03T00:00:04.000Z"
+            }
+        }
+    ]
+}

@@ -1,0 +1,54 @@
+{
+ "name": "coivitas",
+ "version": "0.1.0-alpha.1",
+ "private": true,
+ "description": "Verifiable identity, scoped authorization, auditable behavior, and accountable governance protocol for human-agent co-existence society.",
+ "author": "Coivitas Foundation Contributors",
+ "license": "Apache-2.0",
+ "homepage": "https://github.com/ttssp/Coivitas",
+ "repository": {
+ "type": "git",
+ "url": "git+https://github.com/ttssp/Coivitas.git"
+ },
+ "bugs": {
+ "url": "https://github.com/ttssp/Coivitas/issues"
+ },
+ "packageManager": "pnpm@9.15.0",
+ "engines": {
+ "node": ">=20.0.0",
+ "pnpm": ">=9.0.0"
+ },
+ "scripts": {
+ "build": "turbo run build",
+ "lint": "turbo run lint",
+ "docs:check": "node ./scripts/check-delta-artifacts.mjs",
+ "lint:docs": "bash ./scripts/lint-doc-references.sh",
+ "test": "vitest run --config vitest.config.ts",
+ "test:interop": "vitest run --config vitest.config.ts tests/conformance tests/interop",
+ "test:coverage": "vitest run --config vitest.config.ts --coverage",
+ "test:integration": "vitest run --config vitest.config.ts --dir tests/integration",
+ "test:benchmark": "tsx tests/performance/policy-benchmark.ts && tsx tests/performance/e2e-benchmark.ts && vitest run --config vitest.config.ts tests/e2e/benchmark.test.ts",
+ "golden-path": "node --env-file-if-exists=.env packages/sdk/dist/cli/index.js demo golden-path",
+ "db:setup": "./scripts/db-setup.sh",
+ "db:migrate": "./scripts/db-migrate.sh"
+ },
+ "devDependencies": {
+ "@types/express": "^5.0.3",
+ "@types/node": "^24.6.0",
+ "@types/pg": "^8.15.5",
+ "@typescript-eslint/eslint-plugin": "^8.31.0",
+ "@typescript-eslint/parser": "^8.31.0",
+ "@vitest/coverage-v8": "^3.2.4",
+ "eslint": "^8.57.1",
+ "eslint-config-prettier": "^10.1.2",
+ "prettier": "^3.5.3",
+ "tsx": "^4.21.0",
+ "turbo": "^2.5.3",
+ "typescript": "^5.8.3",
+ "vitest": "^3.2.4"
+ },
+ "dependencies": {
+ "@noble/curves": "1.9.7",
+ "canonicalize": "2.1.0"
+ }
+}

@@ -1,0 +1,226 @@
+{
+    "description": "hand-crafted canonicalize input vectors",
+    "vectors": [
+        {
+            "id": "empty-object",
+            "description": "empty object boundary"
+        },
+        {
+            "id": "single-ascii-key",
+            "description": "single ASCII key",
+            "input": { "a": 1 }
+        },
+        {
+            "id": "ascii-keys-sorted",
+            "description": "3 ASCII keys sorted by JCS code point",
+            "input": { "z": 3, "a": 1, "m": 2 }
+        },
+        {
+            "id": "unicode-cjk-keys",
+            "description": "CJK keys (BMP U+4E2D U+6587)",
+            "input": { "中": 1, "文": 2, "a": 0 }
+        },
+        {
+            "id": "unicode-emoji-mixed",
+            "description": "CJK + emoji + ASCII mixed keys",
+            "input": { "中": 1, "🚀": 2, "a": 3 }
+        },
+        {
+            "id": "emoji-only-keys",
+            "description": "emoji key (surrogate pair U+1F600)",
+            "input": { "😀": 42 }
+        },
+        {
+            "id": "nested-object-simple",
+            "description": "single-level nested object",
+            "input": { "b": { "x": 1 }, "a": { "y": 2 } }
+        },
+        {
+            "id": "nested-object-deep",
+            "description": "three-level nesting",
+            "input": { "z": { "b": { "c": 99 } }, "a": 0 }
+        },
+        {
+            "id": "array-values",
+            "description": "array values preserve order",
+            "input": { "items": [3, 1, 2], "name": "test" }
+        },
+        {
+            "id": "array-nested-objects",
+            "description": "nested objects inside an array",
+            "input": {
+                "list": [
+                    { "b": 2, "a": 1 },
+                    { "d": 4, "c": 3 }
+                ]
+            }
+        },
+        {
+            "id": "boolean-values",
+            "description": "true / false literals",
+            "input": { "active": true, "disabled": false }
+        },
+        {
+            "id": "null-value",
+            "description": "null literal",
+            "input": { "optional": null, "name": "agent" }
+        },
+        {
+            "id": "number-integer-positive",
+            "description": "positive integer",
+            "input": { "count": 42 }
+        },
+        {
+            "id": "number-integer-negative",
+            "description": "negative integer",
+            "input": { "offset": -100 }
+        },
+        {
+            "id": "number-zero",
+            "description": "0 literal",
+            "input": { "score": 0 }
+        },
+        {
+            "id": "number-float",
+            "description": "floating-point number",
+            "input": { "ratio": 1.5 }
+        },
+        {
+            "id": "number-small-float",
+            "description": "small float (ECMA toString edge)",
+            "input": { "tiny": 0.000001 }
+        },
+        {
+            "id": "number-safe-int-max",
+            "description": "JS safe-integer upper bound 2^53-1",
+            "input": { "max": 9007199254740991 }
+        },
+        {
+            "id": "number-safe-int-min",
+            "description": "JS safe-integer lower bound -(2^53-1)",
+            "input": { "min": -9007199254740991 }
+        },
+        {
+            "id": "string-with-unicode-escape",
+            "description": "string value containing a Unicode escape",
+            "input": { "text": "hello world" }
+        },
+        {
+            "id": "string-with-backslash",
+            "description": "string containing a backslash",
+            "input": { "path": "a\\b" }
+        },
+        {
+            "id": "string-with-quote",
+            "description": "string containing a double quote",
+            "input": { "msg": "say \"hi\"" }
+        },
+        {
+            "id": "string-empty",
+            "description": "empty string value",
+            "input": { "label": "" }
+        },
+        {
+            "id": "string-multibyte-utf8",
+            "description": "multibyte UTF-8 (Japanese + Korean)",
+            "input": { "グ": 1, "한": 2, "a": 0 }
+        },
+        {
+            "id": "many-keys-ordering",
+            "description": "8 ASCII keys testing sort stability",
+            "input": {
+                "z": 26,
+                "y": 25,
+                "x": 24,
+                "a": 1,
+                "b": 2,
+                "c": 3,
+                "m": 13,
+                "n": 14
+            }
+        },
+        {
+            "id": "mixed-types",
+            "description": "mixed-type values",
+            "input": { "n": null, "b": true, "i": 1, "s": "x", "a": [1, 2] }
+        },
+        {
+            "id": "specversion-payload",
+            "description": "spec v0.4.0 typical payload field set",
+            "input": {
+                "specVersion": "0.4.0",
+                "type": "HANDSHAKE_INIT",
+                "id": "550e8400-e29b-41d4-a716-446655440001"
+            }
+        },
+        {
+            "id": "did-payload",
+            "description": "DID field mix",
+            "input": {
+                "senderDid": "did:agent:a3f1b2c4d5e6f7a8",
+                "recipientDid": "did:agent:b4e2c3d5f6a7b8c9",
+                "sessionId": null
+            }
+        },
+        {
+            "id": "number-float-negative",
+            "description": "negative float",
+            "input": { "temp": -3.14 }
+        },
+        {
+            "id": "number-integer-large",
+            "description": "larger integer but within safe range",
+            "input": { "ts": 1747872000000 }
+        },
+        {
+            "id": "array-empty",
+            "description": "empty array",
+            "input": { "items": [] }
+        },
+        {
+            "id": "nested-empty-object",
+            "description": "nested empty object",
+            "input": { "meta": {}, "name": "test" }
+        },
+        {
+            "id": "supplementary-plane-key",
+            "description": "supplementary-plane character key (U+1D11E musical note) — surrogate-pair sort test",
+            "input": { "𝄞": 1, "z": 2, "a": 0 }
+        },
+        {
+            "id": "high-bmp-key",
+            "description": "high BMP character key (U+FF01) vs low BMP (U+0041)",
+            "input": { "！": 1, "A": 2 }
+        },
+        {
+            "id": "number-ecma-1e-7",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch boundary: 1e-7 (exponential form output 1e-7, not 0.0000001)",
+            "input": { "v": 1e-7 }
+        },
+        {
+            "id": "number-ecma-1e-8",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1e-8 (also exponential form 1e-8)",
+            "input": { "v": 1e-8 }
+        },
+        {
+            "id": "number-ecma-1e21",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch boundary: 1e+21 (≥1e21 → exponential form 1e+21)",
+            "input": { "v": 1e21 }
+        },
+        {
+            "id": "number-ecma-1e22",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1e+22",
+            "input": { "v": 1e22 }
+        },
+        {
+            "id": "number-ecma-neg-1e21",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: -1e+21 (negative exponential form)",
+            "input": { "v": -1e21 }
+        },
+        {
+            "id": "number-ecma-1p5e-7",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1.5e-7 (non-integer exponential form)",
+            "input": { "v": 1.5e-7 }
+        }
+    ]
+}

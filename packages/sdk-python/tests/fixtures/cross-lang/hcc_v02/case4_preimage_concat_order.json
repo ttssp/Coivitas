@@ -1,0 +1,10 @@
+{
+ "_comment": "hcc v0.2 Case 4: preimage concat order verify — canonicalPayload (str) BEFORE chainIdentityJcs (str), both UTF-8 encoded",
+ "_d37_change": " E-track: canonicalPayload is now a str (JCS JSON string), not raw bytes. Both inputs are UTF-8 encoded internally before concat.",
+ "canonicalPayload": "audit_payload_data",
+ "chainIdentity": {
+ "chainNamespace": "test:ns"
+ },
+ "concatOrder": "UTF8(canonicalPayload) || UTF8(chainIdentityJcs)",
+ "_note": "cross-lang must agree on concat order: UTF8(canonicalPayload) + UTF8(chainIdentityJcs) (not reversed). Both inputs are str; UTF-8 encoding is applied internally. Any test verifying sha256 must use this order."
+}

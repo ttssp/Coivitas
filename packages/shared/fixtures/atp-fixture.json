@@ -1,0 +1,70 @@
+{
+ "$schema_id": "https://coivitas.ai/schemas/audit-event-v0.1.json",
+ "$comment": "audit-tamper-proof audit_events fixture — 3 audit_class L1 chain events demonstrating GENESIS → e1 → e2 (per-(tenantId, audit_class) hash chain; all 10 fields bound; the real tamperProofHash + previousHash values are computed by the L3 writer — this fixture only shows the schema + chain shape; the actual hash values are computed by the acceptance test)",
+ "tenant_a_l1_chain": [
+ {
+ "$comment": "GENESIS event — chain[0]; previousHash=null; tamperProofHash computed by SHA-256(JCS({10 fields}))",
+ "atpVersion": "1.0.0",
+ "eventId": "11111111-bbbb-4ccc-8ddd-000000000001",
+ "tenantId": "11111111-aaaa-4bbb-8ccc-111111111111",
+ "auditClass": "L1",
+ "actorDid": "did:key:z6MkAliceFixture",
+ "action": "TOKEN_VERIFY",
+ "target": "token-id-001",
+ "canonicalPayload": "{\"requesterId\":\"agent-a\",\"tokenId\":\"token-id-001\"}",
+ "tamperProofHash": "$computed_by_writer_l3",
+ "previousHash": null,
+ "timestamp": "2026-05-13T00:00:00.000Z",
+ "signature": null
+ },
+ {
+ "$comment": "chain[1] — previousHash equals chain[0] tamperProofHash; non-GENESIS; independent per-(tenant_a, L1) chain",
+ "atpVersion": "1.0.0",
+ "eventId": "11111111-bbbb-4ccc-8ddd-000000000002",
+ "tenantId": "11111111-aaaa-4bbb-8ccc-111111111111",
+ "auditClass": "L1",
+ "actorDid": "did:key:z6MkAliceFixture",
+ "action": "ENVELOPE_RECORDED",
+ "target": "envelope-id-100",
+ "canonicalPayload": "{\"envelopeId\":\"envelope-id-100\",\"sender\":\"agent-a\"}",
+ "tamperProofHash": "$computed_by_writer_l3",
+ "previousHash": "$chain_0_tamperProofHash",
+ "timestamp": "2026-05-13T00:00:01.000Z",
+ "signature": null
+ }
+ ],
+ "tenant_a_l2_chain": [
+ {
+ "$comment": "L2 chain GENESIS (independent per-(tenant_a, L2) chain; not linked to the L1 chain)",
+ "atpVersion": "1.0.0",
+ "eventId": "11111111-bbbb-4ccc-8ddd-000000000010",
+ "tenantId": "11111111-aaaa-4bbb-8ccc-111111111111",
+ "auditClass": "L2",
+ "actorDid": "did:key:z6MkAliceFixture",
+ "action": "REVOCATION_PUBLISHED",
+ "target": "revocation-list-001",
+ "canonicalPayload": "{\"listId\":\"revocation-list-001\",\"items\":3}",
+ "tamperProofHash": "$computed_by_writer_l3",
+ "previousHash": null,
+ "timestamp": "2026-05-13T00:01:00.000Z",
+ "signature": null
+ }
+ ],
+ "tenant_b_l1_chain": [
+ {
+ "$comment": "tenant_b L1 GENESIS (independent per-(tenant_b, L1) chain; multi-tenant isolation)",
+ "atpVersion": "1.0.0",
+ "eventId": "22222222-bbbb-4ccc-8ddd-000000000001",
+ "tenantId": "22222222-aaaa-4bbb-8ccc-222222222222",
+ "auditClass": "L1",
+ "actorDid": "did:key:z6MkBobFixture",
+ "action": "TOKEN_VERIFY",
+ "target": "token-id-901",
+ "canonicalPayload": "{\"requesterId\":\"agent-b\",\"tokenId\":\"token-id-901\"}",
+ "tamperProofHash": "$computed_by_writer_l3",
+ "previousHash": null,
+ "timestamp": "2026-05-13T00:02:00.000Z",
+ "signature": null
+ }
+ ]
+}

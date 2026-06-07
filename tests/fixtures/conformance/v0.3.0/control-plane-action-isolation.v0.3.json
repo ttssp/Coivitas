@@ -1,0 +1,141 @@
+{
+ "$schema": "conformance/control-plane-action-isolation",
+ "description": "The SESSION_SUPERSEDED control-plane action MUST NOT appear on authorization/negotiation boundaries (CapabilityToken / AgentIdentityDocument / AgentCard / HandshakeChallenge / HandshakeResponse); the only valid location = ActionRecord.action. Control-plane actions do not issue an envelope / token; they serve only as the actor identifier in ActionRecord.agentDid / principalDid. At the schema layer, BUSINESS_ACTION_VOCABULARY enforces fail-closed via enums at 5 sites.",
+ "schemaId": "capabilityToken",
+ "cases": [
+ {
+ "id": "case-A-capability-token-rejects-control-plane-action",
+ "description": "CapabilityToken.capabilities[*].action='SESSION_SUPERSEDED' → reject (not in the BUSINESS_ACTION_VOCABULARY enum)",
+ "schemaId": "capability",
+ "valid": false,
+ "expectedError": "action must be equal to one of the allowed values",
+ "data": {
+ "action": "SESSION_SUPERSEDED",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["SKU-001"]
+ }
+ }
+ },
+ {
+ "id": "case-A-baseline-business-action-accept",
+ "description": "Control group: CapabilityToken.capabilities[*].action='INQUIRY' → accept (business action is valid)",
+ "schemaId": "capability",
+ "valid": true,
+ "data": {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["SKU-001"]
+ }
+ }
+ },
+ {
+ "id": "case-B-agent-identity-document-rejects-control-plane-capability",
+ "description": "AgentIdentityDocument.capabilities=['SESSION_SUPERSEDED'] → reject",
+ "schemaId": "agentIdentityDocument",
+ "valid": false,
+ "expectedError": "capabilities items must be equal to one of the allowed values",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.3.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-28T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "capabilities": ["INQUIRY", "SESSION_SUPERSEDED"],
+ "createdAt": "2026-04-28T00:00:00.000Z",
+ "updatedAt": "2026-04-28T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "case-C-agent-card-rejects-control-plane-capability-declared",
+ "description": "AgentCard.capabilitiesDeclared=['SESSION_SUPERSEDED'] → reject",
+ "schemaId": "agentCard",
+ "valid": false,
+ "expectedError": "capabilitiesDeclared items must be equal to one of the allowed values",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.3.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "SESSION_SUPERSEDED"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-28T00:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ }
+ },
+ {
+ "id": "case-D-handshake-challenge-rejects-control-plane-capability",
+ "description": "HandshakeChallenge.initiatorCapabilities=['SESSION_SUPERSEDED'] → reject (the handshakeChallenge schema validates the body directly)",
+ "schemaId": "handshakeChallenge",
+ "valid": false,
+ "expectedError": "initiatorCapabilities items must be equal to one of the allowed values",
+ "data": {
+ "challengeId": "550e8400-e29b-41d4-a716-446655440099",
+ "initiatorDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "nonce": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+ "timestamp": "2026-04-28T00:00:00.000Z",
+ "expiresAt": "2026-04-28T00:01:00.000Z",
+ "initiatorCapabilities": ["INQUIRY", "SESSION_SUPERSEDED"]
+ }
+ },
+ {
+ "id": "case-D-handshake-response-rejects-control-plane-capability",
+ "description": "HandshakeResponse.responderCapabilities=['SESSION_SUPERSEDED'] → reject",
+ "schemaId": "handshakeResponse",
+ "valid": false,
+ "expectedError": "responderCapabilities items must be equal to one of the allowed values",
+ "data": {
+ "challengeId": "550e8400-e29b-41d4-a716-446655440099",
+ "sessionId": "550e8400-e29b-41d4-a716-446655440100",
+ "responderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "responderCapabilities": ["QUOTE", "SESSION_SUPERSEDED"],
+ "nonce": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef",
+ "timestamp": "2026-04-28T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "case-E-action-record-accepts-control-plane-action",
+ "description": "Control group: ActionRecord.action='SESSION_SUPERSEDED' (the only valid location for the control plane) → accept; the agent/principal enforcement of did:system:session-governor is guaranteed by the actionRecord allOf branch",
+ "schemaId": "actionRecord",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-05f200000001",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440200",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440201",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-28T03:00:00.000Z",
+ "affectedAgentDid": "did:agent:cccccccccccccccccccccccccccccccccccccccc",
+ "affectedPrincipalDid": "did:key:z6MkAffectedPrincipalCaseE4444444444444"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-28T03:00:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "11aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "actorSignature": "11bb334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ }
+ ]
+}

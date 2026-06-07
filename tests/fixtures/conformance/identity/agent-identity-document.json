@@ -1,0 +1,66 @@
+{
+    "$schema": "conformance/identity/agent-identity-document",
+    "description": "Alpha-owned AgentIdentityDocument schema fixtures",
+    "valid": [
+        {
+            "id": "agent-minimal",
+            "data": {
+                "id": "did:agent:00112233445566778899aabbccddeeff00112233",
+                "specVersion": "0.1.0",
+                "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                "publicKey": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+                "bindingProof": {
+                    "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                    "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+                    "issuedAt": "2026-04-03T08:00:00.000Z",
+                    "expiresAt": null,
+                    "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+                },
+                "createdAt": "2026-04-03T08:00:00.000Z",
+                "updatedAt": "2026-04-03T08:00:00.000Z"
+            }
+        }
+    ],
+    "invalid": [
+        {
+            "id": "agent-invalid-did",
+            "data": {
+                "id": "did:agent:not-hex",
+                "specVersion": "0.1.0",
+                "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                "publicKey": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+                "bindingProof": {
+                    "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                    "agentDid": "did:agent:not-hex",
+                    "issuedAt": "2026-04-03T08:00:00.000Z",
+                    "expiresAt": null,
+                    "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+                },
+                "createdAt": "2026-04-03T08:00:00.000Z",
+                "updatedAt": "2026-04-03T08:00:00.000Z"
+            }
+        }
+    ],
+    "boundary": [
+        {
+            "id": "agent-empty-capabilities",
+            "valid": true,
+            "data": {
+                "id": "did:agent:00112233445566778899aabbccddeeff00112233",
+                "specVersion": "0.1.0",
+                "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                "publicKey": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+                "bindingProof": {
+                    "principalDid": "did:key:z6MktwupdmLXVVqTzCw4i46r4uGyosGXRnR3XjN4Zq7oMMsw",
+                    "agentDid": "did:agent:00112233445566778899aabbccddeeff00112233",
+                    "issuedAt": "2026-04-03T08:00:00.000Z",
+                    "expiresAt": null,
+                    "signature": "5cfb0ea8da57512b5354e2d7c9ba0e1b305655b4fa6647a5c923aa355417d4559df01690eaad078abb2071b7370b23406f6a87aaa6fa5ab9df01fb0681258c06"
+                },
+                "capabilities": [],
+                "createdAt": "2026-04-03T08:00:00.000Z",
+                "updatedAt": "2026-04-03T08:00:00.000Z"
+            }
+        }
+    ]
+}

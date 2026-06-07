@@ -1,0 +1,7 @@
+{
+ "_comment": "sdk v0.2 Case 2: mTLS verify failure — DID cross-check mismatch",
+ "verifierKind": "mtls",
+ "scenario": "fail_mapping_mismatch",
+ "expectedError": "SDK_MAPPING_MISMATCH",
+ "_note": "cert CN=did:key:abc123 but expected_did=did:key:xyz999 → SDK_MAPPING_MISMATCH"
+}

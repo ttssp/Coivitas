@@ -1,0 +1,105 @@
+{
+    "version": "v0.1",
+    "generated_by": "packages/sdk/scripts/generate-cross-lang-fixtures.ts",
+    "vectors": [
+        {
+            "id": "ed25519-rfc8032-test1-empty",
+            "description": "RFC 8032 §6.1 Test Vector 1 — empty message",
+            "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+            "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+            "message_hex": "",
+            "expected_signature_hex": "e5564300c360ac729086e2cc806e828a84877f1eb8e5d974d873e065224901555fb8821590a33bacc61e39701cf9b46bd25bf5f0595bbe24655141438e7a100b",
+            "expected_signature_base64url": "5VZDAMNgrHKQhuLMgG6CioSHfx645dl02HPgZSJJAVVfuIIVkKM7rMYeOXAc-bRr0lv18FlbviRlUUFDjnoQCw"
+        },
+        {
+            "id": "ed25519-rfc8032-test2",
+            "description": "RFC 8032 §6.1 Test Vector 2 seed — noble-derived pubkey (756cd751); the RFC 8032 official pubkey 3d4017c3 differs from the @noble/curves derivation, so the actual noble-derived value is used [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+            "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+            "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+            "message_hex": "72",
+            "expected_signature_hex": "0eb46b080ad7beac82513dceee2628da5b993057ad864bc846f99582b631ad0b66b8ed6325731b7fff311b771b8eee9ccddf4d78b89a6e5f712b5dfa0c351a0e",
+            "expected_signature_base64url": "DrRrCArXvqyCUT3O7iYo2luZMFethkvIRvmVgrYxrQtmuO1jJXMbf_8xG3cbju6czd9NeLiabl9xK136DDUaDg"
+        },
+        {
+            "id": "ed25519-rfc8032-test3",
+            "description": "RFC 8032 §6.1 Test Vector 3 — 2-byte message",
+            "private_key_hex": "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7",
+            "public_key_hex": "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025",
+            "message_hex": "af82",
+            "expected_signature_hex": "6291d657deec24024827e69c3abe01a30ce548a284743a445e3680d7db5ac3ac18ff9b538d16f290ae67f760984dc6594a7c15e9716ed28dc027beceea1ec40a",
+            "expected_signature_base64url": "YpHWV97sJAJIJ-acOr4BowzlSKKEdDpEXjaA19taw6wY_5tTjRbykK5n92CYTcZZSnwV6XFu0o3AJ77O6h7ECg"
+        },
+        {
+            "id": "ed25519-zero-seed",
+            "description": "all-zero seed (32 bytes) — boundary",
+            "private_key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+            "public_key_hex": "3b6a27bcceb6a42d62a3a8d02a6f0d73653215771de243a63ac048a18b59da29",
+            "message_hex": "deadbeef",
+            "expected_signature_hex": "b70098e5f591ee265de5226c5553f9f04cc6252b78ed2544d561f47e5b8ccc515ecec858ad1053105f2c4486ee8cfcf099bac2e22602f2ea1f88b28f117f960e",
+            "expected_signature_base64url": "twCY5fWR7iZd5SJsVVP58EzGJSt47SVE1WH0fluMzFFezshYrRBTEF8sRIbujPzwmbrC4iYC8uofiLKPEX-WDg"
+        },
+        {
+            "id": "ed25519-ff-seed",
+            "description": "all-0xFF seed (32 bytes) — boundary",
+            "private_key_hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "public_key_hex": "76a1592044a6e4f511265bca73a604d90b0529d1df602be30a19a9257660d1f5",
+            "message_hex": "cafebabe",
+            "expected_signature_hex": "26e7dbd5f0510b4f1d65aa426403fe78977e38df5f5e19fc575bd2299daeabf4b759402f7f1354b83ae6bcc653ca92b979ebc31a0e71a2d6af3f07a77c6e3806",
+            "expected_signature_base64url": "Jufb1fBRC08dZapCZAP-eJd-ON9fXhn8V1vSKZ2uq_S3WUAvfxNUuDrmvMZTypK5eevDGg5xotavPwenfG44Bg"
+        },
+        {
+            "id": "ed25519-ascii-message",
+            "description": "ASCII text message signature",
+            "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+            "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+            "message_hex": "68656c6c6f20776f726c64",
+            "expected_signature_hex": "2c5482392a197ec09fa33777958d3a0be4f4960af85e9796a4d822c95ecf704a34fed32adb699a88c0ea876b9fbb17d1dbd336f754fd9207bfc112c89aa54f02",
+            "expected_signature_base64url": "LFSCOSoZfsCfozd3lY06C-T0lgr4XpeWpNgiyV7PcEo0_tMq22maiMDqh2ufuxfR29M291T9kge_wRLImqVPAg"
+        },
+        {
+            "id": "ed25519-canonical-json-message",
+            "description": "RFC 8785 canonical JSON as the signed message",
+            "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+            "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+            "message_hex": "7b2261223a312c2262223a327d",
+            "expected_signature_hex": "d6de5ef1b71c93496a7f8b2514001196bdf1e803dac215a81d1b818188d4597454bad74060871947522a5b5efda8348f5fb4a178a800434ffacbb57f089f1001",
+            "expected_signature_base64url": "1t5e8bcck0lqf4slFAARlr3x6APawhWoHRuBgYjUWXRUutdAYIcZR1IqW179qDSPX7SheKgAQ0_6y7V_CJ8QAQ"
+        },
+        {
+            "id": "ed25519-32-byte-message",
+            "description": "32-byte message (typical sha256 digest length) — noble-derived pubkey for seed 4ccd089b [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+            "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+            "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+            "message_hex": "b94f6f125c79e3a5ffaa826f584c10d52ada669e6762051b826b55776d05a8a6",
+            "expected_signature_hex": "3aef50ec8321a758d16f308593a884bcc72203bb865d1c7a7c9bf8f15e750dfcd908a967ffa78e6e7d8691c61cb00f5b1ff9daa64b05a8495954ba80ba7c910a",
+            "expected_signature_base64url": "Ou9Q7IMhp1jRbzCFk6iEvMciA7uGXRx6fJv48V51DfzZCKln_6eObn2GkcYcsA9bH_napksFqElZVLqAunyRCg"
+        },
+        {
+            "id": "ed25519-64-byte-message",
+            "description": "64-byte message",
+            "private_key_hex": "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7",
+            "public_key_hex": "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025",
+            "message_hex": "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f40",
+            "expected_signature_hex": "6f183341df3897df0bd0c70ed61b36ecfd397928a29f3fc921e8e2604a86774c7d7f4e05e36a8fc046d3758e84bf8ee4a0c24ae8de5f18d87c36d3e14125530b",
+            "expected_signature_base64url": "bxgzQd84l98L0McO1hs27P05eSiinz_JIejiYEqGd0x9f04F42qPwEbTdY6Ev47koMJK6N5fGNh8NtPhQSVTCw"
+        },
+        {
+            "id": "ed25519-unicode-utf8-message",
+            "description": "UTF-8 Chinese message signature (byte-level)",
+            "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+            "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+            "message_hex": "e4b8ade69687",
+            "expected_signature_hex": "d118118613e610adbe2a5cefea0160d2a8d54d4cabcc1d11a8a640bb39ded0f93547699d791d0440321c247b5bf2342f083203d6bba7cec9a16168c6bfb0b604",
+            "expected_signature_base64url": "0RgRhhPmEK2-Klzv6gFg0qjVTUyrzB0RqKZAuzne0Pk1R2mdeR0EQDIcJHtb8jQvCDID1runzsmhYWjGv7C2BA"
+        },
+        {
+            "id": "ed25519-spec-version-payload",
+            "description": "spec v0.4.0 wire payload byte signature — noble-derived pubkey for seed 4ccd089b [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+            "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+            "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+            "message_hex": "7b2269223a2235353065383430302d65323962222c2273706563223a22302e342e30227d",
+            "expected_signature_hex": "80c56bfe7ef059e6723ae2451400b0a7b355fbc01f8d8301a0106753c880786bb5936b6500cae9f529dbe55b037ac18f88f0e9de00688e7533ee6b7f0baece05",
+            "expected_signature_base64url": "gMVr_n7wWeZyOuJFFACwp7NV-8AfjYMBoBBnU8iAeGu1k2tlAMrp9Snb5VsDesGPiPDp3gBojnUz7mt_C67OBQ"
+        }
+    ]
+}

@@ -1,0 +1,55 @@
+{
+ "$id": "https://coivitas.ai/schemas/hash-chain-entry-v0.1.json",
+ "title": "HashChainEntry",
+ "description": "HCC v0.1 JSON Schema.",
+ "type": "object",
+ "required": [
+  "entryId",
+  "canonicalPayload",
+  "canonicalPayloadHash",
+  "previousHash",
+  "chainPosition",
+  "timestamp",
+  "hccVersion"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "entryId": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+   "description": "UUID v4 entry identifier"
+  },
+  "canonicalPayload": {
+   "type": "string",
+   "minLength": 2,
+   "description": "RFC 8785 JCS canonicalized JSON string; minimum length 2 = '{}' empty object"
+  },
+  "canonicalPayloadHash": {
+   "type": "string",
+   "pattern": "^[a-f0-9]{64}$",
+   "description": "SHA-256 hex digest of canonicalPayload UTF-8 bytes; 64 lowercase hex"
+  },
+  "previousHash": {
+   "type": "string",
+   "pattern": "^[a-f0-9]{64}$",
+   "description": "SHA-256 hex digest of previous entry; genesis = 64 zeros"
+  },
+  "chainPosition": {
+   "type": "integer",
+   "minimum": 0,
+   "description": "Non-negative monotonically increasing position in chain"
+  },
+  "timestamp": {
+   "type": "string",
+   "format": "date-time",
+   "description": "ISO 8601 UTC entry write time"
+  },
+  "hccVersion": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+   "const": "1.0.0",
+   "description": "HCC protocol version; the only valid value in v0.1 is '1.0.0'"
+  }
+ }
+}

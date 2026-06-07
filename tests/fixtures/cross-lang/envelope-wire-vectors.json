@@ -1,0 +1,283 @@
+{
+    "version": "v0.1",
+    "generated_by": "packages/sdk/scripts/generate-cross-lang-fixtures.ts",
+    "vectors": [
+        {
+            "id": "conformance-valid-handshake-init",
+            "description": "conformance fixture: Handshake init envelope (sessionId is null)",
+            "input": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null,
+                    "sequenceNumber": 0
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+                    "capabilities": [
+                        "INQUIRY",
+                        "QUOTE"
+                    ],
+                    "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+                },
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImNhcGFiaWxpdGllcyI6WyJJTlFVSVJZIiwiUVVPVEUiXSwiaW5pdGlhdG9yRGlkIjoiZGlkOmFnZW50OmEzZjFiMmM0ZDVlNmY3YThiOWMwZDFlMmYzYTRiNWM2ZDdlOGY5YTAiLCJub25jZSI6ImQ0ZTVmNmE3YjhjOWQwZTFmMmEzYjRjNWQ2ZTdmOGE5In0sImhlYWRlciI6eyJyZWNpcGllbnREaWQiOiJkaWQ6YWdlbnQ6YjRlMmMzZDVmNmE3YjhjOWQwZTFmMmEzYjRjNWQ2ZTdmOGE5YjBjMSIsInNlbmRlckRpZCI6ImRpZDphZ2VudDphM2YxYjJjNGQ1ZTZmN2E4YjljMGQxZTJmM2E0YjVjNmQ3ZThmOWEwIiwic2VxdWVuY2VOdW1iZXIiOjAsInNlc3Npb25JZCI6bnVsbH0sImlkIjoiNTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAxIiwibWVzc2FnZVR5cGUiOiJIQU5EU0hBS0VfSU5JVCIsInNpZ25hdHVyZSI6ImFhYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5YWFiYmNjZGRlZWZmMDAxMTIyMzM0NDU1NjY3Nzg4OTlhYWJiY2NkZGVlZmYwMDExMjIzMzQ0NTU2Njc3ODg5OWFhYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5Iiwic3BlY1ZlcnNpb24iOiIwLjEuMCIsInRpbWVzdGFtcCI6IjIwMjYtMDEtMDFUMDA6MDA6MDAuMDAwWiJ9",
+            "expected_sha256": "5f0a79892c4ef64369452d5ed6dc7fc9f1efe61ce5c69a423a26d1d299e00767"
+        },
+        {
+            "id": "conformance-valid-negotiation-request",
+            "description": "conformance fixture: Negotiation request envelope (with sessionId)",
+            "input": {
+                "id": "660f9511-f3ac-42e5-b827-557766550002",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "sess-770a8622-g4bd-63f6-c938-668877660003",
+                    "sequenceNumber": 1
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "action": "INQUIRY",
+                    "params": {
+                        "sku": "SKU-001",
+                        "quantity": 10
+                    },
+                    "requestId": "req-001"
+                },
+                "signature": "bbbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899a",
+                "timestamp": "2026-01-01T00:01:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImFjdGlvbiI6IklOUVVJUlkiLCJwYXJhbXMiOnsicXVhbnRpdHkiOjEwLCJza3UiOiJTS1UtMDAxIn0sInJlcXVlc3RJZCI6InJlcS0wMDEifSwiaGVhZGVyIjp7InJlY2lwaWVudERpZCI6ImRpZDphZ2VudDpiNGUyYzNkNWY2YTdiOGM5ZDBlMWYyYTNiNGM1ZDZlN2Y4YTliMGMxIiwic2VuZGVyRGlkIjoiZGlkOmFnZW50OmEzZjFiMmM0ZDVlNmY3YThiOWMwZDFlMmYzYTRiNWM2ZDdlOGY5YTAiLCJzZXF1ZW5jZU51bWJlciI6MSwic2Vzc2lvbklkIjoic2Vzcy03NzBhODYyMi1nNGJkLTYzZjYtYzkzOC02Njg4Nzc2NjAwMDMifSwiaWQiOiI2NjBmOTUxMS1mM2FjLTQyZTUtYjgyNy01NTc3NjY1NTAwMDIiLCJtZXNzYWdlVHlwZSI6Ik5FR09USUFUSU9OX1JFUVVFU1QiLCJzaWduYXR1cmUiOiJiYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5YWFiYmNjZGRlZWZmMDAxMTIyMzM0NDU1NjY3Nzg4OTlhYWJiY2NkZGVlZmYwMDExMjIzMzQ0NTU2Njc3ODg5OWFhYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5YSIsInNwZWNWZXJzaW9uIjoiMC4xLjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTAxLTAxVDAwOjAxOjAwLjAwMFoifQ==",
+            "expected_sha256": "527539199cc013d2fce5120b239664521925c820d300209ae0799a62b8078441"
+        },
+        {
+            "id": "conformance-valid-error-message",
+            "description": "conformance fixture: Error message envelope",
+            "input": {
+                "id": "771a0622-f4bd-43f6-8938-668877660004",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "recipientDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "sessionId": "sess-770a8622-g4bd-63f6-c938-668877660003",
+                    "sequenceNumber": 2
+                },
+                "messageType": "ERROR",
+                "body": {
+                    "code": "SCOPE_EXCEEDED",
+                    "detail": "Requested action CONFIRM is not authorized.",
+                    "requestId": "req-002"
+                },
+                "signature": "ccccdddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899a",
+                "timestamp": "2026-01-01T00:02:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImNvZGUiOiJTQ09QRV9FWENFRURFRCIsImRldGFpbCI6IlJlcXVlc3RlZCBhY3Rpb24gQ09ORklSTSBpcyBub3QgYXV0aG9yaXplZC4iLCJyZXF1ZXN0SWQiOiJyZXEtMDAyIn0sImhlYWRlciI6eyJyZWNpcGllbnREaWQiOiJkaWQ6YWdlbnQ6YTNmMWIyYzRkNWU2ZjdhOGI5YzBkMWUyZjNhNGI1YzZkN2U4ZjlhMCIsInNlbmRlckRpZCI6ImRpZDphZ2VudDpiNGUyYzNkNWY2YTdiOGM5ZDBlMWYyYTNiNGM1ZDZlN2Y4YTliMGMxIiwic2VxdWVuY2VOdW1iZXIiOjIsInNlc3Npb25JZCI6InNlc3MtNzcwYTg2MjItZzRiZC02M2Y2LWM5MzgtNjY4ODc3NjYwMDAzIn0sImlkIjoiNzcxYTA2MjItZjRiZC00M2Y2LTg5MzgtNjY4ODc3NjYwMDA0IiwibWVzc2FnZVR5cGUiOiJFUlJPUiIsInNpZ25hdHVyZSI6ImNjY2NkZGRlZWZmMDAxMTIyMzM0NDU1NjY3Nzg4OTlhYWJiY2NkZGVlZmYwMDExMjIzMzQ0NTU2Njc3ODg5OWFhYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5YWFiYmNjZGRlZWZmMDAxMTIyMzM0NDU1NjY3Nzg4OTlhIiwic3BlY1ZlcnNpb24iOiIwLjEuMCIsInRpbWVzdGFtcCI6IjIwMjYtMDEtMDFUMDA6MDI6MDAuMDAwWiJ9",
+            "expected_sha256": "dd4868dfa70655cdf4570cab4d20f84b36aa6e865abf51b6c3c88fa4bccf320f"
+        },
+        {
+            "id": "conformance-valid-negotiation-request-with-token-ref-v02",
+            "description": "conformance fixture: Negotiation request carrying capabilityTokenRef (specVersion 0.2.0)",
+            "input": {
+                "id": "881a1733-a5ce-44a7-b928-669988771105",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "881a1733-a5ce-44a7-b928-669988771105",
+                    "sequenceNumber": 3,
+                    "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "action": "QUOTE",
+                    "params": {
+                        "sku": "SKU-002",
+                        "quantity": 5
+                    },
+                    "requestId": "req-003"
+                },
+                "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "timestamp": "2026-01-01T00:03:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImFjdGlvbiI6IlFVT1RFIiwicGFyYW1zIjp7InF1YW50aXR5Ijo1LCJza3UiOiJTS1UtMDAyIn0sInJlcXVlc3RJZCI6InJlcS0wMDMifSwiaGVhZGVyIjp7ImNhcGFiaWxpdHlUb2tlblJlZiI6InVybjpjYXA6NTUwZTg0MDAtZTI5Yi00MWQ0LWE3MTYtNDQ2NjU1NDQwMDAxIiwicmVjaXBpZW50RGlkIjoiZGlkOmFnZW50OmI0ZTJjM2Q1ZjZhN2I4YzlkMGUxZjJhM2I0YzVkNmU3ZjhhOWIwYzEiLCJzZW5kZXJEaWQiOiJkaWQ6YWdlbnQ6YTNmMWIyYzRkNWU2ZjdhOGI5YzBkMWUyZjNhNGI1YzZkN2U4ZjlhMCIsInNlcXVlbmNlTnVtYmVyIjozLCJzZXNzaW9uSWQiOiI4ODFhMTczMy1hNWNlLTQ0YTctYjkyOC02Njk5ODg3NzExMDUifSwiaWQiOiI4ODFhMTczMy1hNWNlLTQ0YTctYjkyOC02Njk5ODg3NzExMDUiLCJtZXNzYWdlVHlwZSI6Ik5FR09USUFUSU9OX1JFUVVFU1QiLCJzaWduYXR1cmUiOiJkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZCIsInNwZWNWZXJzaW9uIjoiMC4yLjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTAxLTAxVDAwOjAzOjAwLjAwMFoifQ==",
+            "expected_sha256": "99b041906adc652d02b6b253ea3d6611208d386f2b46822c1b50606ed48a6bec"
+        },
+        {
+            "id": "conformance-valid-negotiation-confirm-with-token-ref-v02",
+            "description": "conformance fixture: specVersion 0.2.0 + capabilityTokenRef",
+            "input": {
+                "id": "991b2844-b6df-45b8-a039-770a99882216",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "991b2844-b6df-45b8-a039-770a99882216",
+                    "capabilityTokenRef": "urn:cap:660f9511-f3ac-42e5-b827-557766550002"
+                },
+                "messageType": "NEGOTIATION_CONFIRM",
+                "body": {
+                    "requestId": "req-004",
+                    "accepted": true
+                },
+                "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "timestamp": "2026-01-01T00:04:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImFjY2VwdGVkIjp0cnVlLCJyZXF1ZXN0SWQiOiJyZXEtMDA0In0sImhlYWRlciI6eyJjYXBhYmlsaXR5VG9rZW5SZWYiOiJ1cm46Y2FwOjY2MGY5NTExLWYzYWMtNDJlNS1iODI3LTU1Nzc2NjU1MDAwMiIsInJlY2lwaWVudERpZCI6ImRpZDphZ2VudDpiNGUyYzNkNWY2YTdiOGM5ZDBlMWYyYTNiNGM1ZDZlN2Y4YTliMGMxIiwic2VuZGVyRGlkIjoiZGlkOmFnZW50OmEzZjFiMmM0ZDVlNmY3YThiOWMwZDFlMmYzYTRiNWM2ZDdlOGY5YTAiLCJzZXNzaW9uSWQiOiI5OTFiMjg0NC1iNmRmLTQ1YjgtYTAzOS03NzBhOTk4ODIyMTYifSwiaWQiOiI5OTFiMjg0NC1iNmRmLTQ1YjgtYTAzOS03NzBhOTk4ODIyMTYiLCJtZXNzYWdlVHlwZSI6Ik5FR09USUFUSU9OX0NPTkZJUk0iLCJzaWduYXR1cmUiOiJlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZSIsInNwZWNWZXJzaW9uIjoiMC4yLjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTAxLTAxVDAwOjA0OjAwLjAwMFoifQ==",
+            "expected_sha256": "0395d6be8e297c7b5a5218b210a45ea4c305781f20976565d7fd906332a6bca8"
+        },
+        {
+            "id": "conformance-valid-handshake-init-v02",
+            "description": "conformance fixture: specVersion 0.2.0 handshake without capabilityTokenRef (legacy format still passes)",
+            "input": {
+                "id": "aa2c3955-c7e0-46c9-b14a-881baaa93327",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+                    "recipientDid": "did:agent:d6a4e5f7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "nonce": "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+                    "capabilities": [
+                        "INQUIRY"
+                    ],
+                    "initiatorDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2"
+                },
+                "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "timestamp": "2026-01-01T00:05:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImNhcGFiaWxpdGllcyI6WyJJTlFVSVJZIl0sImluaXRpYXRvckRpZCI6ImRpZDphZ2VudDpjNWYzZDRlNmE3YjhjOWQwZTFmMmEzYjRjNWQ2ZTdmOGE5YjBjMWQyIiwibm9uY2UiOiJlNWY2YTdiOGM5ZDBlMWYyYTNiNGM1ZDZlN2Y4YTliMCJ9LCJoZWFkZXIiOnsicmVjaXBpZW50RGlkIjoiZGlkOmFnZW50OmQ2YTRlNWY3YjhjOWQwZTFmMmEzYjRjNWQ2ZTdmOGE5YjBjMWQyZTMiLCJzZW5kZXJEaWQiOiJkaWQ6YWdlbnQ6YzVmM2Q0ZTZhN2I4YzlkMGUxZjJhM2I0YzVkNmU3ZjhhOWIwYzFkMiIsInNlc3Npb25JZCI6bnVsbH0sImlkIjoiYWEyYzM5NTUtYzdlMC00NmM5LWIxNGEtODgxYmFhYTkzMzI3IiwibWVzc2FnZVR5cGUiOiJIQU5EU0hBS0VfSU5JVCIsInNpZ25hdHVyZSI6ImZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmIiwic3BlY1ZlcnNpb24iOiIwLjIuMCIsInRpbWVzdGFtcCI6IjIwMjYtMDEtMDFUMDA6MDU6MDAuMDAwWiJ9",
+            "expected_sha256": "9eec806592193ceef48b00f3a4e151fceb72dc4209691bbdbddd916233b3892b"
+        },
+        {
+            "id": "boundary-empty-body",
+            "description": "envelope with an empty body",
+            "input": {
+                "id": "aaaaaaaa-0000-0000-0000-000000000001",
+                "specVersion": "0.4.0",
+                "header": {
+                    "senderDid": "did:agent:aabbccdd",
+                    "recipientDid": "did:agent:eeff0011",
+                    "sessionId": null,
+                    "sequenceNumber": 0
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {},
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7fSwiaGVhZGVyIjp7InJlY2lwaWVudERpZCI6ImRpZDphZ2VudDplZWZmMDAxMSIsInNlbmRlckRpZCI6ImRpZDphZ2VudDphYWJiY2NkZCIsInNlcXVlbmNlTnVtYmVyIjowLCJzZXNzaW9uSWQiOm51bGx9LCJpZCI6ImFhYWFhYWFhLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMSIsIm1lc3NhZ2VUeXBlIjoiSEFORFNIQUtFX0lOSVQiLCJzaWduYXR1cmUiOiJhYWJiY2NkZGVlZmYwMDExMjIzMzQ0NTU2Njc3ODg5OWFhYmJjY2RkZWVmZjAwMTEyMjMzNDQ1NTY2Nzc4ODk5YWFiYmNjZGRlZWZmMDAxMTIyMzM0NDU1NjY3Nzg4OTlhYWJiY2NkZGVlZmYwMDExMjIzMzQ0NTU2Njc3ODg5OSIsInNwZWNWZXJzaW9uIjoiMC40LjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTAxLTAxVDAwOjAwOjAwLjAwMFoifQ==",
+            "expected_sha256": "ce55216bc394a4f4fbb54ce169bd4add0a3d7d4d6ec9e824fc6e5e06bf2930da"
+        },
+        {
+            "id": "boundary-spec-v040",
+            "description": "specVersion 0.4.0 envelope",
+            "input": {
+                "id": "bbbbbbbb-0000-0000-0000-000000000002",
+                "specVersion": "0.4.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "sess-cccccccc-0000-0000-0000-000000000003",
+                    "sequenceNumber": 5
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "action": "INQUIRY",
+                    "params": {
+                        "sku": "SKU-001",
+                        "quantity": 10
+                    },
+                    "requestId": "req-boundary-001"
+                },
+                "signature": "ccccddddeeee00001111222233334444555566667777888899990000aaaabbbbccccddddeeee00001111222233334444555566667777888899990000aaaabbbbcc",
+                "timestamp": "2026-05-12T00:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImFjdGlvbiI6IklOUVVJUlkiLCJwYXJhbXMiOnsicXVhbnRpdHkiOjEwLCJza3UiOiJTS1UtMDAxIn0sInJlcXVlc3RJZCI6InJlcS1ib3VuZGFyeS0wMDEifSwiaGVhZGVyIjp7InJlY2lwaWVudERpZCI6ImRpZDphZ2VudDpiNGUyYzNkNWY2YTdiOGM5ZDBlMWYyYTNiNGM1ZDZlN2Y4YTliMGMxIiwic2VuZGVyRGlkIjoiZGlkOmFnZW50OmEzZjFiMmM0ZDVlNmY3YThiOWMwZDFlMmYzYTRiNWM2ZDdlOGY5YTAiLCJzZXF1ZW5jZU51bWJlciI6NSwic2Vzc2lvbklkIjoic2Vzcy1jY2NjY2NjYy0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDMifSwiaWQiOiJiYmJiYmJiYi0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDIiLCJtZXNzYWdlVHlwZSI6Ik5FR09USUFUSU9OX1JFUVVFU1QiLCJzaWduYXR1cmUiOiJjY2NjZGRkZGVlZWUwMDAwMTExMTIyMjIzMzMzNDQ0NDU1NTU2NjY2Nzc3Nzg4ODg5OTk5MDAwMGFhYWFiYmJiY2NjY2RkZGRlZWVlMDAwMDExMTEyMjIyMzMzMzQ0NDQ1NTU1NjY2Njc3Nzc4ODg4OTk5OTAwMDBhYWFhYmJiYmNjIiwic3BlY1ZlcnNpb24iOiIwLjQuMCIsInRpbWVzdGFtcCI6IjIwMjYtMDUtMTJUMDA6MDA6MDAuMDAwWiJ9",
+            "expected_sha256": "4e928ad57909e87735c374a90dff2e52f965fbf2d35f53d167a0b83506b03db2"
+        },
+        {
+            "id": "boundary-unicode-body",
+            "description": "body containing Unicode characters",
+            "input": {
+                "id": "cccccccc-0000-0000-0000-000000000003",
+                "specVersion": "0.4.0",
+                "header": {
+                    "senderDid": "did:agent:a1b2c3d4",
+                    "recipientDid": "did:agent:e5f6a7b8",
+                    "sessionId": null,
+                    "sequenceNumber": 0
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "description": "中文描述 + emoji 🚀",
+                    "tags": [
+                        "标签一",
+                        "标签二"
+                    ]
+                },
+                "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "timestamp": "2026-05-12T01:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImRlc2NyaXB0aW9uIjoi5Lit5paH5o+P6L+wICsgZW1vamkg8J+agCIsInRhZ3MiOlsi5qCH562+5LiAIiwi5qCH562+5LqMIl19LCJoZWFkZXIiOnsicmVjaXBpZW50RGlkIjoiZGlkOmFnZW50OmU1ZjZhN2I4Iiwic2VuZGVyRGlkIjoiZGlkOmFnZW50OmExYjJjM2Q0Iiwic2VxdWVuY2VOdW1iZXIiOjAsInNlc3Npb25JZCI6bnVsbH0sImlkIjoiY2NjY2NjY2MtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAzIiwibWVzc2FnZVR5cGUiOiJORUdPVElBVElPTl9SRVFVRVNUIiwic2lnbmF0dXJlIjoiZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGRkZGQiLCJzcGVjVmVyc2lvbiI6IjAuNC4wIiwidGltZXN0YW1wIjoiMjAyNi0wNS0xMlQwMTowMDowMC4wMDBaIn0=",
+            "expected_sha256": "4c744b9e683a8d16552aac8e92a34f93cc9998af8e79f5ae9670e5a73a3f9562"
+        },
+        {
+            "id": "boundary-null-session",
+            "description": "sessionId=null boundary — handshake initiation",
+            "input": {
+                "id": "dddddddd-0000-0000-0000-000000000004",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:11223344",
+                    "recipientDid": "did:agent:55667788",
+                    "sessionId": null,
+                    "sequenceNumber": 0
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "nonce": "ffffffffffffffffffffffffffffffff",
+                    "capabilities": [
+                        "INQUIRY"
+                    ],
+                    "initiatorDid": "did:agent:11223344"
+                },
+                "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "timestamp": "2026-05-12T02:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImNhcGFiaWxpdGllcyI6WyJJTlFVSVJZIl0sImluaXRpYXRvckRpZCI6ImRpZDphZ2VudDoxMTIyMzM0NCIsIm5vbmNlIjoiZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmYifSwiaGVhZGVyIjp7InJlY2lwaWVudERpZCI6ImRpZDphZ2VudDo1NTY2Nzc4OCIsInNlbmRlckRpZCI6ImRpZDphZ2VudDoxMTIyMzM0NCIsInNlcXVlbmNlTnVtYmVyIjowLCJzZXNzaW9uSWQiOm51bGx9LCJpZCI6ImRkZGRkZGRkLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwNCIsIm1lc3NhZ2VUeXBlIjoiSEFORFNIQUtFX0lOSVQiLCJzaWduYXR1cmUiOiJlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZWVlZSIsInNwZWNWZXJzaW9uIjoiMC4xLjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTA1LTEyVDAyOjAwOjAwLjAwMFoifQ==",
+            "expected_sha256": "a8e3f919e71e1204dc4dbf4e35b749bfeb36a541244c23676803ff71adaa7e56"
+        },
+        {
+            "id": "boundary-large-sequence-number",
+            "description": "sequenceNumber large integer (within JS safe range)",
+            "input": {
+                "id": "eeeeeeee-0000-0000-0000-000000000005",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:aabbccdd",
+                    "recipientDid": "did:agent:00112233",
+                    "sessionId": "sess-ffffffff-0000-0000-0000-000000000006",
+                    "sequenceNumber": 9007199254740991
+                },
+                "messageType": "ERROR",
+                "body": {
+                    "code": "SCOPE_EXCEEDED",
+                    "detail": "Sequence number overflow boundary test.",
+                    "requestId": "req-boundary-max"
+                },
+                "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "timestamp": "2026-05-12T03:00:00.000Z"
+            },
+            "expected_wire_bytes_base64": "eyJib2R5Ijp7ImNvZGUiOiJTQ09QRV9FWENFRURFRCIsImRldGFpbCI6IlNlcXVlbmNlIG51bWJlciBvdmVyZmxvdyBib3VuZGFyeSB0ZXN0LiIsInJlcXVlc3RJZCI6InJlcS1ib3VuZGFyeS1tYXgifSwiaGVhZGVyIjp7InJlY2lwaWVudERpZCI6ImRpZDphZ2VudDowMDExMjIzMyIsInNlbmRlckRpZCI6ImRpZDphZ2VudDphYWJiY2NkZCIsInNlcXVlbmNlTnVtYmVyIjo5MDA3MTk5MjU0NzQwOTkxLCJzZXNzaW9uSWQiOiJzZXNzLWZmZmZmZmZmLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwNiJ9LCJpZCI6ImVlZWVlZWVlLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwNSIsIm1lc3NhZ2VUeXBlIjoiRVJST1IiLCJzaWduYXR1cmUiOiJmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZmZiIsInNwZWNWZXJzaW9uIjoiMC4yLjAiLCJ0aW1lc3RhbXAiOiIyMDI2LTA1LTEyVDAzOjAwOjAwLjAwMFoifQ==",
+            "expected_sha256": "47ba1bd03b476f49486de38106a0055b9b9d1edddfd8db877d28e5054d8f6f1c"
+        }
+    ]
+}

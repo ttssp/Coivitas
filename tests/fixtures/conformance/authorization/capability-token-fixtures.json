@@ -1,0 +1,68 @@
+{
+ "$schema": "conformance/authorization/capability-token-fixtures",
+ "specVersion": "0.1.0",
+ "description": "CapabilityToken fixtures aligned with the current L2 implementation",
+ "valid": [
+ {
+ "id": "valid-inquiry-allowlist",
+ "data": {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-446655440000",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-21T10:00:00.000Z",
+ "expiresAt": "2026-04-22T10:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "recipient",
+ "values": ["supplier-a", "*.acme.com"]
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/v1/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-04-21T10:00:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-plain-uuid-id",
+ "expectedError": "INVALID_TOKEN_FORMAT",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-446655440000",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-21T10:00:00.000Z",
+ "expiresAt": "2026-04-22T10:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "recipient",
+ "values": ["supplier-a"]
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/v1/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-04-21T10:00:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ }
+ }
+ ]
+}

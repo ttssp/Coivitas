@@ -1,0 +1,18 @@
+# Grafana dashboard provider provisioning.
+# Points at /var/lib/grafana/dashboards to load all *.json dashboards.
+# Auto-imported on startup; no manual UI upload needed.
+
+apiVersion: 1
+
+providers:
+    - name: 'coivitas-managed-service'
+      orgId: 1
+      folder: 'Coivitas'
+      type: file
+      disableDeletion: false
+      editable: true
+      updateIntervalSeconds: 60
+      allowUiUpdates: true
+      options:
+          path: /var/lib/grafana/dashboards
+          foldersFromFilesStructure: false

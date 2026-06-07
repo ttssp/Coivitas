@@ -1,0 +1,115 @@
+{
+ "$id": "https://coivitas.ai/schemas/audit-share-v0.2.json",
+ "title": "AuditShareVerifiedRequest",
+ "description": "audit-share v0.2 sub-protocol — VerifiedAuditRequest JSON Schema",
+ "type": "object",
+ "required": [
+  "auditShareVersion",
+  "token",
+  "disclosedClaims",
+  "challenge",
+  "audience",
+  "notAfter",
+  "requestedScope",
+  "requesterDid",
+  "requesterSignature"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "auditShareVersion": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+   "const": "1.0.0",
+   "description": "audit-share protocol version; the sole v0.2 value is '1.0.0'"
+  },
+  "token": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+   "description": "= DelegatedAuditKey.auditKeyId; UUID v4 format (same format as csp UuidV4String; guarded by the AuditKeyId brand factory toAuditKeyId)"
+  },
+  "disclosedClaims": {
+   "type": "array",
+   "uniqueItems": true,
+   "description": "selective disclosure projected field subset; each item must belong to the AuditEventField enum (15 items frozen); AJV uniqueItems prevents duplicates",
+   "items": {
+    "type": "string",
+    "enum": [
+     "id",
+     "eventType",
+     "actorDid",
+     "targetAgentDid",
+     "timestamp",
+     "correlationId",
+     "outcome",
+     "denyReason",
+     "prevHash",
+     "signature",
+     "tenantId",
+     "auditClass",
+     "chainNamespace",
+     "chainPosition",
+     "canonicalPayloadHash"
+    ]
+   }
+  },
+  "challenge": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+   "description": "verifier-side issued nonce; UUID v4 format (csp; single-use)"
+  },
+  "audience": {
+   "type": "string",
+   "pattern": "^did:",
+   "minLength": 5,
+   "description": "= target domain DID; strict audience binding (csp F2; startsWith did: guards against hijack)"
+  },
+  "notAfter": {
+   "type": "string",
+   "format": "date-time",
+   "description": "independent expiry window for the csp signed payload; ISO 8601 UTC (csp I5 stale-replay defense)"
+  },
+  "requestedScope": {
+   "type": "object",
+   "required": [
+    "tenantId",
+    "auditClass"
+   ],
+   "additionalProperties": false,
+   "description": "L3 manager fetch by scope brand; the factory toAuditShareScope guard rejects sentinel enumeration",
+   "properties": {
+    "tenantId": {
+     "type": "string",
+     "minLength": 1,
+     "description": "atp v0.1 tenant isolation primary key; sentinel enumeration is enforced at the factory layer"
+    },
+    "auditClass": {
+     "type": "string",
+     "enum": [
+      "L1",
+      "L2",
+      "L3"
+     ],
+     "description": "atp v0.1 three-tier audit isolation; L1=public / L2=tenant-scoped / L3=principal-scoped"
+    },
+    "chainNamespace": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Optional chain namespace (atp/policy/governance); if provided must be non-empty and non-sentinel"
+    }
+   }
+  },
+  "requesterDid": {
+   "type": "string",
+   "pattern": "^did:",
+   "minLength": 5,
+   "description": "= DelegatedAuditKey.delegatedTo; strict-equality verify at step 5 (AUDIT_SHARE_DELEGATOR_AUDIENCE_MISMATCH)"
+  },
+  "requesterSignature": {
+   "type": "string",
+   "minLength": 64,
+   "description": "Ed25519 hex/base64url signature; the requester's private key signs canonicalize(request minus requesterSignature)"
+  }
+ }
+}

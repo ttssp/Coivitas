@@ -1,0 +1,134 @@
+{
+ "$schema": "conformance/communication/error-envelope",
+ "specVersion": "0.1.0",
+ "description": "Standard ERROR envelope fixtures",
+ "valid": [
+ {
+ "id": "valid-authz-insufficient",
+ "description": "Insufficient authorization error",
+ "data": {
+ "id": "da7f9511-f3ac-42e5-b827-557766550009",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": "ca3f9511-f3ac-42e5-b827-557766550009"
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "AUTHORIZATION_INSUFFICIENT",
+ "message": "capability revoked",
+ "relatedEnvelopeId": "550e8400-e29b-41d4-a716-446655440001"
+ },
+ "signature": "66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666",
+ "timestamp": "2026-04-03T00:05:00.000Z"
+ }
+ },
+ {
+ "id": "valid-session-not-found",
+ "description": "Session-not-found error",
+ "data": {
+ "id": "eb8f9511-f3ac-42e5-b827-557766550010",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": "da4f9511-f3ac-42e5-b827-557766550010"
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "SESSION_NOT_FOUND",
+ "message": "session is unavailable"
+ },
+ "signature": "77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777",
+ "timestamp": "2026-04-03T00:05:01.000Z"
+ }
+ },
+ {
+ "id": "valid-internal-error",
+ "description": "Internal error envelope",
+ "data": {
+ "id": "fc9f9511-f3ac-42e5-b827-557766550011",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": null
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "INTERNAL_ERROR",
+ "message": "unexpected failure"
+ },
+ "signature": "88888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888",
+ "timestamp": "2026-04-03T00:05:02.000Z"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-unknown-error-code",
+ "description": "Error code is not in the standard set",
+ "expectedIssue": "INVALID_ERROR_ENVELOPE",
+ "data": {
+ "id": "0da09511-f3ac-42e5-b827-557766550012",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": null
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "NOT_STANDARD",
+ "message": "unexpected"
+ },
+ "signature": "99999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999",
+ "timestamp": "2026-04-03T00:05:03.000Z"
+ }
+ },
+ {
+ "id": "invalid-error-missing-message",
+ "description": "Error body is missing message",
+ "expectedIssue": "INVALID_ERROR_ENVELOPE",
+ "data": {
+ "id": "1ea19511-f3ac-42e5-b827-557766550013",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": null
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "INTERNAL_ERROR"
+ },
+ "signature": "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab",
+ "timestamp": "2026-04-03T00:05:04.000Z"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-error-without-related-envelope",
+ "description": "Minimal valid error body with an empty relatedEnvelopeId",
+ "valid": true,
+ "data": {
+ "id": "2fb29511-f3ac-42e5-b827-557766550014",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "recipientDid": "did:agent:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "sessionId": null
+ },
+ "messageType": "ERROR",
+ "body": {
+ "code": "INVALID_ENVELOPE",
+ "message": "payload shape mismatch"
+ },
+ "signature": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+ "timestamp": "2026-04-03T00:05:05.000Z"
+ }
+ }
+ ]
+}

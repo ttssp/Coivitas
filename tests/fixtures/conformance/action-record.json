@@ -1,0 +1,474 @@
+{
+ "$schema": "conformance/action-record",
+ "specVersion": "0.1.0",
+ "description": "ActionRecord wire-format conformance fixtures — ledger object shape alignment",
+ "valid": [
+ {
+ "id": "valid-first-record",
+ "description": "chain-head record (prevHash is null), object shape parametersSummary + authorizationRef + resultSummary",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110001",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {
+ "product_category": "electronics"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "valid-chained-record",
+ "description": "chained record (prevHash references the previous record), parametersSummary carries a readable summary",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110002",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V001",
+ "amount": 3000
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:02:00.000Z",
+ "prevHash": "ba7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0001",
+ "ledgerSignature": "bbbbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "valid-rejected-no-match",
+ "description": "action rejected (no matching token), authorizationRef=null + resultSummary.status=REJECTED",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110003",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {
+ "order_id": "ORD-001"
+ },
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "no matching capability"
+ },
+ "timestamp": "2026-01-01T00:03:00.000Z",
+ "prevHash": "ca7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0002",
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "valid-rejected-human-denied",
+ "description": "human approval denied: resultSummary.reason distinguished from a system-level rejection",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110004",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "action": "CONFIRM",
+ "parametersSummary": {
+ "amount": 9500
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:660f9511-f3ac-52e5-b827-557766550001"
+ },
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "human approval denied"
+ },
+ "timestamp": "2026-01-01T00:04:00.000Z",
+ "prevHash": "da7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0003",
+ "ledgerSignature": "ddddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ },
+ {
+ "id": "valid-error-execution",
+ "description": "execution-time error: resultSummary.status=ERROR + message (distinct from a REJECTED reason)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110005",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V002",
+ "amount": 1500
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "connection timeout"
+ },
+ "timestamp": "2026-01-01T00:05:00.000Z",
+ "prevHash": "ea7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0004",
+ "ledgerSignature": "eeeeeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ },
+ {
+ "id": "valid-null-parameters-summary",
+ "description": "parametersSummary may be null (scenario where all sensitive fields are redacted)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110006",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": null,
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:06:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "fffeeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ },
+ {
+ "id": "valid-null-result-summary",
+ "description": "round 2: resultSummary may be null (object|null; action-recorder.ts normalization scenario)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110009",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": {
+ "ledger_id": "primary"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": null,
+ "timestamp": "2026-01-01T00:09:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "9999eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ },
+ {
+ "id": "valid-result-summary-with-amount",
+ "description": "round 2: resultSummary carries amount (cumulative aggregation field)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-11111111000c",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V004"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "amount": 3000
+ },
+ "timestamp": "2026-01-01T00:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "8888eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ },
+ {
+ "id": "valid-authorization-ref-token-id-null",
+ "description": "round 2: authorizationRef.tokenId may be null (exception branch: token ID could not be determined)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-11111111000d",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": null
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "7777eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-unknown-status",
+ "description": "resultSummary.status outside the enum range (PENDING_APPROVAL is not a terminal value and cannot be committed to the ledger)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-001",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "PENDING_APPROVAL"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-missing-authorization-ref",
+ "description": "missing authorizationRef field (required; may be null but cannot be omitted)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-002",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-authorization-ref-empty-token-id",
+ "description": "authorizationRef.tokenId must be a non-empty string",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-003",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": ""
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-result-summary-missing-status",
+ "description": "resultSummary object is missing the status field (required)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-004",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "reason": "missing status"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-result-summary-unknown-field",
+ "description": "round 2: resultSummary contains an unregistered field (additionalProperties:false still applies; new metrics must go through an ADR)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110099",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "unknownMetric": 42
+ },
+ "timestamp": "2026-01-01T00:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-prevhash-wrong-length",
+ "description": "prevHash is not 64-char hex (invalid hash format)",
+ "expectedError": "INVALID_HASH_FORMAT",
+ "data": {
+ "id": "rec-invalid-005",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:01:00.000Z",
+ "prevHash": "tooshort",
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-result-summary-reason-over-500",
+ "description": "0.1.0 baseline: resultSummary.reason length 501 exceeds maxLength:500 (later review F-F)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-007",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ },
+ "timestamp": "2026-01-01T00:09:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "invalid-result-summary-message-over-500",
+ "description": "0.1.0 baseline: resultSummary.message length 501 exceeds maxLength:500 (later review F-F)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-008",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ },
+ "timestamp": "2026-01-01T00:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-prevhash-all-zeros",
+ "description": "prevHash is 64 all-zero characters (valid boundary value, not null)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110007",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:07:00.000Z",
+ "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "boundary-empty-parameters-summary-object",
+ "description": "parametersSummary is an empty object {} (valid boundary distinct from null)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110008",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-01-01T00:08:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "boundary-result-summary-reason-max-500",
+ "description": "0.1.0 baseline: resultSummary.reason length is exactly 500 (maxLength upper bound, later review F-F)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110010",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ },
+ "timestamp": "2026-01-01T00:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "boundary-result-summary-message-max-500",
+ "description": "0.1.0 baseline: resultSummary.message length is exactly 500 (maxLength upper bound, later review F-F)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110011",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ },
+ "timestamp": "2026-01-01T00:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ }
+ ]
+}

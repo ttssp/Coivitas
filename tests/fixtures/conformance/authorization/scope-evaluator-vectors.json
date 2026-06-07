@@ -1,0 +1,76 @@
+{
+    "$schema": "conformance/authorization/scope-evaluator-vectors",
+    "description": "ScopeEvaluator behavior vectors for current L3 implementation",
+    "vectors": [
+        {
+            "id": "allowlist-exact-match",
+            "scope": {
+                "type": "allowlist",
+                "field": "recipient",
+                "values": ["supplier-a"]
+            },
+            "params": {
+                "recipient": "supplier-a"
+            },
+            "expected": {
+                "allowed": true
+            }
+        },
+        {
+            "id": "allowlist-wildcard-suffix",
+            "scope": {
+                "type": "allowlist",
+                "field": "recipient",
+                "values": ["*.acme.com"]
+            },
+            "params": {
+                "recipient": "buyer.acme.com"
+            },
+            "expected": {
+                "allowed": true
+            }
+        },
+        {
+            "id": "allowlist-empty-deny",
+            "scope": {
+                "type": "allowlist",
+                "field": "recipient",
+                "values": []
+            },
+            "params": {
+                "recipient": "supplier-a"
+            },
+            "expected": {
+                "allowed": false,
+                "reason": "recipient allowlist is empty"
+            }
+        },
+        {
+            "id": "numeric-limit-missing-param-allow",
+            "scope": {
+                "type": "numeric_limit",
+                "field": "amount",
+                "max": 500
+            },
+            "params": {},
+            "expected": {
+                "allowed": true
+            }
+        },
+        {
+            "id": "numeric-limit-string-deny",
+            "scope": {
+                "type": "numeric_limit",
+                "field": "amount",
+                "max": 500
+            },
+            "params": {
+                "amount": "500"
+            },
+            "expected": {
+                "allowed": false,
+                "reason": "amount is not a number"
+            }
+        }
+    ]
+}

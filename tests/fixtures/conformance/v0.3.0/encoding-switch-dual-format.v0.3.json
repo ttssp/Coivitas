@@ -1,0 +1,409 @@
+{
+ "$schema": "conformance/encoding-switch",
+ "description": "conformance fixture: v0.2 hex->base64url encoding switch + v0.3.0 tri-state coexistence dual-format cross-validation. Comparison samples of the same logical value under both hex and base64url encodings, used to verify the multi-version validator's dual-read capability.",
+ "encoding_pairs": [
+ {
+ "id": "pair-01-public-key-32byte",
+ "description": "32-byte Ed25519 public key: hex 64-char vs base64url 43-char (two encodings of the same byte sequence)",
+ "logicalValue": "32 bytes: a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "hex": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "base64url": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "byteLength": 32
+ },
+ {
+ "id": "pair-02-signature-64byte",
+ "description": "64-byte Ed25519 signature: hex 128-char vs base64url 86-char",
+ "logicalValue": "64 bytes: aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "hex": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "base64url": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "byteLength": 64
+ },
+ {
+ "id": "pair-03-hash-32byte",
+ "description": "32-byte SHA-256 hash: hex 64-char vs base64url 43-char",
+ "logicalValue": "32 bytes: ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+ "hex": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad",
+ "base64url": "ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0",
+ "byteLength": 32
+ }
+ ],
+ "agent_identity_document": {
+ "description": "AgentIdentityDocument: the same entity compared under v0.1.0 hex and v0.2.0 base64url encodings",
+ "v010_hex": {
+ "id": "enc-v010-aid-hex",
+ "description": "v0.1.0 AgentIdentityDocument -- all cryptographic fields hex-encoded (baseline)",
+ "valid": true,
+ "validatorVersion": ["0.1.0", "0.2.0", "0.3.0"],
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b7c8d9e0f1a2",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "createdAt": "2026-04-01T00:00:00.000Z",
+ "updatedAt": "2026-04-01T00:00:00.000Z"
+ }
+ },
+ "v020_base64url": {
+ "id": "enc-v020-aid-base64url",
+ "description": "v0.2.0 AgentIdentityDocument -- same logical entity, cryptographic fields base64url-encoded (after the switch)",
+ "valid": true,
+ "validatorVersion": ["0.2.0", "0.3.0"],
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ"
+ },
+ "version": 1,
+ "createdAt": "2026-04-01T00:00:00.000Z",
+ "updatedAt": "2026-04-01T00:00:00.000Z"
+ }
+ },
+ "v030_base64url": {
+ "id": "enc-v030-aid-base64url",
+ "description": "v0.3.0 AgentIdentityDocument -- inherits v0.2.0 base64url encoding (v0.3.0 does not change encoding semantics)",
+ "valid": true,
+ "validatorVersion": ["0.3.0"],
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.3.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ"
+ },
+ "version": 1,
+ "createdAt": "2026-04-01T00:00:00.000Z",
+ "updatedAt": "2026-04-01T00:00:00.000Z"
+ }
+ }
+ },
+ "negotiation_envelope": {
+ "description": "NegotiationEnvelope: the same logical message compared under hex and base64url encodings",
+ "v010_hex": {
+ "id": "enc-v010-env-hex",
+ "description": "v0.1.0 envelope -- signature hex 128-char",
+ "valid": true,
+ "validatorVersion": ["0.1.0", "0.2.0", "0.3.0"],
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b100000001",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 0
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+ "capabilities": ["INQUIRY"],
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+ },
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "timestamp": "2026-05-01T00:00:00.000Z"
+ }
+ },
+ "v020_base64url": {
+ "id": "enc-v020-env-base64url",
+ "description": "v0.2.0 envelope -- signature base64url 86-char (same logical signature value)",
+ "valid": true,
+ "validatorVersion": ["0.2.0", "0.3.0"],
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b100000002",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b100000002",
+ "sequenceNumber": 1,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": { "sku": "SKU-ENC-01" },
+ "requestId": "req-enc-v02"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T00:01:00.000Z"
+ }
+ },
+ "v030_base64url": {
+ "id": "enc-v030-env-base64url",
+ "description": "v0.3.0 envelope -- inherits v0.2.0 base64url encoding (v0.3.0 does not change encoding semantics; no capabilityTokenRef)",
+ "valid": true,
+ "validatorVersion": ["0.3.0"],
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b100000003",
+ "specVersion": "0.3.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b100000003",
+ "sequenceNumber": 1
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": { "sku": "SKU-ENC-03" },
+ "requestId": "req-enc-v03"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T00:02:00.000Z"
+ }
+ }
+ },
+ "action_record": {
+ "description": "ActionRecord compared under hex and base64url encodings (paramsHash / prevHash / ledgerSignature / actorSignature)",
+ "v010_hex": {
+ "id": "enc-v010-ar-hex",
+ "description": "v0.1.0 ActionRecord -- all cryptographic fields hex-encoded",
+ "valid": true,
+ "validatorVersion": ["0.1.0", "0.2.0", "0.3.0"],
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b100000011",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product": "widget" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T00:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ "v020_base64url": {
+ "id": "enc-v020-ar-base64url",
+ "description": "v0.2.0 ActionRecord -- cryptographic fields base64url + actorSignature required (dual signature)",
+ "valid": true,
+ "validatorVersion": ["0.2.0", "0.3.0"],
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b100000012",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product": "widget" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T00:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-enc-v02"
+ }
+ },
+ "v030_base64url": {
+ "id": "enc-v030-ar-base64url",
+ "description": "v0.3.0 ActionRecord -- inherits v0.2.0 base64url + delegationDepth required",
+ "valid": true,
+ "validatorVersion": ["0.3.0"],
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b100000013",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product": "widget" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T00:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-enc-v03",
+ "delegationDepth": 0
+ }
+ }
+ },
+ "capability_token": {
+ "description": "CapabilityToken proof.value compared under hex and base64url encodings",
+ "v010_hex": {
+ "id": "enc-v010-ct-hex",
+ "description": "v0.1.0 CapabilityToken -- proof.value hex 128-char",
+ "valid": true,
+ "validatorVersion": ["0.1.0", "0.2.0", "0.3.0"],
+ "data": {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-09b100000021",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-05-01T00:20:00.000Z",
+ "expiresAt": "2027-05-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B"]
+ }
+ }
+ ],
+ "revocationUrl": "https://example.com/revoke/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-05-01T00:20:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ }
+ },
+ "v020_base64url": {
+ "id": "enc-v020-ct-base64url",
+ "description": "v0.2.0 CapabilityToken -- proof.value base64url 86-char",
+ "valid": true,
+ "validatorVersion": ["0.2.0", "0.3.0"],
+ "data": {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-09b100000022",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-05-01T00:21:00.000Z",
+ "expiresAt": "2027-05-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B"]
+ }
+ }
+ ],
+ "revocationUrl": "https://example.com/revoke/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-05-01T00:21:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ"
+ }
+ }
+ }
+ },
+ "invalid_encoding": [
+ {
+ "id": "enc-invalid-mixed-encoding-same-object",
+ "description": "within the same v0.2.0 document, publicKey uses base64url but bindingProof.signature uses hex (mixed encoding violates the RotationProof consistency hard constraint)",
+ "valid": false,
+ "expectedError": "encoding format mismatch within same specVersion",
+ "data": {
+ "id": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-04-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ },
+ "version": 1,
+ "createdAt": "2026-04-01T00:00:00.000Z",
+ "updatedAt": "2026-04-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "enc-invalid-base64url-with-padding",
+ "description": "base64url signature with padding '=' (standard base64url has no padding; the schema pattern should reject)",
+ "valid": false,
+ "expectedError": "signature format invalid",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b100000099",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 0
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+ "capabilities": ["INQUIRY"],
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ==",
+ "timestamp": "2026-05-01T00:30:00.000Z"
+ }
+ },
+ {
+ "id": "enc-invalid-truncated-base64url-signature",
+ "description": "base64url signature too short (< 86 char for Ed25519, truncated)",
+ "valid": false,
+ "expectedError": "signature format invalid",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b10000009a",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b10000009a",
+ "sequenceNumber": 1,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": {},
+ "requestId": "req-enc-trunc"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_w",
+ "timestamp": "2026-05-01T00:31:00.000Z"
+ }
+ },
+ {
+ "id": "enc-invalid-standard-base64-not-url-safe",
+ "description": "standard base64 (contains '+' and '/') rather than base64url (the schema requires the URL-safe character set [A-Za-z0-9_-])",
+ "valid": false,
+ "expectedError": "signature format invalid",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b10000009b",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 0
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+ "capabilities": ["INQUIRY"],
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+ },
+ "signature": "qrvM3e7/ABEiM0RVZneImaq7zN3u/wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7/ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T00:32:00.000Z"
+ }
+ }
+ ]
+}

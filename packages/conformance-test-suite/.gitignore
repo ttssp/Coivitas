@@ -1,0 +1,8 @@
+# build artifacts
+dist/
+coverage/
+tsconfig.tsbuildinfo
+
+# fixtures/ is a generated directory copied from tests/fixtures/conformance/v0.3.0/ during the build,
+# not version-controlled (included in the published package via npm pack).
+fixtures/

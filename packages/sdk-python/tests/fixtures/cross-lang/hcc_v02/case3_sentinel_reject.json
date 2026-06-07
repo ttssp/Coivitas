@@ -1,0 +1,16 @@
+{
+ "_comment": "hcc v0.2 Case 3: sentinel reject — genesis previousHash must be 64-zero string",
+ "_d37_change": " E-track: removed payloadType + chainIdentityJcs; added canonicalPayload (str) + timestamp",
+ "entry": {
+ "entryId": "rec-00000000-0000-1000-8000-000000000001",
+ "chainPosition": 1,
+ "previousHash": "0000000000000000000000000000000000000000000000000000000000000000",
+ "canonicalPayload": "{\"type\":\"audit_record\",\"subject\":\"agent-001\"}",
+ "canonicalPayloadHash": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "hccVersion": "2.0.0",
+ "chainIdentity": {"chainNamespace": "tenant:prod:audit"},
+ "timestamp": "2026-05-24T00:00:00+00:00"
+ },
+ "expectedError": "HCC_GENESIS_INVARIANT_VIOLATION",
+ "_note": "chainPosition=1 but previousHash=sentinel → genesis invariant violation (non-genesis must have real previousHash)"
+}

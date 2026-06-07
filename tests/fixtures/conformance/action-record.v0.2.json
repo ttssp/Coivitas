@@ -1,0 +1,449 @@
+{
+ "$schema": "conformance/action-record",
+ "specVersion": "0.2.0",
+ "description": "ActionRecord (specVersion 0.2.0) conformance fixtures — object shape aligned with rulings #14/#15/#16; coexists with the *.json 0.1.0 baseline, covering structured resultSummary + delegationDepth boundaries (F4 must-fix)",
+ "valid": [
+ {
+ "id": "valid-v02-with-session-id-only",
+ "description": "specVersion 0.2.0 + sessionId (minimal extension) + actorSignature dual-signing (mandatory in v0.2)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110011",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {
+ "product_category": "electronics"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:00:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-phase2-single-field",
+ "actorSignature": "11111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111"
+ }
+ },
+ {
+ "id": "valid-v02-with-full-phase2-fields",
+ "description": "specVersion 0.2.0 + sessionId + delegationDepth:2 + actorSignature (all new fields, dual-signed)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110012",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V001",
+ "amount": 3000
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:cc33dd44-55ee-46ff-8011-223344556612"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:01:00.000Z",
+ "prevHash": "ba7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0001",
+ "ledgerSignature": "bbbbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-phase2-full-fields",
+ "delegationDepth": 2,
+ "actorSignature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee7788"
+ }
+ },
+ {
+ "id": "valid-v02-delegation-depth-zero",
+ "description": "delegationDepth:0 means direct authorization with no delegation (semantic boundary) + actorSignature dual-signing",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110013",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": {
+ "ledger_id": "primary-ledger"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:02:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "cccceeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-direct-no-delegation",
+ "delegationDepth": 0,
+ "actorSignature": "22222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222"
+ }
+ },
+ {
+ "id": "valid-v02-rejected-structured-result",
+ "description": "structured resultSummary (REJECTED + reason) + authorizationRef=null rejection path + actorSignature dual-signing",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110015",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {
+ "order_id": "ORD-002"
+ },
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "no matching capability"
+ },
+ "timestamp": "2026-06-01T00:03:00.000Z",
+ "prevHash": "fa7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0005",
+ "ledgerSignature": "dddddeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-reject-no-match",
+ "delegationDepth": 1,
+ "actorSignature": "33333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333"
+ }
+ },
+ {
+ "id": "valid-v02-error-structured-result",
+ "description": "structured resultSummary (ERROR + message) + delegation depth 3",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110016",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V003"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:ee55ff66-77aa-48bb-8033-445566778834"
+ },
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "upstream connection timeout"
+ },
+ "timestamp": "2026-06-01T00:04:00.000Z",
+ "prevHash": "ab7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0006",
+ "ledgerSignature": "eeeeedff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-error-execution",
+ "delegationDepth": 3,
+ "actorSignature": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc1234"
+ }
+ },
+ {
+ "id": "valid-v02-null-result-summary",
+ "description": "round 2: v0.2 resultSummary may be null (object|null; recorder normalization scenario) + actorSignature dual-signing",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110018",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": null,
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": null,
+ "timestamp": "2026-06-01T00:05:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "fffaeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-null-result-v02",
+ "actorSignature": "55555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555"
+ }
+ },
+ {
+ "id": "valid-v02-result-summary-with-amount",
+ "description": "round 2: v0.2 resultSummary carries amount (cumulative aggregation) + actorSignature dual-signing",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110019",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "vendor_id": "V005"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:cc33dd44-55ee-46ff-8011-223344556612"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "amount": 7500
+ },
+ "timestamp": "2026-06-01T00:06:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "1234eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-amount-aggregation",
+ "actorSignature": "66666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666"
+ }
+ },
+ {
+ "id": "valid-v02-authorization-ref-token-id-null",
+ "description": "round 2: v0.2 authorizationRef.tokenId may be null (exception branch) + actorSignature dual-signing",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-11111111001a",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": null
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:07:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "5678eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "sessionId": "sess-token-null-v02",
+ "actorSignature": "77777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-v02-pending-approval-status",
+ "description": "resultSummary.status=PENDING_APPROVAL is invalid (ruling #15: intermediate states are not committed to the ledger)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-001",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "PENDING_APPROVAL"
+ },
+ "timestamp": "2026-06-01T00:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-invalid-pending"
+ }
+ },
+ {
+ "id": "invalid-v02-missing-actor-signature",
+ "description": "round 2: missing actorSignature when writing specVersion 0.2.0 is invalid (schema if/then; dual-signing for non-repudiation)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-003",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:13:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-missing-actor-sig"
+ }
+ },
+ {
+ "id": "invalid-v02-delegation-depth-negative",
+ "description": "delegationDepth is negative (minimum:0)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-002",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-invalid-depth",
+ "delegationDepth": -1
+ }
+ },
+ {
+ "id": "invalid-v02-delegation-depth-too-large",
+ "description": "delegationDepth exceeds MAX_DELEGATION_DEPTH=5 (later review F-E: aligned with ledger.schema.json maximum:5)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-004",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:14:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-invalid-depth-too-large",
+ "delegationDepth": 6,
+ "actorSignature": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111aabb"
+ }
+ },
+ {
+ "id": "invalid-v02-result-summary-reason-over-500",
+ "description": "resultSummary.reason length 501 exceeds maxLength:500 (later review F-F)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-005",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ },
+ "timestamp": "2026-06-01T00:15:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-reason-501",
+ "actorSignature": "2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222ccdd"
+ }
+ },
+ {
+ "id": "invalid-v02-result-summary-message-over-500",
+ "description": "resultSummary.message length 501 exceeds maxLength:500 (later review F-F)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "id": "rec-invalid-v02-006",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ },
+ "timestamp": "2026-06-01T00:16:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-message-501",
+ "actorSignature": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333eeff"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-delegation-depth-max-five",
+ "description": "delegationDepth:5 (soft-limit reference value, schema maximum:5)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110014",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {
+ "product_category": "electronics"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:ee55ff66-77aa-48bb-8033-445566778834"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:20:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-boundary-max-depth",
+ "delegationDepth": 5,
+ "actorSignature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff9999"
+ }
+ },
+ {
+ "id": "boundary-result-summary-minimal",
+ "description": "minimal resultSummary object { status:'SUCCESS' } (no reason/message, typical shape of the SUCCESS path) + actorSignature dual-signing",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110017",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "RECORD",
+ "parametersSummary": null,
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": {
+ "status": "SUCCESS"
+ },
+ "timestamp": "2026-06-01T00:21:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-minimal-result",
+ "actorSignature": "44444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444"
+ }
+ },
+ {
+ "id": "boundary-result-summary-reason-max-500",
+ "description": "resultSummary.reason length is exactly 500 (maxLength upper bound, later review F-F)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110020",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "REJECTED",
+ "reason": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ },
+ "timestamp": "2026-06-01T00:22:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-reason-500",
+ "actorSignature": "5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555aabb"
+ }
+ },
+ {
+ "id": "boundary-result-summary-message-max-500",
+ "description": "resultSummary.message length is exactly 500 (maxLength upper bound, later review F-F)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-111111110021",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": {},
+ "authorizationRef": null,
+ "resultSummary": {
+ "status": "ERROR",
+ "message": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ },
+ "timestamp": "2026-06-01T00:23:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "sessionId": "sess-message-500",
+ "actorSignature": "6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666ccdd"
+ }
+ }
+ ]
+}

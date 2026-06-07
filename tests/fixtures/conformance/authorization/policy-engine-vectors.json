@@ -1,0 +1,36 @@
+{
+ "$schema": "conformance/authorization/policy-engine-vectors",
+ "description": "PolicyEngine execution vectors",
+ "vectors": [
+ {
+ "id": "guard-denied",
+ "expected": {
+ "executed": false,
+ "reason": "no matching capability"
+ },
+ "recordStatus": "REJECTED"
+ },
+ {
+ "id": "human-denied",
+ "expected": {
+ "executed": false,
+ "reason": "human approval denied"
+ },
+ "recordStatus": "REJECTED"
+ },
+ {
+ "id": "executor-success",
+ "expected": {
+ "executed": true
+ },
+ "recordStatus": "SUCCESS"
+ },
+ {
+ "id": "executor-error",
+ "expected": {
+ "throws": true
+ },
+ "recordStatus": "ERROR"
+ }
+ ]
+}

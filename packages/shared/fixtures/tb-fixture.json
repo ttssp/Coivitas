@@ -1,0 +1,192 @@
+{
+  "__meta": {
+    "purpose": "trust-boundary primitive fixtures — 5 state lifecycle + 8 legal transition + edge cases"
+  },
+  "boundaries": {
+    "pending_basic": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440001",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read", "scope:write:limit:1000"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "pending",
+      "stateEnteredAt": "2026-05-18T10:00:00.000Z"
+    },
+    "active_after_t1": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440002",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "active",
+      "stateEnteredAt": "2026-05-18T10:00:01.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440101"
+    },
+    "active_after_t2_lease_extended": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440003",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-07-17T10:00:00.000Z"
+      },
+      "state": "active",
+      "stateEnteredAt": "2026-05-19T10:00:00.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440102"
+    },
+    "suspended_after_t3": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440004",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "suspended",
+      "stateEnteredAt": "2026-05-19T15:00:00.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440103"
+    },
+    "active_after_t4_resumed": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440005",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "active",
+      "stateEnteredAt": "2026-05-20T10:00:00.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440104"
+    },
+    "revoked_after_t5": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440006",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "revoked",
+      "stateEnteredAt": "2026-05-21T10:00:00.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440105"
+    },
+    "expired_after_t6_client": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440007",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "expired",
+      "stateEnteredAt": "2026-06-17T10:00:01.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440106"
+    },
+    "expired_after_t7_sweeper": {
+      "tbVersion": "1.0.0",
+      "id": "550e8400-e29b-41d4-a716-446655440008",
+      "principalSide": "did:agent:principal-alice",
+      "boundedSide": "did:agent:bounded-bob",
+      "boundaryScope": ["scope:read"],
+      "lifecycleWindow": {
+        "notBefore": "2026-05-18T10:00:00.000Z",
+        "notAfter": "2026-06-17T10:00:00.000Z"
+      },
+      "state": "expired",
+      "stateEnteredAt": "2026-06-17T10:00:30.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440107"
+    }
+  },
+  "binding_proofs": {
+    "valid_binding_proof": {
+      "cspVersion": "1.0.0",
+      "token": "binding-proof-token-data-base64",
+      "disclosedClaims": [],
+      "challenge": "challenge-uuid-12345",
+      "audience": "https://trust-boundary.coivitas.ai/v1/boundaries",
+      "notAfter": "2026-06-17T10:00:00.000Z",
+      "proofValue": "ed25519-signature-base64url-stub",
+      "boundaryId": "550e8400-e29b-41d4-a716-446655440002"
+    },
+    "valid_lease_extension_proof": {
+      "cspVersion": "1.0.0",
+      "token": "lease-extension-token-data-base64",
+      "disclosedClaims": [],
+      "challenge": "challenge-uuid-67890",
+      "audience": "https://trust-boundary.coivitas.ai/v1/boundaries",
+      "notAfter": "2026-07-17T10:00:00.000Z",
+      "proofValue": "ed25519-signature-base64url-stub",
+      "boundaryId": "550e8400-e29b-41d4-a716-446655440003"
+    }
+  },
+  "audit_events": {
+    "t1_on_trust_established": {
+      "type": "onTrustEstablished",
+      "boundaryId": "550e8400-e29b-41d4-a716-446655440002",
+      "transitionBefore": "pending",
+      "transitionAfter": "active",
+      "transitionSource": "client",
+      "actorDID": "did:agent:principal-alice",
+      "timestamp": "2026-05-18T10:00:01.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440101"
+    },
+    "t6_on_expired_client": {
+      "type": "onExpired",
+      "boundaryId": "550e8400-e29b-41d4-a716-446655440007",
+      "transitionBefore": "active",
+      "transitionAfter": "expired",
+      "transitionSource": "client",
+      "actorDID": "did:agent:principal-alice",
+      "timestamp": "2026-06-17T10:00:01.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440106"
+    },
+    "t7_on_expired_sweeper": {
+      "type": "onExpired",
+      "boundaryId": "550e8400-e29b-41d4-a716-446655440008",
+      "transitionBefore": "active",
+      "transitionAfter": "expired",
+      "transitionSource": "sweeper",
+      "actorDID": "did:system:trust-boundary-sweeper",
+      "timestamp": "2026-06-17T10:00:30.000Z",
+      "bindingProofId": "660e8400-e29b-41d4-a716-446655440107"
+    }
+  },
+  "legal_transitions": [
+    { "id": "T1", "from": "pending", "event": "onTrustEstablished", "to": "active" },
+    { "id": "T2", "from": "active", "event": "onLeaseExtended", "to": "active" },
+    { "id": "T3", "from": "active", "event": "onSuspended", "to": "suspended" },
+    { "id": "T4", "from": "suspended", "event": "onResumed", "to": "active" },
+    { "id": "T5", "from": "active", "event": "onRevoked", "to": "revoked" },
+    { "id": "T5", "from": "suspended", "event": "onRevoked", "to": "revoked" },
+    { "id": "T6", "from": "active", "event": "onExpired", "to": "expired" },
+    { "id": "T6", "from": "suspended", "event": "onExpired", "to": "expired" },
+    { "id": "T7", "from": "active", "event": "onExpired", "to": "expired" },
+    { "id": "T7", "from": "suspended", "event": "onExpired", "to": "expired" },
+    { "id": "T8", "from": "active", "event": "onEmergencySuspended", "to": "emergency_suspended" }
+  ],
+  "illegal_transitions": [
+    { "reason": "pending → revoked (must go through active)", "from": "pending", "event": "onRevoked", "to": "revoked" },
+    { "reason": "revoked → active (revoked is terminal)", "from": "revoked", "event": "onTrustEstablished", "to": "active" },
+    { "reason": "expired → active (expired is terminal)", "from": "expired", "event": "onResumed", "to": "active" },
+    { "reason": "suspended → suspended (already suspended)", "from": "suspended", "event": "onSuspended", "to": "suspended" },
+    { "reason": "pending → suspended (skip T1)", "from": "pending", "event": "onSuspended", "to": "suspended" }
+  ]
+}

@@ -1,0 +1,276 @@
+{
+ "$schema": "conformance/v030-base64url-field-extensions",
+ "description": "conformance fixture: v0.3.0 field extensions + base64url encoding combined validation. Confirms that v0.3.0's new fields (A2 dual key / A4 delegationDepth required / A8 SESSION_SUPERSEDED) work correctly in the base64url encoding context. v0.3.0's new fields are base64url from their first appearance.",
+ "a2_dual_key_base64url": {
+ "description": "ResolvedPublicKeys validation under base64url encoding (base64url from its first appearance in v0.3.0)",
+ "valid": [
+ {
+ "id": "a2-b64-valid-stable",
+ "description": "STABLE single key, base64url 43-char public key",
+ "data": {
+ "current": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "rotationState": "STABLE"
+ }
+ },
+ {
+ "id": "a2-b64-valid-rotating-with-cutoff",
+ "description": "ROTATING dual key + previousValidBefore cutoff, both public keys base64url",
+ "data": {
+ "current": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "previous": "tOLDXfant8nQ4fIjtMXW5_ipsMHSzjSltscY6fABshM",
+ "previousValidBefore": "2026-05-15T00:00:00.000Z",
+ "rotationState": "ROTATING"
+ }
+ },
+ {
+ "id": "a2-b64-valid-frozen",
+ "description": "FROZEN single key, base64url encoding",
+ "data": {
+ "current": "57X2qMnQ4fIjtMXW5_ipsMHSzjSltscY6fABshPk9aY",
+ "rotationState": "FROZEN"
+ }
+ },
+ {
+ "id": "a2-b64-valid-rotating-different-key-lengths",
+ "description": "ROTATING dual key, two distinct base64url public key values (verifies key independence)",
+ "data": {
+ "current": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+ "previous": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+ "previousValidBefore": "2026-06-01T00:00:00.000Z",
+ "rotationState": "ROTATING"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "a2-b64-invalid-hex-in-v030-context",
+ "description": "v0.3.0 ResolvedPublicKeys using hex encoding (v0.3.0's first appearance should be base64url; if the schema already hard-codes the base64url pattern it rejects; if anyOf dual-read, it is valid at the runtime layer but a semantic violation)",
+ "note": "This fixture flags that the schema-layer behavior depends on whether the resolvedPublicKeys schema uses an anyOf pattern. It only records this boundary; it does not modify the schema.",
+ "data": {
+ "current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "rotationState": "STABLE"
+ },
+ "expectedBehavior": "SCHEMA_DEPENDENT"
+ },
+ {
+ "id": "a2-b64-invalid-empty-current",
+ "description": "current is an empty string (length below minLength, the schema should reject)",
+ "data": {
+ "current": "",
+ "rotationState": "STABLE"
+ },
+ "expectedError": "current must NOT have fewer than 1 characters"
+ },
+ {
+ "id": "a2-b64-invalid-frozen-with-previous",
+ "description": "FROZEN but the previous field is present (semantic contradiction: FROZEN locks the current key, there should be no previous)",
+ "data": {
+ "current": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "previous": "tOLDXfant8nQ4fIjtMXW5_ipsMHSzjSltscY6fABshM",
+ "rotationState": "FROZEN"
+ },
+ "expectedError": "FROZEN state must not have previous key"
+ },
+ {
+ "id": "a2-b64-invalid-rotating-missing-previous",
+ "description": "ROTATING but missing previous (ROTATING must have a previous key)",
+ "data": {
+ "current": "o_GyvNXm96i5wNHi86S1xteen6CxwtPk9aa3yNng8aI",
+ "previousValidBefore": "2026-05-15T00:00:00.000Z",
+ "rotationState": "ROTATING"
+ },
+ "expectedError": "ROTATING state requires previous key"
+ }
+ ]
+ },
+ "a4_delegation_depth_base64url": {
+ "description": "v0.3.0 ActionRecord delegationDepth required + base64url signature",
+ "valid": [
+ {
+ "id": "a4-b64-valid-depth0-base64url-sigs",
+ "description": "delegationDepth=0 + ledgerSignature/actorSignature both base64url 86-char",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000001",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product": "base64url-test" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:00:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "a4-b64-valid-depth3-base64url-prevhash",
+ "description": "delegationDepth=3 + prevHash base64url 43-char (hash chain continuation)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000002",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": { "order_id": "ORD-B64-02" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:01:00.000Z",
+ "prevHash": "ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0",
+ "ledgerSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "actorSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "sessionId": "sess-b64-depth3",
+ "delegationDepth": 3
+ }
+ },
+ {
+ "id": "a4-b64-valid-depth5-max",
+ "description": "delegationDepth=5 (MAX) + base64url signature (upper-bound regression)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000003",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "PUBLISH",
+ "parametersSummary": { "channel": "public" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:02:00.000Z",
+ "prevHash": "ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0",
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-b64-depth5",
+ "delegationDepth": 5
+ }
+ },
+ {
+ "id": "a4-b64-valid-depth1-session-superseded",
+ "description": "SESSION_SUPERSEDED + delegationDepth=0 + base64url (A4+A8 combination)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000004",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440300",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440301",
+ "reason": "TOKEN_REVOKED",
+ "timestamp": "2026-05-01T11:03:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:03:00.000Z",
+ "prevHash": "ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0",
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 0
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "a4-b64-invalid-depth6-base64url",
+ "description": "delegationDepth=6 (>MAX=5) + base64url signature",
+ "expectedError": "delegationDepth must be <= 5",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000011",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 6
+ }
+ },
+ {
+ "id": "a4-b64-invalid-missing-depth-v030",
+ "description": "v0.3.0 missing delegationDepth + base64url signature (required rejection)",
+ "expectedError": "must have required property 'delegationDepth'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000012",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ"
+ }
+ },
+ {
+ "id": "a4-b64-invalid-depth-float",
+ "description": "delegationDepth=2.5 (non-integer, schema integer rejection)",
+ "expectedError": "delegationDepth must be integer",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000013",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 2.5
+ }
+ },
+ {
+ "id": "a4-b64-invalid-supersede-wrong-actor",
+ "description": "SESSION_SUPERSEDED + base64url + wrong actor (A8 actor DID constraint)",
+ "expectedError": "agentDid must equal did:system:session-governor",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b300000014",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440400",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440401",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-05-01T11:13:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T11:13:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 0
+ }
+ }
+ ]
+ }
+}

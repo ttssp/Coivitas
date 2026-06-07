@@ -1,0 +1,7 @@
+{
+ "_comment": "sdk v0.2 Case 6: OAuth2 introspection failure — token inactive",
+ "verifierKind": "oauth2",
+ "scenario": "fail_inactive",
+ "expectedError": "SDK_OAUTH2_VERIFY_FAILED",
+ "_note": "introspection response: {active: false} → SDK_OAUTH2_VERIFY_FAILED (fail-closed, A30)"
+}

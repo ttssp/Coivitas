@@ -1,0 +1,7 @@
+{
+ "_comment": "hcc v0.2 Case 5: hccVersion must be '2.0.0'",
+ "validVersion": "2.0.0",
+ "invalidVersions": ["1.0.0", "0.1.0", "2", "2.0", "2.0.0.0", ""],
+ "expectedErrorOnInvalid": "HCC_VERSION_MISMATCH",
+ "_note": "hccVersion field in HashChainEntry must exactly equal '2.0.0'; any other value → HCC_VERSION_MISMATCH"
+}

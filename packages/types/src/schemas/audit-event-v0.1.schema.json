@@ -1,0 +1,91 @@
+{
+ "$id": "https://coivitas.ai/schemas/audit-event-v0.1.json",
+ "title": "Audit Tamper-Proof Event (atp v0.1)",
+ "description": "atp v0.1 AuditEvent JSON Schema",
+ "type": "object",
+ "required": [
+  "atpVersion",
+  "eventId",
+  "tenantId",
+  "auditClass",
+  "actorDid",
+  "action",
+  "target",
+  "canonicalPayload",
+  "tamperProofHash",
+  "previousHash",
+  "timestamp"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "atpVersion": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+   "const": "1.0.0"
+  },
+  "eventId": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+  },
+  "tenantId": {
+   "type": "string",
+   "format": "uuid",
+   "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+  },
+  "auditClass": {
+   "type": "string",
+   "enum": [
+    "L1",
+    "L2",
+    "L3"
+   ]
+  },
+  "actorDid": {
+   "type": "string",
+   "pattern": "^did:"
+  },
+  "action": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 256
+  },
+  "target": {
+   "type": "string"
+  },
+  "canonicalPayload": {
+   "type": "string",
+   "minLength": 1
+  },
+  "tamperProofHash": {
+   "type": "string",
+   "pattern": "^[0-9a-f]{64}$"
+  },
+  "previousHash": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    }
+   ]
+  },
+  "timestamp": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "signature": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9_-]+=*$"
+    }
+   ]
+  }
+ }
+}

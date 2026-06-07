@@ -1,0 +1,28 @@
+# Managed service demo / development / CI override.
+#
+# **STUB MODE — DO NOT USE IN PRODUCTION**
+#
+# Purpose:
+#   The main docker-compose.yml is fail-closed (FEDERATED_NODES / ALLOW_STUB unset → bin exit 1).
+#   This override file explicitly opts into stub mode, for demo / local development / CI only.
+#
+# How to start:
+#   cd infra/managed-service/
+#   docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+#
+# Stub behavior notes:
+#   - resolver: any resolve request hits the stub and throws an exception;
+#     callers should handle the 502 via the SDK fallback path (packages/sdk/src/managed-service-client.ts).
+#   - revocation: the stub checker always returns { revoked: false };
+#     **no caller should rely on this result for a revocation decision** — the SDK fallback defaults to fail-unknown.
+
+services:
+    resolver:
+        environment:
+            # This override explicitly opts into stub mode; the resolver bin starts in mode=STUB and logs a warning.
+            MANAGED_SERVICE_ALLOW_STUB_RESOLVER: '1'
+
+    revocation:
+        environment:
+            # This override explicitly opts into stub mode; the revocation bin starts in mode=STUB and logs a warning.
+            MANAGED_SERVICE_ALLOW_STUB_REVOCATION: '1'

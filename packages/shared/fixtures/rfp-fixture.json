@@ -1,0 +1,103 @@
+{
+ "__meta": {
+ "purpose": "RFP v0.1 fixtures — 6 scenario paths for verifyResolverFreshness + consumer quorum"
+ },
+ "proofs": {
+ "normal_valid": {
+ "__scenario": "P1 normal path — all 8 invariants pass",
+ "__invariants_tested": ["I_complete", "I_ver", "I_csp", "I_did", "I_fw", "I_asof", "I_sig", "I_asof_window"],
+ "rfpVersion": "1.0.0",
+ "cspVersion": "1.0.0",
+ "resolverDid": "did:agent:resolver-fixture-001",
+ "asOfTime": "__RUNTIME_NOW_ISO__",
+ "freshnessWindow": 300000,
+ "signature": "__RUNTIME_COMPUTED__",
+ "__note": "asOfTime + signature must be computed at test runtime; see test helper buildValidRfp"
+ },
+ "freshness_stale": {
+ "__scenario": "P2 I_asof_window fails — proof has expired (asOfTime falls outside the freshnessWindow)",
+ "__invariants_tested": ["I_asof_window"],
+ "__error_code": "RFP_FRESHNESS_EXPIRED",
+ "__http_status": 503,
+ "rfpVersion": "1.0.0",
+ "cspVersion": "1.0.0",
+ "resolverDid": "did:agent:resolver-fixture-001",
+ "asOfTime": "2026-05-18T00:00:00.000Z",
+ "freshnessWindow": 300000,
+ "signature": "__RUNTIME_COMPUTED__",
+ "__note": "asOfTime must be older than now - freshnessWindow; signature still valid over stale 5-field payload"
+ },
+ "watermark_regress": {
+ "__scenario": "P3 I_ver fails — rfpVersion is not 1.0.0 (version-rollback attack simulation)",
+ "__invariants_tested": ["I_ver"],
+ "__error_code": "RFP_VERSION_UNSUPPORTED",
+ "__http_status": 422,
+ "rfpVersion": "0.9.0",
+ "cspVersion": "1.0.0",
+ "resolverDid": "did:agent:resolver-fixture-001",
+ "asOfTime": "__RUNTIME_NOW_ISO__",
+ "freshnessWindow": 300000,
+ "signature": "__RUNTIME_COMPUTED__",
+ "__note": "verifyResolverFreshness must throw RFP_VERSION_UNSUPPORTED before reaching I_sig"
+ },
+ "signature_invalid": {
+ "__scenario": "P4 I_sig fails — Ed25519 signature mismatch (asOfTime tampered without re-signing)",
+ "__invariants_tested": ["I_sig"],
+ "__error_code": "RFP_SIGNATURE_INVALID",
+ "__http_status": 401,
+ "rfpVersion": "1.0.0",
+ "cspVersion": "1.0.0",
+ "resolverDid": "did:agent:resolver-fixture-001",
+ "asOfTime": "__RUNTIME_NOW_ISO__",
+ "freshnessWindow": 300000,
+ "signature": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+ "__note": "signature is an 87-char base64url string that will NOT verify against any real payload; length matches but content is wrong"
+ },
+ "resolver_unknown": {
+ "__scenario": "P5 publicKeyResolver pre-check for I_sig fails — resolver DID has no public key record (resolvePublicKey returns null)",
+ "__invariants_tested": ["I_sig publicKeyResolver"],
+ "__error_code": "RFP_RESOLVER_UNREACHABLE",
+ "__http_status": 503,
+ "rfpVersion": "1.0.0",
+ "cspVersion": "1.0.0",
+ "resolverDid": "did:agent:resolver-fixture-UNKNOWN-999",
+ "asOfTime": "__RUNTIME_NOW_ISO__",
+ "freshnessWindow": 300000,
+ "signature": "__RUNTIME_COMPUTED__",
+ "__note": "resolverDid must not be registered in the test publicKeyResolver; returns null → RFP_RESOLVER_UNREACHABLE (HTTP 503; dependency-unavailable semantics)"
+ },
+ "quorum_below_threshold": {
+ "__scenario": "P6 verifyQuorumFreshness fails — the number of nodes with an available fresh proof is below quorumThreshold",
+ "__invariants_tested": ["quorum freshness aggregation"],
+ "__error_code": "RFP_QUORUM_FRESHNESS_UNMET",
+ "__http_status": 503,
+ "resolverNodes": [
+ {
+ "resolverDid": "did:agent:resolver-node-a",
+ "rfp": null,
+ "__note": "node A: RFP not available (unreachable)"
+ },
+ {
+ "resolverDid": "did:agent:resolver-node-b",
+ "rfp": null,
+ "__note": "node B: RFP not available (unreachable)"
+ },
+ {
+ "resolverDid": "did:agent:resolver-node-c",
+ "rfp": "__RUNTIME_VALID_RFP__",
+ "__note": "node C: fresh proof available but only 1/3 < quorumThreshold=2"
+ }
+ ],
+ "quorumThreshold": 2,
+ "__note": "verifyQuorumFreshness([nodeA-null, nodeB-null, nodeC-valid], {quorumThreshold:2}) → throws RFP_QUORUM_FRESHNESS_UNMET"
+ }
+ },
+ "resolver_public_keys": {
+ "__note": "Test-time resolver DID → public key registry (in-memory; not DB-persisted)",
+ "did:agent:resolver-fixture-001": {
+ "__format": "Ed25519 public key hex (32 bytes = 64 hex chars)",
+ "publicKeyHex": "__RUNTIME_GENERATED__",
+ "__note": "Generated per-test-run via generateKeyPair; stored here for fixture schema documentation only"
+ }
+ }
+}

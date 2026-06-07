@@ -1,0 +1,421 @@
+{
+    "version": "v0.1",
+    "generated_by": "packages/sdk/scripts/generate-cross-lang-fixtures.ts",
+    "ts_canonicalize_lib": "canonicalize@2.1.0",
+    "vectors": [
+        {
+            "id": "empty-object",
+            "description": "empty object boundary",
+            "input": {},
+            "expected_output": "{}",
+            "expected_sha256": "44136fa355b3678a1146ad16f7e8649e94fb4fc21fe77e8310c060f61caaff8a"
+        },
+        {
+            "id": "single-ascii-key",
+            "description": "single ASCII key",
+            "input": {
+                "a": 1
+            },
+            "expected_output": "{\"a\":1}",
+            "expected_sha256": "015abd7f5cc57a2dd94b7590f04ad8084273905ee33ec5cebeae62276a97f862"
+        },
+        {
+            "id": "ascii-keys-sorted",
+            "description": "3 ASCII keys sorted by JCS code point",
+            "input": {
+                "z": 3,
+                "a": 1,
+                "m": 2
+            },
+            "expected_output": "{\"a\":1,\"m\":2,\"z\":3}",
+            "expected_sha256": "70d1ebc7a727a476f15f7b4436d65b0bca07718c03a0843fa008659badad79c7"
+        },
+        {
+            "id": "unicode-cjk-keys",
+            "description": "CJK keys (BMP U+4E2D U+6587)",
+            "input": {
+                "中": 1,
+                "文": 2,
+                "a": 0
+            },
+            "expected_output": "{\"a\":0,\"中\":1,\"文\":2}",
+            "expected_sha256": "ba76095964674bc24a5d78f3c5d66590f927cd671d253b22136173254e472d64"
+        },
+        {
+            "id": "unicode-emoji-mixed",
+            "description": "CJK + emoji + ASCII mixed keys",
+            "input": {
+                "中": 1,
+                "🚀": 2,
+                "a": 3
+            },
+            "expected_output": "{\"a\":3,\"中\":1,\"🚀\":2}",
+            "expected_sha256": "5ef887139906b760c954395798a9344b62b73df342ae719af6816d039b7523fe"
+        },
+        {
+            "id": "emoji-only-keys",
+            "description": "emoji key (surrogate pair U+1F600)",
+            "input": {
+                "😀": 42
+            },
+            "expected_output": "{\"😀\":42}",
+            "expected_sha256": "aa7c7eb6d096688732cb349b6370adeb15fb598b4888a85c444a04119aa32add"
+        },
+        {
+            "id": "nested-object-simple",
+            "description": "single-level nested object",
+            "input": {
+                "b": {
+                    "x": 1
+                },
+                "a": {
+                    "y": 2
+                }
+            },
+            "expected_output": "{\"a\":{\"y\":2},\"b\":{\"x\":1}}",
+            "expected_sha256": "f3466236056be1475d7ce1c9cced4ebed5ac69dc982b841080df70bdf0b3c473"
+        },
+        {
+            "id": "nested-object-deep",
+            "description": "three-level nesting",
+            "input": {
+                "z": {
+                    "b": {
+                        "c": 99
+                    }
+                },
+                "a": 0
+            },
+            "expected_output": "{\"a\":0,\"z\":{\"b\":{\"c\":99}}}",
+            "expected_sha256": "565d5ae65b6d69793f73c21c313be1893d0ff2521aa41afce146b77f2c052d90"
+        },
+        {
+            "id": "array-values",
+            "description": "array values preserve order",
+            "input": {
+                "items": [
+                    3,
+                    1,
+                    2
+                ],
+                "name": "test"
+            },
+            "expected_output": "{\"items\":[3,1,2],\"name\":\"test\"}",
+            "expected_sha256": "ae3aeab3c9f0de514741f910807c1787273166b9d8d8b10b5bebad83dfbe8386"
+        },
+        {
+            "id": "array-nested-objects",
+            "description": "nested objects inside an array",
+            "input": {
+                "list": [
+                    {
+                        "b": 2,
+                        "a": 1
+                    },
+                    {
+                        "d": 4,
+                        "c": 3
+                    }
+                ]
+            },
+            "expected_output": "{\"list\":[{\"a\":1,\"b\":2},{\"c\":3,\"d\":4}]}",
+            "expected_sha256": "9501617ef8938d8d606f2d0416ff69b8207b0d76701a0c41371262ba389ac351"
+        },
+        {
+            "id": "boolean-values",
+            "description": "true / false literals",
+            "input": {
+                "active": true,
+                "disabled": false
+            },
+            "expected_output": "{\"active\":true,\"disabled\":false}",
+            "expected_sha256": "14b5bbe408da2367666c44fc9fd99dab2b543580b9c77c4f8a04769ea2888732"
+        },
+        {
+            "id": "null-value",
+            "description": "null literal",
+            "input": {
+                "optional": null,
+                "name": "agent"
+            },
+            "expected_output": "{\"name\":\"agent\",\"optional\":null}",
+            "expected_sha256": "ef8a412aa9179a8c55c39d076378bbd802d47f58904a93c78dd55e3f33b88de6"
+        },
+        {
+            "id": "number-integer-positive",
+            "description": "positive integer",
+            "input": {
+                "count": 42
+            },
+            "expected_output": "{\"count\":42}",
+            "expected_sha256": "b35539ce83f07b2fe8fb4bdce27fb9666c2122af4ad9a5850a711d906fb58998"
+        },
+        {
+            "id": "number-integer-negative",
+            "description": "negative integer",
+            "input": {
+                "offset": -100
+            },
+            "expected_output": "{\"offset\":-100}",
+            "expected_sha256": "862b9a61b5a46c70e7ddc424276f3febd7ba3df52f9ac2347a8c2c556a077554"
+        },
+        {
+            "id": "number-zero",
+            "description": "0 literal",
+            "input": {
+                "score": 0
+            },
+            "expected_output": "{\"score\":0}",
+            "expected_sha256": "628cb4ead38e34e34a34f78fa4481f2a0ccf8e9139acfae69d79dc997e90e36b"
+        },
+        {
+            "id": "number-float",
+            "description": "floating-point number",
+            "input": {
+                "ratio": 1.5
+            },
+            "expected_output": "{\"ratio\":1.5}",
+            "expected_sha256": "8ed95bcd27e7144354767a7422d378f43857da08d96d10a7017a473c89bd6740"
+        },
+        {
+            "id": "number-small-float",
+            "description": "small float (ECMA toString edge)",
+            "input": {
+                "tiny": 0.000001
+            },
+            "expected_output": "{\"tiny\":0.000001}",
+            "expected_sha256": "c931ba7c3b8fcce9782a8e455f956195107605f0f4f41ce825027dbaaaa09bf8"
+        },
+        {
+            "id": "number-safe-int-max",
+            "description": "JS safe-integer upper bound 2^53-1",
+            "input": {
+                "max": 9007199254740991
+            },
+            "expected_output": "{\"max\":9007199254740991}",
+            "expected_sha256": "5274eb3771d44c0dc4c8145127c27d94a9a8128420eb69f1ea038d267ac28b06"
+        },
+        {
+            "id": "number-safe-int-min",
+            "description": "JS safe-integer lower bound -(2^53-1)",
+            "input": {
+                "min": -9007199254740991
+            },
+            "expected_output": "{\"min\":-9007199254740991}",
+            "expected_sha256": "f6db7b0d468fd52892256184ace277fdf3d4c3facc8313042b65407c9a6d2442"
+        },
+        {
+            "id": "string-with-unicode-escape",
+            "description": "string value containing a Unicode escape",
+            "input": {
+                "text": "hello world"
+            },
+            "expected_output": "{\"text\":\"hello world\"}",
+            "expected_sha256": "e344fa3b83cf2b142293de2a4e56c6b211d4a157f8adb3c954c51ab67f41a46a"
+        },
+        {
+            "id": "string-with-backslash",
+            "description": "string containing a backslash",
+            "input": {
+                "path": "a\\b"
+            },
+            "expected_output": "{\"path\":\"a\\\\b\"}",
+            "expected_sha256": "46cfa8597aadeec32eaa59f32d17e6505dfdcc855d34d8db734600f3c58b7903"
+        },
+        {
+            "id": "string-with-quote",
+            "description": "string containing a double quote",
+            "input": {
+                "msg": "say \"hi\""
+            },
+            "expected_output": "{\"msg\":\"say \\\"hi\\\"\"}",
+            "expected_sha256": "a8abf99650607dcd2cccbae536da1047caa9000160e41ce7c13a9ce542ea937f"
+        },
+        {
+            "id": "string-empty",
+            "description": "empty string value",
+            "input": {
+                "label": ""
+            },
+            "expected_output": "{\"label\":\"\"}",
+            "expected_sha256": "a72cc15f2452fc5ccdfdf4d2376b1dc4a6ed900713f842cda2f2f27f4e7e6d25"
+        },
+        {
+            "id": "string-multibyte-utf8",
+            "description": "multibyte UTF-8 (Japanese + Korean)",
+            "input": {
+                "グ": 1,
+                "한": 2,
+                "a": 0
+            },
+            "expected_output": "{\"a\":0,\"グ\":1,\"한\":2}",
+            "expected_sha256": "a4ab3df99daed9fbdaa50554947db1e4d817a85d9894e90fcc7473469e1b8998"
+        },
+        {
+            "id": "many-keys-ordering",
+            "description": "8 ASCII keys testing sort stability",
+            "input": {
+                "z": 26,
+                "y": 25,
+                "x": 24,
+                "a": 1,
+                "b": 2,
+                "c": 3,
+                "m": 13,
+                "n": 14
+            },
+            "expected_output": "{\"a\":1,\"b\":2,\"c\":3,\"m\":13,\"n\":14,\"x\":24,\"y\":25,\"z\":26}",
+            "expected_sha256": "bd0a77da460d709729f358e65b70ae9abec2f74d7a759c6c21d865e70b838c75"
+        },
+        {
+            "id": "mixed-types",
+            "description": "mixed-type values",
+            "input": {
+                "n": null,
+                "b": true,
+                "i": 1,
+                "s": "x",
+                "a": [
+                    1,
+                    2
+                ]
+            },
+            "expected_output": "{\"a\":[1,2],\"b\":true,\"i\":1,\"n\":null,\"s\":\"x\"}",
+            "expected_sha256": "bf5138ebc724eaa8f3785d4fe1dde560630e1a3a960d2cc0e5d3790552666333"
+        },
+        {
+            "id": "specversion-payload",
+            "description": "spec v0.4.0 typical payload field set",
+            "input": {
+                "specVersion": "0.4.0",
+                "type": "HANDSHAKE_INIT",
+                "id": "550e8400-e29b-41d4-a716-446655440001"
+            },
+            "expected_output": "{\"id\":\"550e8400-e29b-41d4-a716-446655440001\",\"specVersion\":\"0.4.0\",\"type\":\"HANDSHAKE_INIT\"}",
+            "expected_sha256": "b1985bbd521d2f8ec206d680c44150240c619a0bd2b135c14d42ba696618e34d"
+        },
+        {
+            "id": "did-payload",
+            "description": "DID field mix",
+            "input": {
+                "senderDid": "did:agent:a3f1b2c4d5e6f7a8",
+                "recipientDid": "did:agent:b4e2c3d5f6a7b8c9",
+                "sessionId": null
+            },
+            "expected_output": "{\"recipientDid\":\"did:agent:b4e2c3d5f6a7b8c9\",\"senderDid\":\"did:agent:a3f1b2c4d5e6f7a8\",\"sessionId\":null}",
+            "expected_sha256": "26b6b0368cd9758f15f6585dc7a81b5496f129091f1510e00cae35e3d2712620"
+        },
+        {
+            "id": "number-float-negative",
+            "description": "negative float",
+            "input": {
+                "temp": -3.14
+            },
+            "expected_output": "{\"temp\":-3.14}",
+            "expected_sha256": "f6c9731e975d67561a32457dabda06f15df43332628c72e4f5963c1d4265109e"
+        },
+        {
+            "id": "number-integer-large",
+            "description": "larger integer but within safe range",
+            "input": {
+                "ts": 1747872000000
+            },
+            "expected_output": "{\"ts\":1747872000000}",
+            "expected_sha256": "e846b8e9444227e15038cf8a0b65511ba5202d189e1b41d55714b18155d64c05"
+        },
+        {
+            "id": "array-empty",
+            "description": "empty array",
+            "input": {
+                "items": []
+            },
+            "expected_output": "{\"items\":[]}",
+            "expected_sha256": "eef46741adfc3a9f76294d3b78f37a45f113092ac9d44ee77c7a038a88ff09a1"
+        },
+        {
+            "id": "nested-empty-object",
+            "description": "nested empty object",
+            "input": {
+                "meta": {},
+                "name": "test"
+            },
+            "expected_output": "{\"meta\":{},\"name\":\"test\"}",
+            "expected_sha256": "bd773de8aea2e2c657e435fda32c514c67a3f24b9f15a2267686b3188e75f4cb"
+        },
+        {
+            "id": "supplementary-plane-key",
+            "description": "supplementary-plane character key (U+1D11E musical note) — surrogate-pair sort test",
+            "input": {
+                "𝄞": 1,
+                "z": 2,
+                "a": 0
+            },
+            "expected_output": "{\"a\":0,\"z\":2,\"𝄞\":1}",
+            "expected_sha256": "171653aa7d33b26c429157001cc4c3c3fa7a2c6ebd421ec0c79d052f735f261e"
+        },
+        {
+            "id": "high-bmp-key",
+            "description": "high BMP character key (U+FF01) vs low BMP (U+0041)",
+            "input": {
+                "！": 1,
+                "A": 2
+            },
+            "expected_output": "{\"A\":2,\"！\":1}",
+            "expected_sha256": "9f877a2a08f63bc6d5bebc47c02a8bcfa1572256b88517dcb37c5fe46c3c6cd3"
+        },
+        {
+            "id": "number-ecma-1e-7",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch boundary: 1e-7 (exponential form output 1e-7, not 0.0000001)",
+            "input": {
+                "v": 1e-7
+            },
+            "expected_output": "{\"v\":1e-7}",
+            "expected_sha256": "3a28f15de586a90e5f896f27e39cd7d7e4022dcccc3a795c373d64a52661987f"
+        },
+        {
+            "id": "number-ecma-1e-8",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1e-8 (also exponential form 1e-8)",
+            "input": {
+                "v": 1e-8
+            },
+            "expected_output": "{\"v\":1e-8}",
+            "expected_sha256": "20fd489d8ef99ff14802df8d0948f5699a6655f28650c94b6b609bfcea39f02b"
+        },
+        {
+            "id": "number-ecma-1e21",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch boundary: 1e+21 (≥1e21 → exponential form 1e+21)",
+            "input": {
+                "v": 1e+21
+            },
+            "expected_output": "{\"v\":1e+21}",
+            "expected_sha256": "9e24d139b060bd89f98e510a1e34d48fade6aeb668a016e6fb2e296762a3aefa"
+        },
+        {
+            "id": "number-ecma-1e22",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1e+22",
+            "input": {
+                "v": 1e+22
+            },
+            "expected_output": "{\"v\":1e+22}",
+            "expected_sha256": "8ab036087fb40281983a74a1ac55233c5d87421833f7c4b113da5a2ce420ea74"
+        },
+        {
+            "id": "number-ecma-neg-1e21",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: -1e+21 (negative exponential form)",
+            "input": {
+                "v": -1e+21
+            },
+            "expected_output": "{\"v\":-1e+21}",
+            "expected_sha256": "e2c8234e1548bc80ba238ba3913aeb55c4c324df829c9c0641b7966a8a9b1067"
+        },
+        {
+            "id": "number-ecma-1p5e-7",
+            "description": "RFC 8785 §3.2.2 / ECMA-262 branch: 1.5e-7 (non-integer exponential form)",
+            "input": {
+                "v": 1.5e-7
+            },
+            "expected_output": "{\"v\":1.5e-7}",
+            "expected_sha256": "19483b7698a39932b8442d9bcf9baa0640a5d4f6ee91947e4383fdca21ed4236"
+        }
+    ]
+}

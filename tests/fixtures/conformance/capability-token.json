@@ -1,0 +1,258 @@
+{
+    "$schema": "conformance/capability-token",
+    "specVersion": "0.1.0",
+    "description": "CapabilityToken wire-format conformance fixtures",
+    "valid": [
+        {
+            "id": "valid-allowlist-scope",
+            "description": "Valid token with an allowlist scope",
+            "data": {
+                "id": "urn:cap:550e8400-e29b-41d4-a716-446655440000",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2027-01-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "INQUIRY",
+                        "scope": {
+                            "type": "allowlist",
+                            "field": "sku",
+                            "values": ["SKU-001", "SKU-002", "SKU-003"]
+                        }
+                    }
+                ],
+                "revocationUrl": "https://revocation.example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        },
+        {
+            "id": "valid-numeric-limit-scope",
+            "description": "Valid token with a numeric_limit scope",
+            "data": {
+                "id": "urn:cap:660f9511-f3ac-52e5-b827-557766550001",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+                "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+                "issuedTo": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                "issuedAt": "2026-02-01T00:00:00.000Z",
+                "expiresAt": "2027-02-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "QUOTE",
+                        "scope": {
+                            "type": "numeric_limit",
+                            "field": "amount",
+                            "max": 50000,
+                            "currency": "USD"
+                        }
+                    },
+                    {
+                        "action": "CONFIRM",
+                        "scope": {
+                            "type": "numeric_limit",
+                            "field": "amount",
+                            "max": 10000,
+                            "currency": "USD"
+                        }
+                    }
+                ],
+                "revocationUrl": "https://auth.example.com/revoke/{id}/status",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-02-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS#key-1",
+                    "value": "ccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb"
+                }
+            }
+        }
+    ],
+    "invalid": [
+        {
+            "id": "invalid-issuer-not-did-key",
+            "description": "issuerDid is not in did:key format (rejects agent self-signing)",
+            "expectedError": "SIGNATURE_INVALID",
+            "data": {
+                "id": "urn:cap:invalid-issuer-001",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "principalDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedTo": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2027-01-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "INQUIRY",
+                        "scope": {
+                            "type": "allowlist",
+                            "field": "sku",
+                            "values": ["SKU-001"]
+                        }
+                    }
+                ],
+                "revocationUrl": "https://example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        },
+        {
+            "id": "invalid-empty-capabilities",
+            "description": "Empty capability list",
+            "expectedError": "SCOPE_EXCEEDED",
+            "data": {
+                "id": "urn:cap:invalid-empty-cap",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2027-01-01T00:00:00.000Z",
+                "capabilities": [],
+                "revocationUrl": "https://example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        },
+        {
+            "id": "invalid-already-expired",
+            "description": "Token already expired (expiresAt before issuedAt)",
+            "expectedError": "TOKEN_EXPIRED",
+            "data": {
+                "id": "urn:cap:invalid-expired-001",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2025-01-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "INQUIRY",
+                        "scope": {
+                            "type": "allowlist",
+                            "field": "sku",
+                            "values": ["SKU-001"]
+                        }
+                    }
+                ],
+                "revocationUrl": "https://example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        },
+        {
+            "id": "invalid-revocation-url-no-id-placeholder",
+            "description": "revocationUrl does not contain the {id} placeholder",
+            "expectedError": "INTERNAL_ERROR",
+            "data": {
+                "id": "urn:cap:invalid-revurl-001",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2027-01-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "INQUIRY",
+                        "scope": {
+                            "type": "allowlist",
+                            "field": "sku",
+                            "values": ["SKU-001"]
+                        }
+                    }
+                ],
+                "revocationUrl": "https://example.com/tokens/list",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        }
+    ],
+    "boundary": [
+        {
+            "id": "boundary-allowlist-single-value",
+            "description": "allowlist scope contains only one value (smallest valid list)",
+            "valid": true,
+            "data": {
+                "id": "urn:cap:770e8400-e29b-41d4-a716-446655440010",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2026-01-01T00:00:00.001Z",
+                "capabilities": [
+                    {
+                        "action": "INQUIRY",
+                        "scope": {
+                            "type": "allowlist",
+                            "field": "sku",
+                            "values": ["X"]
+                        }
+                    }
+                ],
+                "revocationUrl": "https://example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        },
+        {
+            "id": "boundary-numeric-max-zero",
+            "description": "numeric_limit.max = 0 (boundary value: allows zero-quota operations)",
+            "valid": true,
+            "data": {
+                "id": "urn:cap:880e8400-e29b-41d4-a716-446655440011",
+                "specVersion": "0.1.0",
+                "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+                "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                "issuedAt": "2026-01-01T00:00:00.000Z",
+                "expiresAt": "2027-01-01T00:00:00.000Z",
+                "capabilities": [
+                    {
+                        "action": "RECORD",
+                        "scope": {
+                            "type": "numeric_limit",
+                            "field": "amount",
+                            "max": 0
+                        }
+                    }
+                ],
+                "revocationUrl": "https://example.com/tokens/{id}",
+                "proof": {
+                    "type": "Ed25519Signature2026",
+                    "created": "2026-01-01T00:00:00.000Z",
+                    "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+                    "value": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+                }
+            }
+        }
+    ]
+}

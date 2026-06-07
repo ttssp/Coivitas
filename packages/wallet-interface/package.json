@@ -1,0 +1,33 @@
+{
+  "name": "@coivitas/wallet-interface",
+  "version": "0.1.0-alpha.1",
+  "license": "Apache-2.0",
+  "description": "Human Principal wallet interface definitions (types-only + stub-only fail-closed)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {},
+  "peerDependencies": {
+    "@coivitas/types": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  },
+  "engines": {
+    "node": ">=20.18.1"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "test": "vitest run --config vitest.config.ts"
+  }
+}

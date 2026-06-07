@@ -1,0 +1,73 @@
+{
+ "$schema": "https://coivitas.ai/schemas/identity.schema.json#/$defs/resolvedPublicKeys",
+ "description": "conformance fixture: ResolvedPublicKeys + KeyRotationState v0.3.0 schema validation (including the previousValidBefore cutoff safety invariant)",
+ "valid": [
+ {
+ "description": "STABLE - single key, no rotation in progress",
+ "data": {
+ "current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "rotationState": "STABLE"
+ }
+ },
+ {
+ "description": "ROTATING - verify with current key (outbound window phase, new envelopes signed with current) + cutoff",
+ "data": {
+ "current": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "previous": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "previousValidBefore": "2026-04-01T00:00:00.000Z",
+ "rotationState": "ROTATING"
+ }
+ },
+ {
+ "description": "ROTATING - verify with previous key fallback (inbound window phase, in-flight artifacts signed with previous) + cutoff",
+ "data": {
+ "current": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+ "previous": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "previousValidBefore": "2026-04-15T00:00:00.000Z",
+ "rotationState": "ROTATING"
+ }
+ },
+ {
+ "description": "FROZEN - key frozen (compromise / administrator lockout), only current is valid",
+ "data": {
+ "current": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+ "rotationState": "FROZEN"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "description": "missing the required current field",
+ "data": {
+ "rotationState": "STABLE"
+ },
+ "expectedError": "must have required property 'current'"
+ },
+ {
+ "description": "illegal rotationState enum value",
+ "data": {
+ "current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "rotationState": "CHURNING"
+ },
+ "expectedError": "rotationState must be equal to one of the allowed values"
+ },
+ {
+ "description": "ROTATING missing previousValidBefore (cutoff safety invariant)",
+ "data": {
+ "current": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+ "previous": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+ "rotationState": "ROTATING"
+ },
+ "expectedError": "must have required property 'previousValidBefore'"
+ },
+ {
+ "description": "STABLE but the previous field is present (semantic contradiction: STABLE implies no previous key; the schema should reject)",
+ "data": {
+ "current": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "previous": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "rotationState": "STABLE"
+ },
+ "expectedError": "STABLE state must not have previous key"
+ }
+ ]
+}

@@ -1,0 +1,19 @@
+# Grafana datasource provisioning.
+# Auto-configures Prometheus as the default datasource, avoiding manual UI setup on first run.
+#
+# Prometheus URL: the docker-compose service name prometheus:9090.
+# The alpha phase has no TLS / no auth and is deployed inside a private network (production should configure mTLS + token).
+
+apiVersion: 1
+
+datasources:
+    - name: Prometheus
+      type: prometheus
+      access: proxy
+      url: http://prometheus:9090
+      isDefault: true
+      editable: false
+      jsonData:
+          # Aligned with prometheus.yml scrape_interval for stable ad-hoc query results.
+          timeInterval: '15s'
+          httpMethod: POST

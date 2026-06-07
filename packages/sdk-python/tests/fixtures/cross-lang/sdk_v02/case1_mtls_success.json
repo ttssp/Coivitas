@@ -1,0 +1,10 @@
+{
+ "_comment": "sdk v0.2 Case 1: mTLS verify success scenario",
+ "verifierKind": "mtls",
+ "scenario": "success",
+ "expectedFields": {
+ "verifierKind": "mtls",
+ "sdkVersion": "2.0.0"
+ },
+ "_note": "mTLS success: cert CN matches expected_did; cert chain valid; cert not expired. Test uses self-signed cert generated at test setup time."
+}

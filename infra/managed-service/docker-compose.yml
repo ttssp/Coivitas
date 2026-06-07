@@ -1,0 +1,137 @@
+# Managed service deployment (alpha; fail-closed main manifest).
+#
+# **This main manifest is only for deployments with real backend wiring.**
+#
+# **NOT FOR PRODUCTION**
+# Limitations:
+#   1. No TLS termination: relies on an external reverse proxy (Caddy / nginx / Cloudflare Tunnel).
+#   2. No secret management: DATABASE_URL is read from .env; production should use Vault / Secret Manager.
+#   3. No horizontal scaling: the rate-limiter is in-memory (single instance); scale-out requires moving to Redis (see SLO.md).
+#   4. Postgres is reused from the root docker-compose.yml (external_links reference); no duplicate instance is created.
+#   5. Monitoring volumes are not persisted: Grafana / Prometheus lose data on restart (acceptable in the alpha phase).
+#
+# Fail-closed startup behavior:
+#   - The resolver service requires FEDERATED_NODES to be set explicitly; if unset → fail-closed exit on startup
+#     (the main manifest no longer brings up a stub by default).
+#   - The revocation service requires an explicit ALLOW_STUB env; if unset → fail-closed exit on startup.
+#     Production deployments should use the SDK integration path packages/sdk/src/managed-service-client.ts instead.
+#
+# Demo / development / CI path (stub explicitly opted in):
+#   see infra/managed-service/docker-compose.dev.yml (override file)
+#   command: docker-compose -f docker-compose.yml -f docker-compose.dev.yml up -d
+#
+# Startup order:
+#   1. From the repository root, run `docker-compose up -d` to start Postgres.
+#   2. Run `./scripts/db-migrate.sh` to apply SQL 008.
+#   3. Set FEDERATED_NODES env (production) or add -f docker-compose.dev.yml (demo).
+#   4. cd infra/managed-service/ && docker-compose up -d to start the managed service + monitoring.
+
+services:
+    resolver:
+        image: node:20-alpine
+        container_name: coivitas-managed-resolver
+        working_dir: /app
+        # Production deployments should pre-build dist/ and bind-mount it, or use a dedicated image.
+        # The alpha phase mounts the source directly and starts via tsx.
+        volumes:
+            - ../..:/app:ro
+        command: >
+            sh -c "cd /app && npx tsx packages/managed-service-runtime/src/bin/resolver-server.ts"
+        # DATABASE_URL must be provided explicitly by the caller (pointing at the postgres instance started by the root compose).
+        # macOS/Windows Docker Desktop: host.docker.internal resolves to the host.
+        # Linux: needs extra_hosts: ["host.docker.internal:host-gateway"] or host network mode.
+        environment:
+            DATABASE_URL: ${DATABASE_URL:-postgresql://coivitas:coivitas@host.docker.internal:5432/coivitas_dev}
+            RESOLVER_PORT: 8080
+            FEDERATED_NODES: ${FEDERATED_NODES:-}
+            FEDERATED_MIN_RESPONSES: ${FEDERATED_MIN_RESPONSES:-1}
+            # The main manifest no longer defaults ALLOW_STUB;
+            # stub mode is opted into explicitly via the docker-compose.dev.yml override (demo/CI only).
+            # Main manifest fail-closed: FEDERATED_NODES unset + no ALLOW_STUB → bin exit 1.
+        ports:
+            - '8080:8080'
+        # Linux users: uncomment below (macOS/Windows Docker Desktop ships host.docker.internal built in).
+        # extra_hosts:
+        #     - "host.docker.internal:host-gateway"
+        restart: unless-stopped
+
+    revocation:
+        image: node:20-alpine
+        container_name: coivitas-managed-revocation
+        working_dir: /app
+        volumes:
+            - ../..:/app:ro
+        command: >
+            sh -c "cd /app && npx tsx packages/managed-service-runtime/src/bin/revocation-server.ts"
+        environment:
+            DATABASE_URL: ${DATABASE_URL:-postgresql://coivitas:coivitas@host.docker.internal:5432/coivitas_dev}
+            REVOCATION_PORT: 8081
+            # The main manifest no longer defaults ALLOW_STUB;
+            # stub mode is opted into explicitly via the docker-compose.dev.yml override (demo/CI only).
+            # Main manifest fail-closed: ALLOW_STUB unset → bin exit 1.
+            # Production path: use the SDK integration (packages/sdk/src/managed-service-client.ts) instead of a standalone server.
+        ports:
+            - '8081:8081'
+        # Same as above (host.docker.internal needs explicit extra_hosts on Linux).
+        # extra_hosts:
+        #     - "host.docker.internal:host-gateway"
+        restart: unless-stopped
+
+    # Postgres: reuse the root docker-compose.yml instance (do not start another one here).
+    #
+    # Deployment flow (also documented in README.md):
+    #   1. From the main repo, `docker-compose up -d postgres` starts the 5432 instance.
+    #   2. `./scripts/db-setup.sh && ./scripts/db-migrate.sh` apply SQL 008.
+    #   3. `docker-compose -f infra/managed-service/docker-compose.yml up -d` starts this service set.
+    #
+    # Rationale:
+    #   Starting another postgres:5432 here conflicts with the root compose port and breaks the alpha deployment path.
+    #   We now reuse the root instance: resolver / revocation reach the root postgres via PGHOST pointing at
+    #   host.docker.internal or the host IP; in multi-instance deployments the orchestrator (K8s) manages DB connections.
+    #
+    # For a fully standalone deployment: use a separate compose project name + override file, without polluting this file.
+
+    prometheus:
+        image: prom/prometheus:v2.55.1
+        container_name: coivitas-managed-prometheus
+        volumes:
+            - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+            - managed-prometheus-data:/prometheus
+        command:
+            - '--config.file=/etc/prometheus/prometheus.yml'
+            - '--storage.tsdb.retention.time=15d'
+            - '--web.enable-lifecycle'
+        ports:
+            - '9090:9090'
+        depends_on:
+            - resolver
+            - revocation
+        restart: unless-stopped
+
+    grafana:
+        image: grafana/grafana:11.3.0
+        container_name: coivitas-managed-grafana
+        environment:
+            GF_SECURITY_ADMIN_USER: ${GRAFANA_ADMIN_USER:-admin}
+            GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_ADMIN_PASSWORD:-admin}
+            # The alpha phase allows anonymous read-only access for easy demos.
+            GF_AUTH_ANONYMOUS_ENABLED: 'true'
+            GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+        # Full provisioning mounts:
+        # - provisioning/datasources: auto-configures the Prometheus datasource
+        # - provisioning/dashboards: dashboard provider definition (points at /var/lib/grafana/dashboards)
+        # - dashboards: dashboard JSON file directory (loaded by the provider)
+        volumes:
+            - ./grafana/provisioning:/etc/grafana/provisioning:ro
+            - ./grafana/dashboards:/var/lib/grafana/dashboards:ro
+            - managed-grafana-data:/var/lib/grafana
+        ports:
+            - '3000:3000'
+        depends_on:
+            - prometheus
+        restart: unless-stopped
+
+volumes:
+    # managed-postgres-data was removed: postgres reuses the root compose instance.
+    managed-prometheus-data:
+    managed-grafana-data:

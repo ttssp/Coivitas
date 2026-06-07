@@ -1,0 +1,375 @@
+{
+ "$schema": "conformance/capability-token",
+ "specVersion": "0.2.0",
+ "description": "CapabilityToken (specVersion 0.2.0) conformance fixtures — coexisting with the *.json 0.1.0 baseline",
+ "valid": [
+ {
+ "id": "valid-v02-temporal-scope",
+ "description": "specVersion 0.2.0 + scope.type=temporal_scope (with recurringWindow)",
+ "data": {
+ "id": "urn:cap:aa11bb22-33cc-44dd-8eef-0011223344aa",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-06-01T00:00:00.000Z",
+ "expiresAt": "2026-12-31T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "QUOTE",
+ "scope": {
+ "type": "temporal_scope",
+ "notBefore": "2026-06-01T00:00:00.000Z",
+ "notAfter": "2026-12-31T00:00:00.000Z",
+ "recurringWindow": {
+ "startTime": "09:00",
+ "endTime": "17:00",
+ "daysOfWeek": [1, 2, 3, 4, 5],
+ "timezone": "Asia/Shanghai"
+ }
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-06-01T00:00:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "7777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777777aabb"
+ }
+ }
+ },
+ {
+ "id": "valid-v02-cumulative-limit",
+ "description": "specVersion 0.2.0 + scope.type=cumulative_limit (with meterField/window)",
+ "data": {
+ "id": "urn:cap:bb22cc33-44dd-45ee-9f00-112233445501",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "issuedTo": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "issuedAt": "2026-07-01T00:00:00.000Z",
+ "expiresAt": "2027-07-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "CONFIRM",
+ "scope": {
+ "type": "cumulative_limit",
+ "meterField": {
+ "source": "action_record",
+ "metric": "transaction_amount",
+ "unit": "USD",
+ "precision": 2
+ },
+ "max": 100000,
+ "window": "month",
+ "currency": "USD"
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-07-01T00:00:00.000Z",
+ "verificationMethod": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS#key-1",
+ "value": "8888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888888ccdd"
+ }
+ }
+ },
+ {
+ "id": "valid-v02-delegation-chain",
+ "description": "specVersion 0.2.0 + delegationChain (1 delegation hop)",
+ "data": {
+ "id": "urn:cap:cc33dd44-55ee-46ff-8011-223344556612",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "issuedAt": "2026-08-01T00:00:00.000Z",
+ "expiresAt": "2026-09-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["SKU-100"]
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-08-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0#key-1",
+ "value": "9999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999eeff"
+ },
+ "delegationChain": [
+ {
+ "parentTokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000",
+ "delegatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "delegateeDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["SKU-100", "SKU-200", "SKU-300"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2027-01-01T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["SKU-100"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-08-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0#key-1",
+ "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa1122"
+ }
+ }
+ ]
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-cumulative-limit-missing-window",
+ "description": "cumulative_limit scope is missing the window field (triggers schema required)",
+ "expectedError": "SCOPE_VALIDATION_ERROR",
+ "data": {
+ "id": "urn:cap:dd44ee55-66ff-47aa-8022-334455667723",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-07-01T00:00:00.000Z",
+ "expiresAt": "2027-07-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "CONFIRM",
+ "scope": {
+ "type": "cumulative_limit",
+ "meterField": {
+ "source": "action_record",
+ "metric": "transaction_amount"
+ },
+ "max": 50000
+ }
+ }
+ ],
+ "revocationUrl": "https://example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-07-01T00:00:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb3344"
+ }
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-delegation-chain-max-depth-5",
+ "description": "delegationChain of 5 hops (schema maxItems boundary); each hop strictly attenuates, and the leaf attenuatedCapabilities matches token.capabilities",
+ "valid": true,
+ "data": {
+ "id": "urn:cap:ee55ff66-77aa-48bb-8033-445566778834",
+ "specVersion": "0.2.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-09-01T00:00:00.000Z",
+ "expiresAt": "2026-09-10T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A"]
+ }
+ }
+ ],
+ "revocationUrl": "https://example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0#key-1",
+ "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc5566"
+ },
+ "delegationChain": [
+ {
+ "parentTokenId": "urn:cap:parent-level-1",
+ "delegatorDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "delegateeDid": "did:agent:1111111111111111111111111111111111111111",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B", "C", "D", "E"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2026-12-31T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B", "C", "D"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d1d11111"
+ }
+ },
+ {
+ "parentTokenId": "urn:cap:parent-level-2",
+ "delegatorDid": "did:agent:1111111111111111111111111111111111111111",
+ "delegateeDid": "did:agent:2222222222222222222222222222222222222222",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B", "C", "D"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2026-12-20T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B", "C"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:1111111111111111111111111111111111111111#key-1",
+ "value": "d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d22222"
+ }
+ },
+ {
+ "parentTokenId": "urn:cap:parent-level-3",
+ "delegatorDid": "did:agent:2222222222222222222222222222222222222222",
+ "delegateeDid": "did:agent:3333333333333333333333333333333333333333",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B", "C"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2026-12-10T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:2222222222222222222222222222222222222222#key-1",
+ "value": "d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d3d33333"
+ }
+ },
+ {
+ "parentTokenId": "urn:cap:parent-level-4",
+ "delegatorDid": "did:agent:3333333333333333333333333333333333333333",
+ "delegateeDid": "did:agent:4444444444444444444444444444444444444444",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A", "B"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2026-11-20T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:3333333333333333333333333333333333333333#key-1",
+ "value": "d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d4d44444"
+ }
+ },
+ {
+ "parentTokenId": "urn:cap:parent-level-5",
+ "delegatorDid": "did:agent:4444444444444444444444444444444444444444",
+ "delegateeDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "parentCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A"]
+ }
+ }
+ ],
+ "parentExpiresAt": "2026-10-15T00:00:00.000Z",
+ "attenuatedCapabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A"]
+ }
+ }
+ ],
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-09-01T00:00:00.000Z",
+ "verificationMethod": "did:agent:4444444444444444444444444444444444444444#key-1",
+ "value": "d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d5d55555"
+ }
+ }
+ ]
+ }
+ }
+ ]
+}

@@ -1,0 +1,107 @@
+{
+ "$schema": "conformance/cross-version",
+ "description": "conformance fixture: tri-state specVersion (0.1.0/0.2.0/0.3.0) cross-version pairs. case-1..4 are encoded centrally, avoiding silent skips caused by scattering them across the cross_version arrays embedded in individual fixtures. Each sample pair declares a schemaId + input + expected result (valid: true/false), driven uniformly by loadFixtureDir.",
+ "schemaId": "negotiationEnvelope",
+ "cases": [
+ {
+ "id": "case-1-v010-envelope-on-unified-validator-accept",
+ "description": "case-1: a v0.1.0 envelope shape (no capabilityTokenRef, no v0.3.0 extension fields) fed to the unified validator -> accept (forward compatible: an older-version wire must retain accept semantics under a newer-version validator; tri-state coexistence)",
+ "schemaId": "negotiationEnvelope",
+ "valid": true,
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-05cf00000001",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 0
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+ "capabilities": ["INQUIRY", "QUOTE"],
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+ },
+ "signature": "11aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "timestamp": "2026-04-27T02:01:00.000Z"
+ }
+ },
+ {
+ "id": "case-2-v030-envelope-version-branch-mismatch-reject",
+ "description": "case-2: a v0.3.0 envelope carries capabilityTokenRef but the specVersion is mislabeled as 0.3.0 -> if/then branch rejects (capabilityTokenRef is only legal on a 0.2.0 envelope; this pair serves as an executable projection of 'cross-version field misuse': an older-version validator does not recognize the new field, and a newer-version validator must reject cross-branch misuse per the version gate, with the same semantics as 'v0.3.0 envelope on v0.1.0 validator -> reject specVersion mismatch')",
+ "schemaId": "negotiationEnvelope",
+ "valid": false,
+ "expectedError": "specVersion must be 0.2.0 when header.capabilityTokenRef is present",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-05cf00000002",
+ "specVersion": "0.3.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-446655440099",
+ "sequenceNumber": 1,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "QUOTE",
+ "params": { "sku": "SKU-001", "quantity": 5 },
+ "requestId": "req-cross-002"
+ },
+ "signature": "22aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff001122334455667788",
+ "timestamp": "2026-04-27T02:02:00.000Z"
+ }
+ },
+ {
+ "id": "case-3-v030-record-superseded-with-v010-version-reject",
+ "description": "case-3: a v0.3.0 ActionRecord contains the SESSION_SUPERSEDED action but the specVersion is mislabeled as 0.1.0 -> the SESSION_SUPERSEDED branch in schemas.ts forces specVersion=0.3.0 (fail-closed). Equivalent to '0.3.0 record rejected on 0.1.0 validator': the 0.1.0 enum does not include SESSION_SUPERSEDED",
+ "schemaId": "actionRecord",
+ "valid": false,
+ "expectedError": "SESSION_SUPERSEDED requires specVersion 0.3.0",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-05cf00000003",
+ "specVersion": "0.1.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440100",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440101",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-04-27T02:03:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T02:03:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "33aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "case-4-v030-record-missing-delegation-depth-reject",
+ "description": "case-4: a v0.3.0 ActionRecord missing delegationDepth -> the allOf v0.3.0 branch in schemas.ts rejects via required (v0.3.0 promotes delegationDepth to required)",
+ "schemaId": "actionRecord",
+ "valid": false,
+ "expectedError": "must have required property 'delegationDepth'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-05cf00000004",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product_category": "books" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T02:04:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "44aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "44bb334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb"
+ }
+ }
+ ]
+}

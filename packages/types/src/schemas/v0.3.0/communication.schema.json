@@ -1,0 +1,292 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "$id": "https://coivitas.ai/schemas/communication.schema.json",
+ "$defs": {
+ "didAgent": {
+ "type": "string",
+ "pattern": "^did:agent:[a-f0-9]{40}$"
+ },
+ "didKey": {
+ "type": "string",
+ "pattern": "^did:key:[a-zA-Z0-9._%-]+(?::[a-zA-Z0-9._%-]+)*$"
+ },
+ "signature": {
+ "type": "string",
+ "anyOf": [
+ { "pattern": "^[0-9a-f]{128}$" },
+ { "pattern": "^[A-Za-z0-9_-]{86}$" }
+ ]
+ },
+ "timestamp": {
+ "type": "string",
+ "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+ },
+ "specVersionCompat": {
+ "type": "string",
+ "enum": ["0.1.0", "0.2.0", "0.3.0"]
+ },
+ "uuidV4": {
+ "type": "string",
+ "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+ },
+ "uuid": {
+ "type": "string",
+ "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+ },
+ "hash": {
+ "type": "string",
+ "anyOf": [
+ { "pattern": "^[0-9a-f]{64}$" },
+ { "pattern": "^[A-Za-z0-9_-]{43}$" }
+ ]
+ },
+ "capabilityTokenId": {
+ "type": "string",
+ "pattern": "^urn:cap:[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+ },
+ "envelopeHeader": {
+ "type": "object",
+ "properties": {
+ "senderDid": { "$ref": "#/$defs/didAgent" },
+ "recipientDid": { "$ref": "#/$defs/didAgent" },
+ "sessionId": {
+ "anyOf": [
+ { "type": "string", "minLength": 1 },
+ { "type": "null" }
+ ]
+ },
+ "sequenceNumber": { "type": "integer", "minimum": 0 },
+ "capabilityTokenRef": { "$ref": "#/$defs/capabilityTokenId" }
+ },
+ "required": ["senderDid", "recipientDid", "sessionId"],
+ "additionalProperties": false
+ },
+ "negotiationEnvelope": {
+ "type": "object",
+ "properties": {
+ "id": { "$ref": "#/$defs/uuidV4" },
+ "specVersion": { "$ref": "#/$defs/specVersionCompat" },
+ "header": { "$ref": "#/$defs/envelopeHeader" },
+ "messageType": {
+ "type": "string",
+ "enum": [
+ "HANDSHAKE_INIT",
+ "HANDSHAKE_ACK",
+ "NEGOTIATION_REQUEST",
+ "NEGOTIATION_RESPONSE",
+ "NEGOTIATION_CONFIRM",
+ "ERROR",
+ "DISCOVERY_REQUEST",
+ "DISCOVERY_RESPONSE"
+ ]
+ },
+ "body": { "type": "object" },
+ "signature": { "$ref": "#/$defs/signature" },
+ "timestamp": { "$ref": "#/$defs/timestamp" }
+ },
+ "required": [
+ "id",
+ "specVersion",
+ "header",
+ "messageType",
+ "body",
+ "signature",
+ "timestamp"
+ ],
+ "additionalProperties": false,
+ "if": {
+ "properties": {
+ "header": {
+ "required": ["capabilityTokenRef"]
+ }
+ }
+ },
+ "then": {
+ "properties": {
+ "specVersion": { "const": "0.2.0" }
+ }
+ }
+ },
+ "handshakeChallenge": {
+ "type": "object",
+ "properties": {
+ "challengeId": { "$ref": "#/$defs/uuid" },
+ "initiatorDid": { "$ref": "#/$defs/didAgent" },
+ "responderDid": { "$ref": "#/$defs/didAgent" },
+ "nonce": { "$ref": "#/$defs/hash" },
+ "timestamp": { "$ref": "#/$defs/timestamp" },
+ "expiresAt": { "$ref": "#/$defs/timestamp" },
+ "initiatorCapabilities": {
+ "type": "array",
+ "items": {
+ "type": "string",
+ "enum": [
+ "INQUIRY",
+ "QUOTE",
+ "CONFIRM",
+ "PUBLISH",
+ "RECORD"
+ ]
+ }
+ },
+ "principalDid": { "$ref": "#/$defs/didKey" },
+ "capabilityTokenId": { "$ref": "#/$defs/capabilityTokenId" },
+ "resumeSessionId": { "type": "string", "minLength": 1 },
+ "encryption": {
+ "type": "object",
+ "description": "Encryption negotiation offer. Omitted when preference=OFF.",
+ "properties": {
+ "preference": {
+ "type": "string",
+ "enum": ["OPT_IN", "REQUIRED"]
+ },
+ "initiatorEphemeralPublicKey": {
+ "type": "string",
+ "minLength": 1
+ },
+ "encryptionProtocolVersion": {
+ "type": "string",
+ "const": "ap/e2e/v1"
+ }
+ },
+ "required": [
+ "preference",
+ "initiatorEphemeralPublicKey",
+ "encryptionProtocolVersion"
+ ],
+ "additionalProperties": false
+ }
+ },
+ "required": [
+ "challengeId",
+ "initiatorDid",
+ "responderDid",
+ "nonce",
+ "timestamp",
+ "expiresAt",
+ "initiatorCapabilities"
+ ],
+ "additionalProperties": false
+ },
+ "handshakeResponse": {
+ "type": "object",
+ "properties": {
+ "challengeId": { "$ref": "#/$defs/uuid" },
+ "sessionId": { "type": "string" },
+ "responderDid": { "$ref": "#/$defs/didAgent" },
+ "responderCapabilities": {
+ "type": "array",
+ "items": {
+ "type": "string",
+ "enum": [
+ "INQUIRY",
+ "QUOTE",
+ "CONFIRM",
+ "PUBLISH",
+ "RECORD"
+ ]
+ }
+ },
+ "nonce": { "$ref": "#/$defs/hash" },
+ "timestamp": { "$ref": "#/$defs/timestamp" },
+ "capabilityTokenId": { "$ref": "#/$defs/capabilityTokenId" },
+ "encryption": {
+ "type": "object",
+ "description": "Encryption negotiation result. Omitted when negotiatedMode=OFF and initiator had no encryption offer.",
+ "properties": {
+ "negotiatedMode": {
+ "type": "string",
+ "enum": ["OFF", "REQUIRED"]
+ },
+ "responderPreference": {
+ "type": "string",
+ "enum": ["OFF", "OPT_IN", "REQUIRED"]
+ },
+ "responderEphemeralPublicKey": {
+ "type": "string",
+ "minLength": 1
+ },
+ "encryptionProtocolVersion": {
+ "type": "string",
+ "const": "ap/e2e/v1"
+ },
+ "transcriptHashConfirmation": { "type": "string" },
+ "authorizedTokenFingerprint": {
+ "type": "string",
+ "minLength": 1,
+ "description": "capabilityTokenFingerprint returned by HAV.validate; present only when negotiatedMode='REQUIRED' and challenge.capabilityTokenId !== null; the initiator uses this value to reconstruct the 16th field of the transcript_hash."
+ }
+ },
+ "required": [
+ "negotiatedMode",
+ "responderPreference",
+ "encryptionProtocolVersion",
+ "transcriptHashConfirmation"
+ ],
+ "additionalProperties": false
+ }
+ },
+ "required": [
+ "challengeId",
+ "sessionId",
+ "responderDid",
+ "responderCapabilities",
+ "nonce",
+ "timestamp"
+ ],
+ "additionalProperties": false
+ },
+ "handshakeAckBody": {
+ "type": "object",
+ "properties": {
+ "accepted": { "type": "boolean" },
+ "response": { "$ref": "#/$defs/handshakeResponse" },
+ "reason": { "type": "string" }
+ },
+ "required": ["accepted", "response"],
+ "additionalProperties": false,
+ "if": {
+ "properties": { "accepted": { "const": true } },
+ "required": ["accepted"]
+ },
+ "then": {
+ "properties": {
+ "response": {
+ "type": "object",
+ "properties": {
+ "sessionId": { "type": "string", "minLength": 1 }
+ },
+ "required": ["sessionId"]
+ }
+ }
+ }
+ },
+ "discoveryRequestBody": {
+ "type": "object",
+ "description": "DISCOVERY_REQUEST envelope body",
+ "properties": {
+ "targetDid": { "$ref": "#/$defs/didAgent" },
+ "requestedAt": { "$ref": "#/$defs/timestamp" }
+ },
+ "required": ["targetDid", "requestedAt"],
+ "additionalProperties": false
+ },
+ "discoveryResponseBody": {
+ "type": "object",
+ "description": "DISCOVERY_RESPONSE envelope body",
+ "properties": {
+ "agentDid": { "$ref": "#/$defs/didAgent" },
+ "agentCardJson": { "type": "string", "minLength": 1 },
+ "respondedAt": { "$ref": "#/$defs/timestamp" },
+ "documentVersion": { "type": "integer", "minimum": 1 }
+ },
+ "required": [
+ "agentDid",
+ "agentCardJson",
+ "respondedAt",
+ "documentVersion"
+ ],
+ "additionalProperties": false
+ }
+ }
+}

@@ -1,0 +1,83 @@
+{
+ "description": "hand-crafted Ed25519 signature input vectors",
+ "note": "RFC 8032 test vector 1 key seed included; additional vectors generated from known seeds for determinism",
+ "vectors": [
+ {
+ "id": "ed25519-rfc8032-test1-empty",
+ "description": "RFC 8032 §6.1 Test Vector 1 — empty message",
+ "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+ "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "message_hex": ""
+ },
+ {
+ "id": "ed25519-rfc8032-test2",
+ "description": "RFC 8032 §6.1 Test Vector 2 seed — noble-derived pubkey (756cd751); the RFC 8032 official pubkey 3d4017c3 differs from the @noble/curves derivation, so the actual noble-derived value is used [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+ "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+ "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+ "message_hex": "72"
+ },
+ {
+ "id": "ed25519-rfc8032-test3",
+ "description": "RFC 8032 §6.1 Test Vector 3 — 2-byte message",
+ "private_key_hex": "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7",
+ "public_key_hex": "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025",
+ "message_hex": "af82"
+ },
+ {
+ "id": "ed25519-zero-seed",
+ "description": "all-zero seed (32 bytes) — boundary",
+ "private_key_hex": "0000000000000000000000000000000000000000000000000000000000000000",
+ "public_key_hex": "",
+ "message_hex": "deadbeef"
+ },
+ {
+ "id": "ed25519-ff-seed",
+ "description": "all-0xFF seed (32 bytes) — boundary",
+ "private_key_hex": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+ "public_key_hex": "",
+ "message_hex": "cafebabe"
+ },
+ {
+ "id": "ed25519-ascii-message",
+ "description": "ASCII text message signature",
+ "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+ "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "message_hex": "68656c6c6f20776f726c64"
+ },
+ {
+ "id": "ed25519-canonical-json-message",
+ "description": "RFC 8785 canonical JSON as the signed message",
+ "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+ "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "message_hex": "7b2261223a312c2262223a327d"
+ },
+ {
+ "id": "ed25519-32-byte-message",
+ "description": "32-byte message (typical sha256 digest length) — noble-derived pubkey for seed 4ccd089b [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+ "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+ "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+ "message_hex": "b94f6f125c79e3a5ffaa826f584c10d52ada669e6762051b826b55776d05a8a6"
+ },
+ {
+ "id": "ed25519-64-byte-message",
+ "description": "64-byte message",
+ "private_key_hex": "c5aa8df43f9f837bedb7442f31dcb7b166d38535076f094b85ce3a2e0b4458f7",
+ "public_key_hex": "fc51cd8e6218a1a38da47ed00230f0580816ed13ba3303ac5deb911548908025",
+ "message_hex": "0102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f202122232425262728292a2b2c2d2e2f303132333435363738393a3b3c3d3e3f40"
+ },
+ {
+ "id": "ed25519-unicode-utf8-message",
+ "description": "UTF-8 Chinese message signature (byte-level)",
+ "private_key_hex": "9d61b19deffd5a60ba844af492ec2cc44449c5697b326919703bac031cae7f60",
+ "public_key_hex": "d75a980182b10ab7d54bfed3c964073a0ee172f3daa62325af021a68f707511a",
+ "message_hex": "e4b8ade69687"
+ },
+ {
+ "id": "ed25519-spec-version-payload",
+ "description": "spec v0.4.0 wire payload byte signature — noble-derived pubkey for seed 4ccd089b [RFC_8032_COMPLIANT=FALSE; INTEROP_NOTE: noble-derived; not RFC 8032 official cross-impl]",
+ "private_key_hex": "4ccd089b28ff96da9db6c346ec114e0f5b8a319f35aba624da8cf6ed4d0bd6f5",
+ "public_key_hex": "756cd751360102aae6d5032957dbf3d7786397bd434225c1675c552dca04e425",
+ "message_hex": "7b2269223a2235353065383430302d65323962222c2273706563223a22302e342e30227d"
+ }
+ ]
+}

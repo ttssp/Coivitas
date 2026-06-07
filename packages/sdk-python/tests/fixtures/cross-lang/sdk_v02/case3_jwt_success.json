@@ -1,0 +1,10 @@
+{
+ "_comment": "sdk v0.2 Case 3: JWT verify success scenario",
+ "verifierKind": "jwt",
+ "scenario": "success",
+ "expectedFields": {
+ "verifierKind": "jwt",
+ "sdkVersion": "2.0.0"
+ },
+ "_note": "JWT success: iss/aud/exp valid, sub=expected_did. Test uses locally generated RSA key."
+}

@@ -1,0 +1,22 @@
+{
+    "$schema": "https://typedoc.org/schema.json",
+    "name": "Coivitas API",
+    "entryPoints": [
+        "packages/types/src/index.ts",
+        "packages/crypto/src/index.ts",
+        "packages/identity/src/index.ts",
+        "packages/policy/src/index.ts",
+        "packages/communication/src/index.ts",
+        "packages/sdk/src/index.ts"
+    ],
+    "entryPointStrategy": "resolve",
+    "tsconfig": "tsconfig.json",
+    "plugin": [],
+    "excludePrivate": true,
+    "excludeProtected": false,
+    "excludeInternal": true,
+    "readme": "none",
+    "sort": ["source-order"],
+    "categorizeByGroup": false,
+    "out": "docs/api/generated"
+}

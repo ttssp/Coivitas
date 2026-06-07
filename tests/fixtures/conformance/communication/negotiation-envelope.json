@@ -1,0 +1,215 @@
+{
+ "$schema": "conformance/communication/negotiation-envelope",
+ "specVersion": "0.1.0",
+ "description": "Communication-layer negotiation envelope fixtures",
+ "valid": [
+ {
+ "id": "valid-handshake-init",
+ "description": "Handshake init message, sessionId is null",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-846655440001",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 1
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "challenge": {
+ "challengeId": "chal-001",
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "responderDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "nonce": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "timestamp": "2026-04-03T00:00:00.000Z",
+ "expiresAt": "2026-04-03T00:01:00.000Z",
+ "initiatorCapabilities": ["INQUIRY", "QUOTE"]
+ }
+ },
+ "signature": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "timestamp": "2026-04-03T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "valid-negotiation-request",
+ "description": "Negotiation request envelope with tokenId semantics",
+ "data": {
+ "id": "660f9511-f3ac-42e5-b827-557766550002",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "770a8622-14bd-43f6-8938-668877660003",
+ "sequenceNumber": 1
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": {
+ "sku": "SKU-001",
+ "quantity": 10
+ },
+ "requestId": "req-001"
+ },
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "timestamp": "2026-04-03T00:01:00.000Z"
+ }
+ },
+ {
+ "id": "valid-negotiation-request-with-token-ref-v02",
+ "description": "Negotiation request carrying capabilityTokenRef (specVersion 0.2.0)",
+ "data": {
+ "id": "771b2844-b6df-45b8-a039-880baa993327",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "880a8622-14bd-43f6-8938-668877660003",
+ "sequenceNumber": 2,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "QUOTE",
+ "params": { "sku": "SKU-002", "quantity": 5 },
+ "requestId": "req-002"
+ },
+ "signature": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+ "timestamp": "2026-04-03T00:02:00.000Z"
+ }
+ },
+ {
+ "id": "valid-negotiation-confirm-with-token-ref-v02",
+ "description": "specVersion 0.2.0 confirm message carrying capabilityTokenRef",
+ "data": {
+ "id": "882c3955-c7e0-46c9-b14a-991cbbb04438",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "882c3955-c7e0-46c9-b14a-991cbbb04438",
+ "capabilityTokenRef": "urn:cap:660f9511-f3ac-42e5-b827-557766550002"
+ },
+ "messageType": "NEGOTIATION_CONFIRM",
+ "body": { "requestId": "req-003", "accepted": true },
+ "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+ "timestamp": "2026-04-03T00:03:00.000Z"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-unknown-message-type",
+ "description": "Unknown messageType",
+ "expectedError": "INVALID_MESSAGE",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-846655440099",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null
+ },
+ "messageType": "UNKNOWN_TYPE",
+ "body": {},
+ "signature": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+ "timestamp": "2026-04-03T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-incompatible-spec-version",
+ "description": "Incompatible major version",
+ "expectedError": "SPEC_VERSION_MISMATCH",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-846655440098",
+ "specVersion": "99",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {},
+ "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+ "timestamp": "2026-04-03T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-capabilitytokenref-v01-forbidden",
+ "description": "specVersion 0.1.0 envelope must not carry capabilityTokenRef (version gating)",
+ "expectedError": "SPEC_VERSION_MISMATCH",
+ "data": {
+ "id": "771b2844-b6df-45b8-a039-880baa993328",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "880a8622-14bd-43f6-8938-668877660003",
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": { "action": "INQUIRY", "requestId": "req-bad-v01" },
+ "signature": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+ "timestamp": "2026-04-03T00:06:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-capabilitytokenref-missing-signature",
+ "description": "Carries capabilityTokenRef but missing signature (presence of the new field does not waive required-field validation)",
+ "expectedError": "INVALID_MESSAGE",
+ "data": {
+ "id": "993d4066-d8f1-57ca-c250-aa2dcc116650",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "993d4066-d8f1-57ca-c250-aa2dcc116650",
+ "capabilityTokenRef": "urn:cap:770a8622-14bd-43f6-8938-668877660003"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": { "action": "CONFIRM", "requestId": "req-bad-01" },
+ "timestamp": "2026-04-03T00:04:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-capabilitytokenref-bad-message-type",
+ "description": "Carries capabilityTokenRef but messageType is illegal",
+ "expectedError": "INVALID_MESSAGE",
+ "data": {
+ "id": "aa4e5b88-e9a2-48db-d361-bb3edd227761",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "aa4e5b88-e9a2-48db-d361-bb3edd227761",
+ "capabilityTokenRef": "urn:cap:881baaa9-3327-46c9-b14a-aa2c3955c7e0"
+ },
+ "messageType": "DELEGATED_ACTION",
+ "body": {},
+ "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+ "timestamp": "2026-04-03T00:05:00.000Z"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-minimal-confirm",
+ "description": "Minimal valid confirm message",
+ "valid": true,
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-846655440097",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "880a8622-14bd-43f6-8938-668877660003"
+ },
+ "messageType": "NEGOTIATION_CONFIRM",
+ "body": {},
+ "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+ "timestamp": "2026-04-03T00:00:00.000Z"
+ }
+ }
+ ]
+}

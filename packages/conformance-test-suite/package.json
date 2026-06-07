@@ -1,0 +1,43 @@
+{
+  "name": "@coivitas/conformance-test-suite",
+  "version": "0.1.0-alpha.1",
+  "license": "Apache-2.0",
+  "description": "Coivitas conformance test suite — standalone publishable package with CLI (coivitas-conformance)",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "bin": {
+    "coivitas-conformance": "./bin/coivitas-conformance.mjs"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist",
+    "bin",
+    "fixtures"
+  ],
+  "peerDependencies": {
+    "@coivitas/types": "workspace:*"
+  },
+  "dependencies": {
+    "@coivitas/types": "workspace:*",
+    "commander": "^14.0.3"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  },
+  "scripts": {
+    "copy-fixtures": "node -e \"const fs=require('fs');const path=require('path');const conformanceRoot=path.resolve(__dirname,'../../tests/fixtures/conformance');const src030=path.join(conformanceRoot,'v0.3.0');const dst030=path.resolve(__dirname,'fixtures/v0.3.0');const dstBaseline=path.resolve(__dirname,'fixtures/baseline');if(fs.existsSync(src030)){fs.mkdirSync(dst030,{recursive:true});for(const f of fs.readdirSync(src030)){if(f.endsWith('.json')){fs.copyFileSync(path.join(src030,f),path.join(dst030,f));console.log('copied',f,'→ fixtures/v0.3.0/');}}}else{console.warn('WARN: source fixture dir not found (monorepo only):',src030);}if(fs.existsSync(conformanceRoot)){fs.mkdirSync(dstBaseline,{recursive:true});let count=0;for(const e of fs.readdirSync(conformanceRoot,{withFileTypes:true})){if(e.isFile&&e.name.endsWith('.json')){fs.copyFileSync(path.join(conformanceRoot,e.name),path.join(dstBaseline,e.name));console.log('copied',e.name,'→ fixtures/baseline/');count++;}}if(count===0){console.warn('WARN: no baseline .json files found in conformance root:',conformanceRoot);}}else{console.warn('WARN: conformance root not found (monorepo only):',conformanceRoot);}\"",
+    "build": "tsc -p tsconfig.json && npm run copy-fixtures",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "test": "vitest run --config vitest.config.ts",
+    "test:coverage": "vitest run --config vitest.config.ts --coverage"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

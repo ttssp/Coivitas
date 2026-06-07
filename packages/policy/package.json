@@ -1,0 +1,38 @@
+{
+  "name": "@coivitas/policy",
+  "version": "0.1.0-alpha.1",
+  "license": "Apache-2.0",
+  "private": true,
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "dependencies": {
+    "@coivitas/crypto": "workspace:*",
+    "@coivitas/identity": "workspace:*",
+    "@coivitas/shared": "workspace:*",
+    "@coivitas/types": "workspace:*",
+    "@noble/curves": "1.9.7",
+    "express": "^5.1.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "lint": "eslint . --ext .ts --max-warnings=0",
+    "test": "vitest run --config vitest.config.ts"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.20.0",
+    "pg": "^8.20.0"
+  }
+}

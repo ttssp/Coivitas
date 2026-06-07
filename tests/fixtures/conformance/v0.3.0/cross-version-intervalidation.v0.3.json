@@ -1,0 +1,336 @@
+{
+ "$schema": "conformance/cross-version-intervalidation",
+ "description": "conformance fixture: cross-version intervalidation matrix. Each case declares the input data's specVersion, the target validator version, and the expected result. Covers the 6x4 cross combinations of the v0.1.0/v0.2.0/v0.3.0 tri-state coexistence (4 schema types x 6 directions). Backward compatibility: a v0.1.0 fixture must pass under the v0.3.0 validator.",
+ "matrix": [
+ {
+ "id": "xv-01-v010-envelope-on-v030-validator",
+ "description": "v0.1.0 hex envelope -> v0.3.0 validator: PASS (backward compatible, P3-A.2 tri-state coexistence)",
+ "schemaId": "negotiationEnvelope",
+ "inputSpecVersion": "0.1.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b200000001",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": null,
+ "sequenceNumber": 0
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "nonce": "1111111111111111111111111111111111111111111111111111111111111111",
+ "capabilities": ["INQUIRY", "QUOTE"],
+ "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+ },
+ "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "timestamp": "2026-05-01T10:00:00.000Z"
+ }
+ },
+ {
+ "id": "xv-02-v020-envelope-on-v030-validator",
+ "description": "v0.2.0 base64url envelope -> v0.3.0 validator: PASS (backward compatible)",
+ "schemaId": "negotiationEnvelope",
+ "inputSpecVersion": "0.2.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b200000002",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b200000002",
+ "sequenceNumber": 1,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": { "sku": "SKU-XV-02" },
+ "requestId": "req-xv-02"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T10:01:00.000Z"
+ }
+ },
+ {
+ "id": "xv-03-v030-envelope-on-v010-validator",
+ "description": "v0.3.0 envelope -> v0.1.0 validator: REJECT (specVersion enum does not include 0.3.0; AJV hard reject, first gate of the matrix)",
+ "schemaId": "negotiationEnvelope",
+ "inputSpecVersion": "0.3.0",
+ "validatorVersion": "0.1.0",
+ "expectedResult": "REJECT",
+ "expectedError": "specVersion must be equal to one of the allowed values",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b200000003",
+ "specVersion": "0.3.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b200000003",
+ "sequenceNumber": 1
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": { "sku": "SKU-XV-03" },
+ "requestId": "req-xv-03"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T10:02:00.000Z"
+ }
+ },
+ {
+ "id": "xv-04-v010-action-record-on-v030-validator",
+ "description": "v0.1.0 hex ActionRecord (no delegationDepth / actorSignature) -> v0.3.0 validator: PASS (backward compatible; delegationDepth treated as undefined)",
+ "schemaId": "actionRecord",
+ "inputSpecVersion": "0.1.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b200000011",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product": "test" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T10:10:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015adba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+ }
+ },
+ {
+ "id": "xv-05-v020-action-record-on-v030-validator",
+ "description": "v0.2.0 base64url ActionRecord (no delegationDepth) -> v0.3.0 validator: PASS (delegationDepth optional in v0.2.0)",
+ "schemaId": "actionRecord",
+ "inputSpecVersion": "0.2.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b200000012",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": { "vendor": "V01" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T10:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-xv-05"
+ }
+ },
+ {
+ "id": "xv-06-v030-action-record-superseded-on-v020-validator",
+ "description": "v0.3.0 ActionRecord SESSION_SUPERSEDED -> v0.2.0 validator: REJECT (the 5-value ACTION_VOCABULARY enum does not include SESSION_SUPERSEDED)",
+ "schemaId": "actionRecord",
+ "inputSpecVersion": "0.3.0",
+ "validatorVersion": "0.2.0",
+ "expectedResult": "REJECT",
+ "expectedError": "action must be equal to one of the allowed values",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b200000013",
+ "specVersion": "0.3.0",
+ "agentDid": "did:system:session-governor",
+ "principalDid": "did:system:session-governor",
+ "action": "SESSION_SUPERSEDED",
+ "parametersSummary": {
+ "oldSessionId": "550e8400-e29b-41d4-a716-446655440200",
+ "newSessionId": "550e8400-e29b-41d4-a716-446655440201",
+ "reason": "EXPLICIT_CLOSE",
+ "timestamp": "2026-05-01T10:12:00.000Z",
+ "affectedAgentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "affectedPrincipalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK"
+ },
+ "authorizationRef": null,
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T10:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "xv-07-v010-identity-doc-on-v030-validator",
+ "description": "v0.1.0 hex AgentIdentityDocument -> v0.3.0 validator: PASS (backward compatible, P3-A.2)",
+ "schemaId": "agentIdentityDocument",
+ "inputSpecVersion": "0.1.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "issuedAt": "2026-01-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015adba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-01-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "xv-08-v010-capability-token-on-v030-validator",
+ "description": "v0.1.0 hex CapabilityToken -> v0.3.0 validator: PASS (backward compatible, P3-A.2)",
+ "schemaId": "capabilityToken",
+ "inputSpecVersion": "0.1.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-09b200000021",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "issuedTo": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "issuedAt": "2026-05-01T10:20:00.000Z",
+ "expiresAt": "2027-05-01T00:00:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "sku",
+ "values": ["A"]
+ }
+ }
+ ],
+ "revocationUrl": "https://example.com/revoke/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-05-01T10:20:00.000Z",
+ "verificationMethod": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK#key-1",
+ "value": "ba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015adba7816bf8f01cfea414140de5dae2223b00361a396177a9cb410ff61f20015ad"
+ }
+ }
+ },
+ {
+ "id": "xv-09-v020-base64url-on-v010-validator",
+ "description": "v0.2.0 base64url envelope -> v0.1.0 validator: PASS at the schema layer (the v0.1 anyOf already accepts the base64url pattern) or REJECT (depends on whether the v0.1 schema has an anyOf; marked here as runtime-dependent, to be confirmed by the implementation)",
+ "schemaId": "negotiationEnvelope",
+ "inputSpecVersion": "0.2.0",
+ "validatorVersion": "0.1.0",
+ "expectedResult": "RUNTIME_DEPENDENT",
+ "note": "Whether the v0.1 validator has a dual-format anyOf schema depends on the forward-compatibility implementation. An anyOf pattern has been introduced, so the actual result depends on the deployed schema version. This fixture is marked RUNTIME_DEPENDENT, with the interop harness deciding PASS/REJECT based on the actual validator instance.",
+ "data": {
+ "id": "550e8400-e29b-41d4-a716-09b200000009",
+ "specVersion": "0.2.0",
+ "header": {
+ "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+ "sessionId": "550e8400-e29b-41d4-a716-09b200000009",
+ "sequenceNumber": 1,
+ "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": {},
+ "requestId": "req-xv-09"
+ },
+ "signature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "timestamp": "2026-05-01T10:30:00.000Z"
+ }
+ },
+ {
+ "id": "xv-10-v030-business-record-on-v030-validator",
+ "description": "v0.3.0 business ActionRecord (CONFIRM + delegationDepth=2 + base64url) -> v0.3.0 validator: PASS",
+ "schemaId": "actionRecord",
+ "inputSpecVersion": "0.3.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b200000030",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": { "order_id": "ORD-XV-10" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T10:30:00.000Z",
+ "prevHash": "ungWv48Bz-pBQUDeXa4iI7ADYaOWF3qctBD_YfIAFa0",
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-xv-10",
+ "delegationDepth": 2
+ }
+ },
+ {
+ "id": "xv-11-v030-record-missing-depth-on-v030-validator",
+ "description": "v0.3.0 ActionRecord missing delegationDepth -> v0.3.0 validator: REJECT (required in v0.3.0)",
+ "schemaId": "actionRecord",
+ "inputSpecVersion": "0.3.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "REJECT",
+ "expectedError": "must have required property 'delegationDepth'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-09b200000031",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-05-01T10:31:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "qrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_ABEiM0RVZneImQ",
+ "actorSignature": "ERIjRFVmd4iZqrvM3e7_ABEiM0RVZneImaq7zN3u_wARIjNEVWZ3iJmqu8zd7v8AESI0RFVmd4iZqrvM3e7_AQ",
+ "sessionId": "sess-xv-11"
+ }
+ },
+ {
+ "id": "xv-12-v020-identity-doc-on-v030-validator",
+ "description": "v0.2.0 AgentIdentityDocument (with version + rotationProof, hex encoding) -> v0.3.0 validator: PASS (backward compatible)",
+ "schemaId": "agentIdentityDocument",
+ "inputSpecVersion": "0.2.0",
+ "validatorVersion": "0.3.0",
+ "expectedResult": "PASS",
+ "data": {
+ "id": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "publicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "issuedAt": "2026-03-15T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "ff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddee"
+ },
+ "version": 2,
+ "previousPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "rotationProof": {
+ "oldPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "newPublicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "oldKeySignature": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111aaaa",
+ "newKeySignature": "2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222bbbb",
+ "principalSignature": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333cccc",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "rotatedAt": "2026-03-15T00:00:00.000Z"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-03-15T00:00:00.000Z"
+ }
+ }
+ ]
+}

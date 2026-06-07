@@ -1,0 +1,41 @@
+{
+ "$schema": "conformance/authorization/runtime-guard-vectors",
+ "description": "RuntimeGuard result vectors",
+ "vectors": [
+ {
+ "id": "no-tokens",
+ "expected": {
+ "allowed": false,
+ "reason": "no tokens found"
+ }
+ },
+ {
+ "id": "no-matching-capability",
+ "expected": {
+ "allowed": false,
+ "reason": "no matching capability"
+ }
+ },
+ {
+ "id": "scope-failed",
+ "expected": {
+ "allowed": false,
+ "reason": "scope check failed: amount exceeds max 500"
+ }
+ },
+ {
+ "id": "revoked",
+ "expected": {
+ "allowed": false,
+ "reason": "capability revoked"
+ }
+ },
+ {
+ "id": "success",
+ "expected": {
+ "allowed": true,
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ }
+ }
+ ]
+}

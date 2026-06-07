@@ -1,0 +1,10 @@
+{
+ "_comment": "sdk v0.2 Case 5: OAuth2 introspection success scenario",
+ "verifierKind": "oauth2",
+ "scenario": "success",
+ "expectedFields": {
+ "verifierKind": "oauth2",
+ "sdkVersion": "2.0.0"
+ },
+ "_note": "OAuth2 success: introspection returns active=true, client_id matches, sub=expected_did. Test mocks HTTP endpoint."
+}

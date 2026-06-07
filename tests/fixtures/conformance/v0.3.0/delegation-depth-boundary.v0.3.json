@@ -1,0 +1,243 @@
+{
+ "$schema": "conformance/action-record",
+ "description": "conformance fixture: delegationDepth v0.3.0 required schema + boundary validation (breaking-format-change-v0.3.0 A4)",
+ "valid": [
+ {
+ "id": "valid-depth-0-no-delegation",
+ "description": "v0.3.0 ActionRecord depth=0 (no delegation chain, minimum legal value)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000001",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": { "product_category": "electronics" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:01:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "1122334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 0
+ }
+ },
+ {
+ "id": "valid-depth-1-single-delegation",
+ "description": "v0.3.0 ActionRecord depth=1 (single-hop delegation)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000002",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "QUOTE",
+ "parametersSummary": { "vendor_id": "V001" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:02:00.000Z",
+ "prevHash": "ba7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0001",
+ "ledgerSignature": "bbbbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "2222334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 1
+ }
+ },
+ {
+ "id": "valid-depth-3-mid-range",
+ "description": "v0.3.0 ActionRecord depth=3 (mid-range legal value)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000003",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "CONFIRM",
+ "parametersSummary": { "order_id": "ORD-003" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440002"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:03:00.000Z",
+ "prevHash": "ca7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0002",
+ "ledgerSignature": "ccccaaddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "3333334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 3
+ }
+ },
+ {
+ "id": "valid-depth-5-max-boundary",
+ "description": "v0.3.0 ActionRecord depth=5 (MAX_DELEGATION_DEPTH upper bound, boundary inclusive)",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000004",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "PUBLISH",
+ "parametersSummary": { "channel": "public" },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440003"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:04:00.000Z",
+ "prevHash": "da7816bf8f01cfea414140de5dae2ec73b00361bbef0469348423f656b4f0003",
+ "ledgerSignature": "ddddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabb",
+ "actorSignature": "4444334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 5
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-depth-6-exceeds-max",
+ "description": "v0.3.0 depth=6 (>MAX_DELEGATION_DEPTH=5, schema maximum triggers rejection)",
+ "expectedError": "delegationDepth must be <= 5",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000011",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:11:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "5555334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": 6
+ }
+ },
+ {
+ "id": "invalid-depth-negative",
+ "description": "v0.3.0 depth=-1 (negative, schema minimum triggers rejection)",
+ "expectedError": "delegationDepth must be >= 0",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000012",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:12:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "6666334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": -1
+ }
+ },
+ {
+ "id": "invalid-depth-missing-v030-required",
+ "description": "v0.3.0 missing delegationDepth (required in v0.3.0, AJV fail-closed rejection)",
+ "expectedError": "must have required property 'delegationDepth'",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000013",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:13:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "7777334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb"
+ }
+ },
+ {
+ "id": "invalid-depth-string-type-error",
+ "description": "v0.3.0 delegationDepth type error (string instead of integer)",
+ "expectedError": "delegationDepth must be integer",
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000014",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:14:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "8888334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb",
+ "delegationDepth": "three"
+ }
+ }
+ ],
+ "cross_version": [
+ {
+ "id": "cross-v010-missing-depth-pass",
+ "description": "v0.1.0 ActionRecord missing delegationDepth (optional in 0.1.0, should pass)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000021",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:21:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899"
+ }
+ },
+ {
+ "id": "cross-v020-missing-depth-pass",
+ "description": "v0.2.0 ActionRecord missing delegationDepth (optional in 0.2.0, should pass; actorSignature required)",
+ "valid": true,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000022",
+ "specVersion": "0.2.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:22:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "9999334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb"
+ }
+ },
+ {
+ "id": "cross-v030-missing-depth-reject",
+ "description": "v0.3.0 ActionRecord missing delegationDepth (required in 0.3.0, should reject)",
+ "valid": false,
+ "data": {
+ "id": "rec-550e8400-e29b-41d4-a716-050d00000023",
+ "specVersion": "0.3.0",
+ "agentDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "action": "INQUIRY",
+ "parametersSummary": {},
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440000"
+ },
+ "resultSummary": { "status": "SUCCESS" },
+ "timestamp": "2026-04-27T00:23:00.000Z",
+ "prevHash": null,
+ "ledgerSignature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+ "actorSignature": "aaaa334455667788990011223344556677889900112233445566778899001122112233445566778899001122334455667788990011223344556677889900aabb"
+ }
+ }
+ ]
+}

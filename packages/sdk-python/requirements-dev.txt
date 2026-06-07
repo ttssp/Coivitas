@@ -1,0 +1,7 @@
+# Development dependencies (kept in sync with pyproject.toml [project.optional-dependencies].dev).
+-r requirements.txt
+pytest>=8.0
+pytest-asyncio>=0.23
+pytest-cov>=4.1
+mypy>=1.10
+pyright>=1.1

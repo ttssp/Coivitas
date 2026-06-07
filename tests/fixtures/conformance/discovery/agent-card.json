@@ -1,0 +1,161 @@
+{
+ "$schema": "conformance/agent-card",
+ "specVersion": "0.1.0",
+ "description": "AgentCard wire-format conformance fixtures — boundary regression anchor for the #6/#7 maxLength relaxation (displayName 64→128, description 512→1024)",
+ "valid": [
+ {
+ "id": "valid-minimal",
+ "description": "Minimal valid AgentCard (no optional fields)",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ }
+ },
+ {
+ "id": "valid-with-display-name-and-description",
+ "description": "Includes optional displayName + description",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "displayName": "Acme Trading Agent",
+ "description": "Handles B2B trading inquiries and quotes for Acme Corp"
+ }
+ },
+ {
+ "id": "valid-v02-document-version",
+ "description": "specVersion 0.2.0 + documentVersion>1",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.2.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 3,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-display-name-too-long-129",
+ "description": "displayName of 129 characters (exceeds maxLength 128)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "displayName": "BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB"
+ }
+ },
+ {
+ "id": "invalid-description-too-long-1025",
+ "description": "description of 1025 characters (exceeds maxLength 1024)",
+ "expectedError": "INTERNAL_ERROR",
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "description": "DDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDDD"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-display-name-exact-128",
+ "description": "displayName of exactly 128 characters (#6 new upper bound)",
+ "valid": true,
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "displayName": "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
+ }
+ },
+ {
+ "id": "boundary-description-exact-1024",
+ "description": "description of exactly 1024 characters (#7 new upper bound)",
+ "valid": true,
+ "data": {
+ "did": "did:agent:a1b2c3d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+ "specVersion": "0.1.0",
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://agent.example.com/negotiate"
+ }
+ ],
+ "capabilitiesDeclared": ["INQUIRY", "QUOTE"],
+ "publicKey": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+ "documentVersion": 1,
+ "updatedAt": "2026-04-21T10:00:00.000Z",
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+ "description": "CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+ }
+ }
+ ]
+}

@@ -1,0 +1,27 @@
+{
+ "$id": "https://coivitas.ai/schemas/discovery-response-body.json",
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "title": "DiscoveryResponseBody",
+ "description": "DISCOVERY_RESPONSE envelope body (v0.2+)",
+ "type": "object",
+ "required": ["agentDid", "agentCardJson", "respondedAt", "documentVersion"],
+ "properties": {
+ "agentDid": {
+ "type": "string",
+ "pattern": "^did:agent:[a-f0-9]{40}$"
+ },
+ "agentCardJson": {
+ "type": "string",
+ "minLength": 1
+ },
+ "respondedAt": {
+ "type": "string",
+ "pattern": "^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}\\.\\d{3}Z$"
+ },
+ "documentVersion": {
+ "type": "integer",
+ "minimum": 1
+ }
+ },
+ "additionalProperties": false
+}

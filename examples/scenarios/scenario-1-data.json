@@ -1,0 +1,320 @@
+{
+ "scenarioId": "scenario-1",
+ "title": "B2B procurement corridor",
+ "phase": "P0",
+ "description": "Golden path-aligned procurement negotiation between a buyer agent and a seller agent.",
+ "principals": [
+ {
+ "did": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "publicKey": "1111111111111111111111111111111111111111111111111111111111111111",
+ "displayName": "Alice Chen",
+ "createdAt": "2026-04-02T09:00:00.000Z"
+ },
+ {
+ "did": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "publicKey": "2222222222222222222222222222222222222222222222222222222222222222",
+ "displayName": "Bob Lin",
+ "createdAt": "2026-04-02T09:00:00.000Z"
+ }
+ ],
+ "agentDocuments": [
+ {
+ "id": "did:agent:1111111111111111111111111111111111111111",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "publicKey": "3333333333333333333333333333333333333333333333333333333333333333",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "agentDid": "did:agent:1111111111111111111111111111111111111111",
+ "issuedAt": "2026-04-02T09:05:00.000Z",
+ "expiresAt": null,
+ "signature": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+ },
+ "capabilities": ["INQUIRY", "CONFIRM", "RECORD"],
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://buyer-agent.example.com/negotiate"
+ }
+ ],
+ "createdAt": "2026-04-02T09:05:00.000Z",
+ "updatedAt": "2026-04-02T09:05:00.000Z"
+ },
+ {
+ "id": "did:agent:2222222222222222222222222222222222222222",
+ "specVersion": "0.1.0",
+ "principalDid": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "publicKey": "4444444444444444444444444444444444444444444444444444444444444444",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "agentDid": "did:agent:2222222222222222222222222222222222222222",
+ "issuedAt": "2026-04-02T09:06:00.000Z",
+ "expiresAt": null,
+ "signature": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+ },
+ "capabilities": ["QUOTE", "RECORD"],
+ "serviceEndpoints": [
+ {
+ "id": "negotiation",
+ "type": "NegotiationEndpoint",
+ "url": "https://seller-agent.example.com/negotiate"
+ }
+ ],
+ "createdAt": "2026-04-02T09:06:00.000Z",
+ "updatedAt": "2026-04-02T09:06:00.000Z"
+ }
+ ],
+ "capabilityTokens": [
+ {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-446655440101",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "principalDid": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "issuedTo": "did:agent:1111111111111111111111111111111111111111",
+ "issuedAt": "2026-04-02T09:10:00.000Z",
+ "expiresAt": "2026-04-03T09:10:00.000Z",
+ "capabilities": [
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "allowlist",
+ "field": "product_category",
+ "values": ["electronics"]
+ }
+ },
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "quantity",
+ "max": 500
+ }
+ },
+ {
+ "action": "INQUIRY",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "budget_usd",
+ "max": 50000,
+ "currency": "USD"
+ }
+ },
+ {
+ "action": "CONFIRM",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "confirmed_price",
+ "max": 10000,
+ "currency": "USD"
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-04-02T09:10:00.000Z",
+ "verificationMethod": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF#key-1",
+ "value": "cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc"
+ }
+ },
+ {
+ "id": "urn:cap:550e8400-e29b-41d4-a716-446655440102",
+ "specVersion": "0.1.0",
+ "issuerDid": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "principalDid": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "issuedTo": "did:agent:2222222222222222222222222222222222222222",
+ "issuedAt": "2026-04-02T09:11:00.000Z",
+ "expiresAt": "2026-04-03T09:11:00.000Z",
+ "capabilities": [
+ {
+ "action": "QUOTE",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "unit_price",
+ "max": 1000,
+ "currency": "USD"
+ }
+ },
+ {
+ "action": "QUOTE",
+ "scope": {
+ "type": "numeric_limit",
+ "field": "quantity",
+ "max": 500
+ }
+ }
+ ],
+ "revocationUrl": "https://revocation.example.com/tokens/{id}",
+ "proof": {
+ "type": "Ed25519Signature2026",
+ "created": "2026-04-02T09:11:00.000Z",
+ "verificationMethod": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1#key-1",
+ "value": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd"
+ }
+ }
+ ],
+ "envelopes": [
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440101",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:1111111111111111111111111111111111111111",
+ "recipientDid": "did:agent:2222222222222222222222222222222222222222",
+ "sessionId": null
+ },
+ "messageType": "HANDSHAKE_INIT",
+ "body": {
+ "challenge": "nonce-11111111111111111111111111111111",
+ "protocolVersion": "0.1.0"
+ },
+ "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+ "timestamp": "2026-04-02T09:20:00.000Z"
+ },
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440102",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:2222222222222222222222222222222222222222",
+ "recipientDid": "did:agent:1111111111111111111111111111111111111111",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440199",
+ "sequenceNumber": 1
+ },
+ "messageType": "HANDSHAKE_ACK",
+ "body": {
+ "challengeResponse": "ack-11111111111111111111111111111111"
+ },
+ "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+ "timestamp": "2026-04-02T09:20:10.000Z"
+ },
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440103",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:1111111111111111111111111111111111111111",
+ "recipientDid": "did:agent:2222222222222222222222222222222222222222",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440199",
+ "sequenceNumber": 2
+ },
+ "messageType": "NEGOTIATION_REQUEST",
+ "body": {
+ "action": "INQUIRY",
+ "params": {
+ "product_category": "electronics",
+ "quantity": 100,
+ "budget_usd": 5000,
+ "currency": "USD",
+ "delivery_deadline": "2026-04-30",
+ "shipping_address": "Shanghai, CN",
+ "inquiry_id": "550e8400-e29b-41d4-a716-446655440201"
+ },
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440101"
+ },
+ "signature": "abababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababababab",
+ "timestamp": "2026-04-02T09:21:00.000Z"
+ },
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440104",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:2222222222222222222222222222222222222222",
+ "recipientDid": "did:agent:1111111111111111111111111111111111111111",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440199",
+ "sequenceNumber": 3
+ },
+ "messageType": "NEGOTIATION_RESPONSE",
+ "body": {
+ "action": "QUOTE",
+ "params": {
+ "inquiry_id": "550e8400-e29b-41d4-a716-446655440201",
+ "quote_id": "550e8400-e29b-41d4-a716-446655440202",
+ "unit_price": 45,
+ "currency": "USD",
+ "quantity": 100,
+ "total_price": 4500,
+ "delivery_days": 5,
+ "validity_hours": 48
+ },
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440102"
+ },
+ "signature": "cdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcdcd",
+ "timestamp": "2026-04-02T09:21:30.000Z"
+ },
+ {
+ "id": "660e8400-e29b-41d4-a716-446655440105",
+ "specVersion": "0.1.0",
+ "header": {
+ "senderDid": "did:agent:1111111111111111111111111111111111111111",
+ "recipientDid": "did:agent:2222222222222222222222222222222222222222",
+ "sessionId": "660e8400-e29b-41d4-a716-446655440199",
+ "sequenceNumber": 4
+ },
+ "messageType": "NEGOTIATION_CONFIRM",
+ "body": {
+ "action": "CONFIRM",
+ "params": {
+ "quote_id": "550e8400-e29b-41d4-a716-446655440202",
+ "inquiry_id": "550e8400-e29b-41d4-a716-446655440201",
+ "confirmed_quantity": 100,
+ "confirmed_price": 4500,
+ "currency": "USD",
+ "shipping_address": "Shanghai, CN",
+ "order_id": "550e8400-e29b-41d4-a716-446655440203",
+ "human_approved": true
+ }
+ },
+ "signature": "edededededededededededededededededededededededededededededededededededededededededededededededededededededededededededededededed",
+ "timestamp": "2026-04-02T09:22:00.000Z"
+ }
+ ],
+ "actionRecords": [
+ {
+ "id": "880e8400-e29b-41d4-a716-446655440101",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:1111111111111111111111111111111111111111",
+ "principalDid": "did:key:z6Mki3wKjJ8sY8L6M1dA5vK2m7Q4uC9pR1xN2yT3aB4cD5eF",
+ "action": "CONFIRM",
+ "parametersSummary": {
+ "orderId": "550e8400-e29b-41d4-a716-446655440203"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440101"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "message": "Buyer confirmed quote and created order 550e8400-e29b-41d4-a716-446655440203"
+ },
+ "timestamp": "2026-04-02T09:22:30.000Z",
+ "prevHash": null,
+ "ledgerSignature": "12121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212121212"
+ },
+ {
+ "id": "880e8400-e29b-41d4-a716-446655440102",
+ "specVersion": "0.1.0",
+ "agentDid": "did:agent:2222222222222222222222222222222222222222",
+ "principalDid": "did:key:z6Mkr9qL2wE7bY6tN5vU4cR3xS8mP1aF0dH2jK7nL4pQ6rT1",
+ "action": "QUOTE",
+ "parametersSummary": {
+ "units": 100,
+ "currency": "USD"
+ },
+ "authorizationRef": {
+ "tokenId": "urn:cap:550e8400-e29b-41d4-a716-446655440102"
+ },
+ "resultSummary": {
+ "status": "SUCCESS",
+ "amount": 4500,
+ "message": "Seller quoted 100 units at 45 USD each"
+ },
+ "timestamp": "2026-04-02T09:22:31.000Z",
+ "prevHash": null,
+ "ledgerSignature": "34343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434343434"
+ }
+ ],
+ "expectedOutcomes": {
+ "handshakeEstablished": true,
+ "humanApprovalRequired": true,
+ "finalOrderStatus": "confirmed",
+ "ledgerWrites": 2
+ }
+}

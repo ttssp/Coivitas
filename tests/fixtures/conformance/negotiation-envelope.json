@@ -1,0 +1,325 @@
+{
+    "$schema": "conformance/negotiation-envelope",
+    "specVersion": "0.1.0",
+    "description": "NegotiationEnvelope wire-format conformance fixtures",
+    "valid": [
+        {
+            "id": "valid-handshake-init",
+            "description": "Handshake init envelope (sessionId is null)",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440001",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null,
+                    "sequenceNumber": 0
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "nonce": "d4e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9",
+                    "capabilities": ["INQUIRY", "QUOTE"],
+                    "initiatorDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0"
+                },
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "valid-negotiation-request",
+            "description": "Negotiation request envelope (with sessionId)",
+            "data": {
+                "id": "660f9511-f3ac-42e5-b827-557766550002",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "sess-770a8622-g4bd-63f6-c938-668877660003",
+                    "sequenceNumber": 1
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "action": "INQUIRY",
+                    "params": {
+                        "sku": "SKU-001",
+                        "quantity": 10
+                    },
+                    "requestId": "req-001"
+                },
+                "signature": "bbbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899a",
+                "timestamp": "2026-01-01T00:01:00.000Z"
+            }
+        },
+        {
+            "id": "valid-error-message",
+            "description": "Error message envelope",
+            "data": {
+                "id": "771a0622-f4bd-43f6-8938-668877660004",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "recipientDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "sessionId": "sess-770a8622-g4bd-63f6-c938-668877660003",
+                    "sequenceNumber": 2
+                },
+                "messageType": "ERROR",
+                "body": {
+                    "code": "SCOPE_EXCEEDED",
+                    "detail": "Requested action CONFIRM is not authorized.",
+                    "requestId": "req-002"
+                },
+                "signature": "ccccdddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899a",
+                "timestamp": "2026-01-01T00:02:00.000Z"
+            }
+        },
+        {
+            "id": "valid-negotiation-request-with-token-ref-v02",
+            "description": "Negotiation request carrying capabilityTokenRef (specVersion 0.2.0)",
+            "data": {
+                "id": "881a1733-a5ce-44a7-b928-669988771105",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "881a1733-a5ce-44a7-b928-669988771105",
+                    "sequenceNumber": 3,
+                    "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": {
+                    "action": "QUOTE",
+                    "params": { "sku": "SKU-002", "quantity": 5 },
+                    "requestId": "req-003"
+                },
+                "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "timestamp": "2026-01-01T00:03:00.000Z"
+            }
+        },
+        {
+            "id": "valid-negotiation-confirm-with-token-ref-v02",
+            "description": "specVersion 0.2.0 + capabilityTokenRef",
+            "data": {
+                "id": "991b2844-b6df-45b8-a039-770a99882216",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "991b2844-b6df-45b8-a039-770a99882216",
+                    "capabilityTokenRef": "urn:cap:660f9511-f3ac-42e5-b827-557766550002"
+                },
+                "messageType": "NEGOTIATION_CONFIRM",
+                "body": { "requestId": "req-004", "accepted": true },
+                "signature": "eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+                "timestamp": "2026-01-01T00:04:00.000Z"
+            }
+        },
+        {
+            "id": "valid-handshake-init-v02",
+            "description": "specVersion 0.2.0 handshake without capabilityTokenRef (legacy format still passes)",
+            "data": {
+                "id": "aa2c3955-c7e0-46c9-b14a-881baaa93327",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2",
+                    "recipientDid": "did:agent:d6a4e5f7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {
+                    "nonce": "e5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0",
+                    "capabilities": ["INQUIRY"],
+                    "initiatorDid": "did:agent:c5f3d4e6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2"
+                },
+                "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "timestamp": "2026-01-01T00:05:00.000Z"
+            }
+        }
+    ],
+    "invalid": [
+        {
+            "id": "invalid-unknown-message-type",
+            "description": "Unknown messageType",
+            "expectedError": "INVALID_MESSAGE",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440099",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "UNKNOWN_TYPE",
+                "body": {},
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-missing-signature",
+            "description": "Missing signature field",
+            "expectedError": "INVALID_MESSAGE",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440098",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": { "nonce": "abc", "capabilities": [] },
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-missing-sender-did",
+            "description": "senderDid missing from header",
+            "expectedError": "INVALID_MESSAGE",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440097",
+                "specVersion": "0.1.0",
+                "header": {
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {},
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-incompatible-spec-version",
+            "description": "Incompatible major version (rejected at validation stage)",
+            "expectedError": "SPEC_VERSION_MISMATCH",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440096",
+                "specVersion": "99.0.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": {},
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-capabilitytokenref-v01-forbidden",
+            "description": "specVersion 0.1.0 envelope must not carry capabilityTokenRef (version gating)",
+            "expectedError": "SPEC_VERSION_MISMATCH",
+            "data": {
+                "id": "881a1733-a5ce-44a7-b928-669988771106",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "881a1733-a5ce-44a7-b928-669988771106",
+                    "capabilityTokenRef": "urn:cap:550e8400-e29b-41d4-a716-446655440001"
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": { "action": "INQUIRY", "requestId": "req-bad-v01" },
+                "signature": "dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+                "timestamp": "2026-01-01T00:08:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-capabilitytokenref-missing-signature",
+            "description": "Carries capabilityTokenRef but missing signature (boundary: presence of the new field does not waive required fields)",
+            "expectedError": "INVALID_MESSAGE",
+            "data": {
+                "id": "bb3d4a66-d8f1-57ca-c250-881cbb994438",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "bb3d4a66-d8f1-57ca-c250-881cbb994438",
+                    "capabilityTokenRef": "urn:cap:770a8622-14bd-43f6-8938-668877660003"
+                },
+                "messageType": "NEGOTIATION_REQUEST",
+                "body": { "action": "INQUIRY", "requestId": "req-bad-01" },
+                "timestamp": "2026-01-01T00:06:00.000Z"
+            }
+        },
+        {
+            "id": "invalid-capabilitytokenref-bad-message-type",
+            "description": "Carries capabilityTokenRef but messageType is illegal (boundary: presence of the new field does not waive message-type validation)",
+            "expectedError": "INVALID_MESSAGE",
+            "data": {
+                "id": "cc4e5b77-e9a2-48db-d361-992dcc005549",
+                "specVersion": "0.2.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "cc4e5b77-e9a2-48db-d361-992dcc005549",
+                    "capabilityTokenRef": "urn:cap:881baaa9-3327-46c9-b14a-aa2c3955c7e0"
+                },
+                "messageType": "DELEGATED_ACTION",
+                "body": {},
+                "signature": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+                "timestamp": "2026-01-01T00:07:00.000Z"
+            }
+        }
+    ],
+    "boundary": [
+        {
+            "id": "boundary-clock-skew-at-limit",
+            "description": "Timestamp differs from current time by exactly 5 minutes (within boundary)",
+            "valid": true,
+            "note": "verifyEnvelope allows ±300000ms by default; this sample timestamp must be verified by injecting a fixed now=2026-01-01T00:05:00.000Z in the test",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440095",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": { "nonce": "boundary-test", "capabilities": [] },
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "boundary-clock-skew-exceeded",
+            "description": "Timestamp exceeds the 5-minute skew (rejected at validation)",
+            "valid": false,
+            "expectedError": "CLOCK_SKEW_EXCEEDED",
+            "note": "this envelope should be rejected when injecting now=2026-01-01T00:05:00.001Z",
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440094",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": null
+                },
+                "messageType": "HANDSHAKE_INIT",
+                "body": { "nonce": "boundary-exceed", "capabilities": [] },
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        },
+        {
+            "id": "boundary-empty-body",
+            "description": "body is an empty object (minimal valid body)",
+            "valid": true,
+            "data": {
+                "id": "550e8400-e29b-41d4-a716-446655440093",
+                "specVersion": "0.1.0",
+                "header": {
+                    "senderDid": "did:agent:a3f1b2c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0",
+                    "recipientDid": "did:agent:b4e2c3d5f6a7b8c9d0e1f2a3b4c5d6e7f8a9b0c1",
+                    "sessionId": "sess-abc123"
+                },
+                "messageType": "NEGOTIATION_CONFIRM",
+                "body": {},
+                "signature": "aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899",
+                "timestamp": "2026-01-01T00:00:00.000Z"
+            }
+        }
+    ]
+}

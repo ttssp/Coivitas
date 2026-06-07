@@ -1,0 +1,16 @@
+services:
+    postgres:
+        image: postgres:16
+        container_name: coivitas-postgres
+        restart: unless-stopped
+        ports:
+            - '${PGPORT:-5432}:5432'
+        environment:
+            POSTGRES_DB: ${PGDATABASE:-coivitas_dev}
+            POSTGRES_USER: ${PGUSER:-coivitas}
+            POSTGRES_PASSWORD: ${PGPASSWORD:-coivitas}
+        volumes:
+            - postgres-data:/var/lib/postgresql/data
+
+volumes:
+    postgres-data:

@@ -1,0 +1,13 @@
+{
+ "_comment": "hcc v0.2 Case 1: ChainIdentity 3-field full — canonicalize + hash",
+ "chainIdentity": {
+ "chainNamespace": "tenant:prod:audit",
+ "tenantId": "tenant-001",
+ "auditClass": "financial"
+ },
+ "canonicalPayloadInput": "hello world",
+ "expectedJcsBytes_utf8": "{\"auditClass\":\"financial\",\"chainNamespace\":\"tenant:prod:audit\",\"tenantId\":\"tenant-001\"}",
+ "expectedJcsHex": "7b2261756469744c6c617373223a2266696e616e6369616c222c22636861696e4e616d657370616365223a2274656e616e743a70726f643a6175646974222c2274656e616e744964223a2274656e616e742d303031227d",
+ "_note": "jcs hex computed from: jcs.canonicalize({'auditClass':'financial','chainNamespace':'tenant:prod:audit','tenantId':'tenant-001'})",
+ "_preimage_note": "preimage = b'hello world' + jcs_bytes; hash = sha256(preimage).hexdigest"
+}

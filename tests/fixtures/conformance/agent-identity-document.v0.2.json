@@ -1,0 +1,180 @@
+{
+ "$schema": "conformance/agent-identity-document",
+ "specVersion": "0.2.0",
+ "description": "AgentIdentityDocument (specVersion 0.2.0) conformance fixtures — coexisting with the *.json 0.1.0 baseline",
+ "valid": [
+ {
+ "id": "valid-v02-with-version-no-rotation",
+ "description": "specVersion 0.2.0 + version:1 (single-field extension, no rotation history)",
+ "data": {
+ "id": "did:agent:d6a4e5f7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "d6a4e5f7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:d6a4e5f7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3",
+ "issuedAt": "2026-03-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "eeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccdd"
+ },
+ "version": 1,
+ "createdAt": "2026-03-01T00:00:00.000Z",
+ "updatedAt": "2026-03-01T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "valid-v02-rotated-once",
+ "description": "version:2 + previousPublicKey + rotationProof (first rotation)",
+ "data": {
+ "id": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "publicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "issuedAt": "2026-03-15T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "ff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddee"
+ },
+ "version": 2,
+ "previousPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "rotationProof": {
+ "oldPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "newPublicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "oldKeySignature": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111aaaa",
+ "newKeySignature": "2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222bbbb",
+ "principalSignature": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333cccc",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "rotatedAt": "2026-03-15T00:00:00.000Z"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-03-15T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "valid-v02-rotated-multi-with-capabilities",
+ "description": "version:3 + full rotationProof + capabilities + serviceEndpoints (multi-field combination)",
+ "data": {
+ "id": "did:agent:f8c6a7b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6MktFYFHD3GvPPKxbMHbHbgVZ7aCBWfVxvBhBGsVuRNH7Xk",
+ "publicKey": "f8c6a7b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7",
+ "bindingProof": {
+ "principalDid": "did:key:z6MktFYFHD3GvPPKxbMHbHbgVZ7aCBWfVxvBhBGsVuRNH7Xk",
+ "agentDid": "did:agent:f8c6a7b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5",
+ "issuedAt": "2026-04-01T00:00:00.000Z",
+ "expiresAt": "2027-04-01T00:00:00.000Z",
+ "signature": "00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff"
+ },
+ "capabilities": ["INQUIRY", "QUOTE", "CONFIRM"],
+ "serviceEndpoints": [
+ {
+ "id": "ws-endpoint",
+ "type": "WebSocketEndpoint",
+ "url": "https://agent.example.com/ws"
+ }
+ ],
+ "version": 3,
+ "previousPublicKey": "b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0",
+ "rotationProof": {
+ "oldPublicKey": "b1b2b3b4b5b6b7b8b9babbbcbdbebfc0c1c2c3c4c5c6c7c8c9cacbcccdcecfd0",
+ "newPublicKey": "f8c6a7b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7",
+ "oldKeySignature": "4444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444444dddd",
+ "newKeySignature": "5555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555555eeee",
+ "principalSignature": "6666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666666ffff",
+ "agentDid": "did:agent:f8c6a7b9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5",
+ "rotatedAt": "2026-04-01T00:00:00.000Z"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-04-01T00:00:00.000Z"
+ }
+ }
+ ],
+ "invalid": [
+ {
+ "id": "invalid-rotation-proof-missing-required-fields",
+ "description": "rotationProof is missing principalSignature (triggers schema required)",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "publicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "issuedAt": "2026-03-15T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "ff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddee"
+ },
+ "version": 2,
+ "previousPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "rotationProof": {
+ "oldPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "newPublicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "oldKeySignature": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111aaaa",
+ "newKeySignature": "2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222bbbb",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "rotatedAt": "2026-03-15T00:00:00.000Z"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-03-15T00:00:00.000Z"
+ }
+ },
+ {
+ "id": "invalid-rotation-proof-without-previous-public-key",
+ "description": "rotationProof is present but previousPublicKey is missing (enforced by the schemas.ts if/then constraint — bidirectional binding per key rotation)",
+ "expectedError": "BINDING_PROOF_INVALID",
+ "data": {
+ "id": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "publicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "bindingProof": {
+ "principalDid": "did:key:z6Mkf6As6PzQn9JM8MUvFWEVGqjTPtKj4W2KFT3Kdxs9EGbS",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "issuedAt": "2026-03-15T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "ff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddee"
+ },
+ "version": 2,
+ "rotationProof": {
+ "oldPublicKey": "a0a1a2a3a4a5a6a7a8a9aaabacadaeafb0b1b2b3b4b5b6b7b8b9babbbcbdbebf",
+ "newPublicKey": "e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6",
+ "oldKeySignature": "1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111111aaaa",
+ "newKeySignature": "2222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222222bbbb",
+ "principalSignature": "3333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333333cccc",
+ "agentDid": "did:agent:e7b5f6a8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4",
+ "rotatedAt": "2026-03-15T00:00:00.000Z"
+ },
+ "createdAt": "2026-01-01T00:00:00.000Z",
+ "updatedAt": "2026-03-15T00:00:00.000Z"
+ }
+ }
+ ],
+ "boundary": [
+ {
+ "id": "boundary-version-one-without-rotation-proof",
+ "description": "rotationProof is not required when version:1 (first version has no history)",
+ "valid": true,
+ "data": {
+ "id": "did:agent:a9d7b8c0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6",
+ "specVersion": "0.2.0",
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "publicKey": "a9d7b8c0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8",
+ "bindingProof": {
+ "principalDid": "did:key:z6MkhaXgBZDvotDkL5257faiztiGiC2QtKLGpbnnEGta2doK",
+ "agentDid": "did:agent:a9d7b8c0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6",
+ "issuedAt": "2026-05-01T00:00:00.000Z",
+ "expiresAt": null,
+ "signature": "112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00112233445566778899aabbccddeeff00"
+ },
+ "version": 1,
+ "createdAt": "2026-05-01T00:00:00.000Z",
+ "updatedAt": "2026-05-01T00:00:00.000Z"
+ }
+ }
+ ]
+}

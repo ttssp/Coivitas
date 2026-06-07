@@ -1,0 +1,100 @@
+-- CSP v0.1 test fixture
+-- 5 paths: 1 normal pass + 4 fail-closed rejection paths
+-- Note: CSP v0.1 is not persisted to the database (no SQL migration).
+-- This file is referenced only by integration tests / golden-path semantic verification.
+-- Version: csp-fixture v0.1
+-- Last updated: 2026-05-18
+
+-- ---------------------------------------------------------------------
+-- fixture 001: normal pass path (mode A, DID audience)
+-- Acceptance criteria: AJV valid=true + handleCspError not triggered
+-- ---------------------------------------------------------------------
+-- fixture_id: csp-fixture-001-normal
+-- expected: PASS
+-- cspVersion: 1.0.0
+-- audience: did:agent:verifier-alice-001
+-- challenge: f47ac10b-58cc-4372-a567-0e02b2c3d479 (UUID v4)
+-- notAfter: 2026-06-18T00:00:00.000Z (30 days out, not expired)
+-- token.specVersion: 0.4.0
+-- token.id: e7c3b2a1-1234-4abc-8def-000000000001 (UUID v4)
+
+-- path note: this path should make validateCspPayload return { valid: true }
+-- and is not triggered in the handleCspError flow.
+
+-- ---------------------------------------------------------------------
+-- fixture 002: challenge mismatch rejection path (CSP_CHALLENGE_INVALID)
+-- Acceptance criteria: handleCspError('CSP_CHALLENGE_INVALID') → httpStatus 401
+-- ---------------------------------------------------------------------
+-- fixture_id: csp-fixture-002-challenge-mismatch
+-- expected: REJECT
+-- errorCode: CSP_CHALLENGE_INVALID
+-- httpStatus: 401
+-- Scenario description:
+-- The verifier issues challenge = f47ac10b-58cc-4372-a567-0e02b2c3d479
+-- during the C1 first-contact handshake,
+-- but the CSP payload submitted by the holder carries challenge =
+-- 00000000-0000-4000-8000-000000000000 (forged/replayed)
+-- ⇒ the verifier-side === comparison fails → CSP_CHALLENGE_INVALID → 401 Unauthorized
+
+-- path note: this path simulates the C1 replay-mitigation failure scenario:
+-- - the verifier does a strict === comparison of the holder-submitted challenge against the issued nonce
+-- - mismatch → reject, preventing replay attacks
+-- - the AJV schema itself reports valid=true (the challenge format is legal), but the business layer rejects it
+
+-- ---------------------------------------------------------------------
+-- fixture 003: audience mismatch rejection path (CSP_AUDIENCE_MISMATCH)
+-- Acceptance criteria: handleCspError('CSP_AUDIENCE_MISMATCH') → httpStatus 403
+-- ---------------------------------------------------------------------
+-- fixture_id: csp-fixture-003-audience-mismatch
+-- expected: REJECT
+-- errorCode: CSP_AUDIENCE_MISMATCH
+-- httpStatus: 403
+-- Scenario description (F2 audience hijack protection):
+-- the holder submits a CSP to verifier-alice (did:agent:verifier-alice-001)
+-- but CSP payload.audience = did:agent:verifier-bob-999 (the target has been tampered with)
+-- ⇒ the verifier-alice-side audience === 'did:agent:verifier-alice-001' comparison fails
+-- ⇒ CSP_AUDIENCE_MISMATCH → 403 Forbidden
+
+-- path note: F2 audience hijack protection requires:
+-- - the verifier must strictly compare payload.audience === its own DID / URL
+-- - mismatch → 403 (not 401, because the identity exists but the access target is wrong)
+
+-- ---------------------------------------------------------------------
+-- fixture 004: notAfter expired rejection path (CSP_PAYLOAD_EXPIRED)
+-- Acceptance criteria: handleCspError('CSP_PAYLOAD_EXPIRED') → httpStatus 401
+-- ---------------------------------------------------------------------
+-- fixture_id: csp-fixture-004-notafter-expired
+-- expected: REJECT
+-- errorCode: CSP_PAYLOAD_EXPIRED
+-- httpStatus: 401
+-- Scenario description (stale replay protection):
+-- CSP payload.notAfter = 2020-01-01T00:00:00.000Z (expired 6 years ago)
+-- verifier-side Date.now() > new Date(notAfter).getTime()
+-- ⇒ CSP_PAYLOAD_EXPIRED → 401 Unauthorized
+-- Note: CSP_MIN_VALIDITY_WINDOW_MS = 1000ms is the floor; even if notAfter is very near,
+-- at least a 1-second window must remain; if expired, reject (fail-closed).
+
+-- ---------------------------------------------------------------------
+-- fixture 005: token specVersion unsupported rejection path (CSP_TOKEN_VERSION_UNSUPPORTED)
+-- Acceptance criteria: handleCspError('CSP_TOKEN_VERSION_UNSUPPORTED') → httpStatus 400
+-- ---------------------------------------------------------------------
+-- fixture_id: csp-fixture-005-token-version-unsupported
+-- expected: REJECT
+-- errorCode: CSP_TOKEN_VERSION_UNSUPPORTED
+-- httpStatus: 400
+-- Scenario description:
+-- CSP payload.token.specVersion = '9.9.9' (a future version, not currently supported)
+-- ⇒ the verifier-side check SUPPORTED_SPEC_VERSIONS.includes(token.specVersion) fails
+-- ⇒ CSP_TOKEN_VERSION_UNSUPPORTED → 400 Bad Request
+-- Note: cspVersion ('1.0.0') and token.specVersion ('0.4.0', etc.) are independent version spaces
+-- (Decision #1 Path B); an unsupported token specVersion does not mean an unsupported CSP version.
+
+-- ---------------------------------------------------------------------
+-- Appendix: schema notes
+-- CSP v0.1 is not written to any DB table (in-memory validation only)
+-- This fixture file is only for integration / golden-path semantic verification
+-- Corresponding JSON fixture: packages/shared/fixtures/csp-fixture.json
+-- Corresponding AJV schema: packages/types/src/schemas/canonical-signed-payload.schema.json
+-- Corresponding types: packages/types/src/canonical-signed-payload/types.ts
+-- Corresponding validator: packages/types/src/canonical-signed-payload/csp-validation.ts
+-- ---------------------------------------------------------------------

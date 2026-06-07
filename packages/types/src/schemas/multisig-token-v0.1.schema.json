@@ -1,0 +1,124 @@
+{
+ "$id": "https://coivitas.ai/schemas/multisig-token-v0.1.json",
+ "title": "MultisigToken",
+ "description": "multisig v0.1 JSON Schema — 6 required fields",
+ "type": "object",
+ "required": [
+  "multisigVersion",
+  "threshold",
+  "signers",
+  "merkleRoot",
+  "inclusionProofs",
+  "csp"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "multisigVersion": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+   "const": "1.0.0",
+   "description": "ms protocol version (decoupled from token.specVersion / cspVersion; v0.1 sole value '1.0.0')"
+  },
+  "threshold": {
+   "type": "integer",
+   "minimum": 1,
+   "description": "the n in an n-of-m threshold; values exceeding signers.length are caught by the runtime fail-closed guard"
+  },
+  "signers": {
+   "$comment": "uniqueItems applies to the full SignerInfo object (whole-object hash uniqueness). The stronger constraint that signers[i].id values are pairwise distinct is enforced by the runtime createMultisigToken factory and verify pipeline (fail-closed).",
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {
+    "$ref": "#/$defs/SignerInfo"
+   }
+  },
+  "merkleRoot": {
+   "type": "string",
+   "minLength": 1,
+   "pattern": "^[A-Za-z0-9_-]+=*$|^[0-9a-f]{64}$",
+   "description": "Merkle root of the signer set (SHA-256; base64url or hex encoding; hex 64-char matches the wire-format-freeze; canonicalHash defaults to hex output)"
+  },
+  "inclusionProofs": {
+   "$comment": "I4 requires inclusionProofs.length === signers.length and the signerId set to map 1:1 onto the signers[i].id set — enforced by the runtime createMultisigToken factory and verify pipeline step 7.3.0 fail-closed guard (Schema uniqueItems is a whole-object uniqueness constraint; the by-field signerId uniqueness constraint is acknowledged as a spec boundary)",
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {
+    "type": "object",
+    "required": [
+     "signerId",
+     "path"
+    ],
+    "additionalProperties": false,
+    "properties": {
+     "signerId": {
+      "type": "string",
+      "minLength": 1,
+      "description": "ID of the corresponding signer (DID or UUID v4; maps 1:1 to signers[i].id)"
+     },
+     "path": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 8192,
+      "pattern": "^[A-Za-z0-9_-]+=*$",
+      "description": "Merkle audit path (RFC 6962 base64url-serialized byte array; length 1-8192)"
+     }
+    }
+   }
+  },
+  "csp": {
+   "$ref": "https://coivitas.ai/schemas/canonical-signed-payload-v0.1.json",
+   "description": "embedded CanonicalSignedPayload (reuses the csp v0.1 5-required-field baseline + cspVersion metadata; ms does not redefine the signed payload)"
+  }
+ },
+ "$defs": {
+  "SignerInfo": {
+   "type": "object",
+   "required": [
+    "id",
+    "role",
+    "publicKey",
+    "signature"
+   ],
+   "additionalProperties": false,
+   "description": "metadata for a single signer (4 required fields; id accepts DID or UUID v4; role is the human/agent enum; not weighted in the quorum)",
+   "properties": {
+    "id": {
+     "type": "string",
+     "minLength": 1,
+     "oneOf": [
+      {
+       "type": "string",
+       "pattern": "^did:"
+      },
+      {
+       "type": "string",
+       "format": "uuid",
+       "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$"
+      }
+     ],
+     "description": "signer ID; DID (did:* prefix) or UUID v4 (short-lived session scenarios)"
+    },
+    "role": {
+     "type": "string",
+     "enum": [
+      "human",
+      "agent"
+     ],
+     "description": "signer role; not weighted in the quorum (collusion defense); used only as a classification label at issuance + for Merkle leaf encoding consistency"
+    },
+    "publicKey": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Ed25519 public key (hex 32-byte or base64url 43-char; @noble/curves; no fallback to other algorithms allowed)"
+    },
+    "signature": {
+     "type": "string",
+     "minLength": 1,
+     "description": "Ed25519 signature (hex 64-byte or base64url 86-char; signed over canonicalSerialize(csp signed payload))"
+    }
+   }
+  }
+ }
+}

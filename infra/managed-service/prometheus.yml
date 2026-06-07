@@ -1,0 +1,30 @@
+# Prometheus scrape config (alpha phase).
+#
+# Scrapes resolver:8080/metrics and revocation:8081/metrics.
+# Metrics: resolver_requests_total / resolver_request_duration_ms / revocation_check_total
+# plus prom-client defaults process_* (CPU / Memory / event loop lag).
+
+global:
+    scrape_interval: 15s
+    scrape_timeout: 10s
+    evaluation_interval: 15s
+
+scrape_configs:
+    - job_name: 'managed-service-resolver'
+      static_configs:
+          - targets: ['resolver:8080']
+            labels:
+                service: 'resolver'
+                env: 'alpha'
+
+    - job_name: 'managed-service-revocation'
+      static_configs:
+          - targets: ['revocation:8081']
+            labels:
+                service: 'revocation'
+                env: 'alpha'
+
+    # Prometheus itself (health check + meta metrics)
+    - job_name: 'prometheus'
+      static_configs:
+          - targets: ['localhost:9090']
